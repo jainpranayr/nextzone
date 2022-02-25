@@ -1,10 +1,12 @@
 import Head from 'next/head'
+import NextLink from 'next/link'
 import {
   AppBar,
   Toolbar,
   Typography,
   Container,
   CssBaseline,
+  Link,
 } from '@material-ui/core'
 import useStyles from '../utils/styles'
 
@@ -23,7 +25,20 @@ export default function Layout({ children }) {
       {/* Navbar */}
       <AppBar position='static' className={classes.navbar}>
         <Toolbar>
-          <Typography className={classes.heading}>nextshop</Typography>
+          <NextLink href='/' passHref>
+            <Link underline='none'>
+              <Typography className={classes.logo}>nextshop</Typography>
+            </Link>
+          </NextLink>
+          <div className={classes.grow}></div>
+          <div>
+            <NextLink href='/cart' passHref>
+              <Link underline='none'>Cart</Link>
+            </NextLink>
+            <NextLink href='/login' passHref>
+              <Link underline='none'>Login</Link>
+            </NextLink>
+          </div>
         </Toolbar>
       </AppBar>
 

@@ -1,7 +1,13 @@
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles({
-  heading: {
+  // common
+  grow: {
+    flexGrow: 1,
+  },
+
+  // navbar
+  logo: {
     fontSize: '1.5rem',
     fontWeight: 800,
   },
@@ -12,9 +18,13 @@ const useStyles = makeStyles({
       marginLeft: 10,
     },
   },
+
+  // main content
   main: {
     minHeight: '80vh',
   },
+
+  // footer
   footer: {
     textAlign: 'center',
   },
