@@ -1,4 +1,5 @@
 import { Layout } from '../components'
+import NextLink from 'next/link'
 import {
   Grid,
   Card,
@@ -23,16 +24,19 @@ export default function Home() {
             <Grid item md={4} key={product.name}>
               {/* product card */}
               <Card>
-                {/* Clickable content on card */}
-                <CardActionArea>
-                  <CardMedia
-                    component='img'
-                    image={product.image}
-                    title={product.name}></CardMedia>
-                  <CardContent>
-                    <Typography>{product.name}</Typography>
-                  </CardContent>
-                </CardActionArea>
+                {/* route to product page */}
+                <NextLink href={`/product/${product.slug}`} passHref>
+                  {/* Clickable content on card */}
+                  <CardActionArea>
+                    <CardMedia
+                      component='img'
+                      image={product.image}
+                      title={product.name}></CardMedia>
+                    <CardContent>
+                      <Typography>{product.name}</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </NextLink>
 
                 {/* buttons and price */}
                 <CardActions>
