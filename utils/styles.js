@@ -5,6 +5,14 @@ const useStyles = makeStyles({
   grow: {
     flexGrow: 1,
   },
+  section: {
+    marginTop: 25,
+    marginBottom: 10,
+  },
+  heading: {
+    fontSize: '2rem',
+    fontWeight: 800,
+  },
 
   // navbar
   logo: {

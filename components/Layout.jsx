@@ -10,18 +10,19 @@ import {
 } from '@material-ui/core'
 import useStyles from '../utils/styles'
 
-export default function Layout({ children }) {
+export default function Layout({ title, description, children }) {
   const classes = useStyles()
 
   return (
     <div>
-      {/* CSS Reset */}
-      <CssBaseline />
-      {/* Address bar of page */}
+      {/* Dynamic title of page */}
       <Head>
-        <title>Next Shop</title>
+        <title>{title ? `${title} - Next Shop` : 'Next Shop'}</title>
+        {description && <meta name='description' content={description}></meta>}
       </Head>
 
+      {/* CSS Reset */}
+      <CssBaseline />
       {/* Navbar */}
       <AppBar position='static' className={classes.navbar}>
         <Toolbar>
