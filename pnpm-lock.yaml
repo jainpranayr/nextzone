@@ -7,6 +7,7 @@ specifiers:
   js-cookie: ^2.2.1
   mongoose: ^6.2.3
   next: 12.1.0
+  next-connect: ^0.12.2
   react: 17.0.2
   react-dom: 17.0.2
 
@@ -15,6 +16,7 @@ dependencies:
   js-cookie: 2.2.1
   mongoose: 6.2.3
   next: 12.1.0_react-dom@17.0.2+react@17.0.2
+  next-connect: 0.12.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
 
@@ -1545,6 +1547,12 @@ packages:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
     dev: true
 
+  /next-connect/0.12.2:
+    resolution: {integrity: sha512-B/zKHPs5S7XWvAVsZVLvOeY2eL2U3g0W/BgCDetEJRcNDzxX2vi8rzqBuEoLLPlI8LvtHwujDVUFFjSgOEZTbA==}
+    dependencies:
+      trouter: 3.2.0
+    dev: false
+
   /next/12.1.0_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-s885kWvnIlxsUFHq9UGyIyLiuD0G3BUC/xrH0CEnH5lHEWkwQcHOORgbDF0hbrW9vr/7am4ETfX4A7M6DjrE7Q==}
     engines: {node: '>=12.22.0'}
@@ -1801,6 +1809,11 @@ packages:
       define-properties: 1.1.3
     dev: true
 
+  /regexparam/1.3.0:
+    resolution: {integrity: sha512-6IQpFBv6e5vz1QAqI+V4k8P2e/3gRrqfCJ9FI+O1FLQTO+Uz6RXZEZOPmTJ6hlGj7gkERzY5BRCv09whKP96/g==}
+    engines: {node: '>=6'}
+    dev: false
+
   /regexpp/3.2.0:
     resolution: {integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==}
     engines: {node: '>=8'}
@@ -2020,6 +2033,13 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       punycode: 2.1.1
+    dev: false
+
+  /trouter/3.2.0:
+    resolution: {integrity: sha512-rLLXbhTObLy2MBVjLC+jTnoIKw99n0GuJs9ov10J870vDw5qhTurPzsDrudNtBf5w/CZ9ctZy2p2IMmhGcel2w==}
+    engines: {node: '>=6'}
+    dependencies:
+      regexparam: 1.3.0
     dev: false
 
   /tsconfig-paths/3.12.0:
