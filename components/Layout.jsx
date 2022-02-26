@@ -67,7 +67,7 @@ export default function Layout({ title, description, children }) {
             </NextLink>
             <div className={classes.grow}></div>
             {/* dark/light mode toggle */}
-            <Switch checked={darkMode} onChange={handleDarkMode}></Switch>
+            <Switch onChange={handleDarkMode}></Switch>
             <div>
               <NextLink href='/cart' passHref>
                 <Link underline='none'>Cart</Link>
