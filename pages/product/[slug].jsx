@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import {
@@ -10,18 +9,14 @@ import {
   Card,
   Button,
 } from '@material-ui/core'
-import { data } from '../../utils'
 import { Layout } from '../../components'
 import { useStyles } from '../../utils'
+import { Product } from '../../models'
+import { db } from '../../config'
 
-export default function ProductScreen() {
+export default function ProductScreen({ product }) {
   // get styles
   const classes = useStyles()
-  const router = useRouter()
-  // get product slug from link
-  const { slug } = router.query
-  // find product in dummy data2
-  const product = data.products.find(a => a.slug === slug)
   // if product not found
   if (!product) {
     return <div>Product Not Found</div>
@@ -117,4 +112,25 @@ export default function ProductScreen() {
       </Grid>
     </Layout>
   )
+}
+
+// get product details from database
+export async function getServerSideProps(context) {
+  // get slug of product
+  const { params } = context
+  const { slug } = params
+
+  // connect to database
+  await db.connect()
+  // find product by slug in database
+  const product = await Product.findOne({ slug }).lean()
+  // disconnect from database
+  await db.disconnect()
+
+  // pass product as prop
+  return {
+    props: {
+      product: db.convertDocToObj(product),
+    },
+  }
 }

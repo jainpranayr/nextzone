@@ -10,16 +10,17 @@ import {
   CardActions,
   Button,
 } from '@material-ui/core'
-import { data } from '../utils' // dummy data
+import { db } from '../config'
+import { Product } from '../models'
 
-export default function Home() {
+export default function Home({ products }) {
   return (
     <Layout>
       <div>
         <h1>Products</h1>
         {/* main products grid */}
         <Grid container spacing={3}>
-          {data.products.map(product => (
+          {products.map(product => (
             // single product grid
             <Grid item md={4} key={product.name}>
               {/* product card */}
@@ -52,4 +53,21 @@ export default function Home() {
       </div>
     </Layout>
   )
+}
+
+// get products from database
+export async function getServerSideProps() {
+  // connect to database
+  await db.connect()
+  // get products and convert it to js object
+  const products = await Product.find({}).lean()
+  // disconect from database
+  await db.disconnect()
+
+  return {
+    props: {
+      // pass products and convert _id, createdAt, updateAt to string
+      products: products.map(db.convertDocToObj),
+    },
+  }
 }
