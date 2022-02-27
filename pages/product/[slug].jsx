@@ -13,13 +13,35 @@ import { Layout } from '../../components'
 import { useStyles } from '../../utils'
 import { Product } from '../../models'
 import { db } from '../../config'
+import axios from 'axios'
+import { useContext } from 'react'
+import { Store } from '../../config'
 
 export default function ProductScreen({ product }) {
   // get styles
   const classes = useStyles()
+
   // if product not found
   if (!product) {
     return <div>Product Not Found</div>
+  }
+
+  // get dispatch function from store
+  const { dispatch } = useContext(Store)
+
+  // handle Add to Cart
+  const handleAddToCart = async () => {
+    // get product details
+    const { data } = await axios.get(`/api/products/${product._id}`)
+
+    // check whether product is in stock
+    if (data.countInStock <= 0) {
+      window.alert('Sorry. Product is out of stock')
+      return
+    }
+
+    // dispatch add to cart function
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } })
   }
   // if product found
   return (
@@ -102,7 +124,11 @@ export default function ProductScreen({ product }) {
                 {/* Add to Cart button */}
               </ListItem>
               <ListItem>
-                <Button fullWidth variant='contained' color='primary'>
+                <Button
+                  fullWidth
+                  variant='contained'
+                  color='primary'
+                  onClick={handleAddToCart}>
                   Add to cart
                 </Button>
               </ListItem>

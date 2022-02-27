@@ -10,6 +10,7 @@ import {
   createTheme,
   ThemeProvider,
   Switch,
+  Badge,
 } from '@material-ui/core'
 import { useStyles } from '../utils'
 import { useContext } from 'react'
@@ -21,8 +22,8 @@ export default function Layout({ title, description, children }) {
   const classes = useStyles()
   // get state and dispatch from store
   const { state, dispatch } = useContext(Store)
-  // get darkMode state from state
-  const { darkMode } = state
+  // get darkMode and cart  state from state
+  const { darkMode, cart } = state
 
   // handle DarkMode on toggle
   const handleDarkMode = () => {
@@ -70,7 +71,18 @@ export default function Layout({ title, description, children }) {
             <Switch onChange={handleDarkMode}></Switch>
             <div>
               <NextLink href='/cart' passHref>
-                <Link underline='none'>Cart</Link>
+                <Link>
+                  {/* Add to cart badge */}
+                  {cart.cartItems.length > 0 ? (
+                    <Badge
+                      color='secondary'
+                      badgeContent={cart.cartItems.length}>
+                      Cart
+                    </Badge>
+                  ) : (
+                    'Cart'
+                  )}
+                </Link>
               </NextLink>
               <NextLink href='/login' passHref>
                 <Link underline='none'>Login</Link>
