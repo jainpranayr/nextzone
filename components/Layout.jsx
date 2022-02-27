@@ -11,9 +11,9 @@ import {
   ThemeProvider,
   Switch,
 } from '@material-ui/core'
-import useStyles from '../utils/styles'
+import { useStyles } from '../utils'
 import { useContext } from 'react'
-import { Store } from '../config/store'
+import { Store } from '../config'
 import Cookies from 'js-cookie'
 
 export default function Layout({ title, description, children }) {

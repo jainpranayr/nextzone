@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { StoreProvider } from '../config/store'
+import { StoreProvider } from '../config'
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {

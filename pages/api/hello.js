@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import db from '../../config/db'
+import { db } from '../../config'
 
 export default async function handler(req, res) {
   await db.connect()

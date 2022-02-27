@@ -10,7 +10,7 @@ import {
   CardActions,
   Button,
 } from '@material-ui/core'
-import data from '../utils/data' // dummy data
+import { data } from '../utils' // dummy data
 
 export default function Home() {
   return (

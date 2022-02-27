@@ -10,9 +10,9 @@ import {
   Card,
   Button,
 } from '@material-ui/core'
-import data from '../../utils/data'
+import { data } from '../../utils'
 import { Layout } from '../../components'
-import useStyles from '../../utils/styles'
+import { useStyles } from '../../utils'
 
 export default function ProductScreen() {
   // get styles

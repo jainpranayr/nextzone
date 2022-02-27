@@ -1,7 +1,7 @@
 import nc from 'next-connect'
-import Product from '../../models/product'
-import db from '../../config/db'
-import data from '../../utils/data'
+import { Product } from '../../models'
+import { db } from '../../config'
+import { data } from '../../utils'
 
 const handler = nc()
 
