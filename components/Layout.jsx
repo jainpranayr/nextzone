@@ -21,9 +21,10 @@ export default function Layout({ title, description, children }) {
   // get styles
   const classes = useStyles()
   // get state and dispatch from store
-  const { state, dispatch } = useContext(Store)
-  // get darkMode and cart  state from state
-  const { darkMode, cart } = state
+  const {
+    state: { darkMode, cart },
+    dispatch,
+  } = useContext(Store)
 
   // handle DarkMode on toggle
   const handleDarkMode = () => {
@@ -68,7 +69,7 @@ export default function Layout({ title, description, children }) {
             </NextLink>
             <div className={classes.grow}></div>
             {/* dark/light mode toggle */}
-            <Switch onChange={handleDarkMode}></Switch>
+            <Switch checked={darkMode} onChange={handleDarkMode}></Switch>
             <div>
               <NextLink href='/cart' passHref>
                 <Link>

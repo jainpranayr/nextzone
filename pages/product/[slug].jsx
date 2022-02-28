@@ -16,18 +16,20 @@ import { db } from '../../config'
 import axios from 'axios'
 import { useContext } from 'react'
 import { Store } from '../../config'
+import { useRouter } from 'next/router'
 
 export default function ProductScreen({ product }) {
   // get styles
   const classes = useStyles()
+  // get dispatch function from store
+  const { dispatch } = useContext(Store)
+  // setup router
+  const router = useRouter()
 
   // if product not found
   if (!product) {
     return <div>Product Not Found</div>
   }
-
-  // get dispatch function from store
-  const { dispatch } = useContext(Store)
 
   // handle Add to Cart
   const handleAddToCart = async () => {
@@ -42,6 +44,8 @@ export default function ProductScreen({ product }) {
 
     // dispatch add to cart function
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } })
+    // redirect to /cart
+    router.push('/cart')
   }
   // if product found
   return (

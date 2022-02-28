@@ -32,6 +32,11 @@ const useStyles = makeStyles({
     minHeight: '80vh',
   },
 
+  // total card
+  card: {
+    marginTop: 20,
+  },
+
   // footer
   footer: {
     textAlign: 'center',
