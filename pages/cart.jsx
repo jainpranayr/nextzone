@@ -5,6 +5,7 @@ import { useStyles } from '../utils'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import {
   Grid,
   TableContainer,
@@ -24,7 +25,9 @@ import {
 } from '@material-ui/core'
 import axios from 'axios'
 
-function CartScreen() {
+function Cart() {
+  // setup router
+  const router = useRouter()
   // get styles
   const classes = useStyles()
   // get cartItems state and dispatch
@@ -53,6 +56,11 @@ function CartScreen() {
   // remove item from cart
   const handleRemoveItem = item => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item })
+  }
+
+  // redirect to shipping after clicking checkout
+  const handleCheckOut = () => {
+    router.push('/shipping')
   }
 
   return (
@@ -157,7 +165,11 @@ function CartScreen() {
 
                 {/* check out button */}
                 <ListItem>
-                  <Button variant='contained' color='primary' fullWidth>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    fullWidth
+                    onClick={handleCheckOut}>
                     Check Out
                   </Button>
                 </ListItem>
@@ -171,4 +183,4 @@ function CartScreen() {
 }
 
 // do not render in ssr
-export default dynamic(() => Promise.resolve(CartScreen), { ssr: false })
+export default dynamic(() => Promise.resolve(Cart), { ssr: false })
