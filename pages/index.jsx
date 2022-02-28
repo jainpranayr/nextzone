@@ -12,8 +12,40 @@ import {
 } from '@material-ui/core'
 import { db } from '../config'
 import { Product } from '../models'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { useContext } from 'react'
+import { Store } from '../config'
 
 export default function Home({ products }) {
+  const router = useRouter()
+  const {
+    state: {
+      cart: { cartItems },
+    },
+    dispatch,
+  } = useContext(Store)
+
+  // handle Add to Cart
+  const handleAddToCart = async product => {
+    // check if item is in stock
+    const existItem = cartItems.find(x => x._id === product._id)
+    const quantity = existItem ? existItem.quantity + 1 : 1
+
+    // get item detail
+    const { data } = await axios.get(`/api/products/${product._id}`)
+
+    // show error if item is not in stock
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock')
+      return
+    }
+
+    // add item to cart
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
+    // redirect to /cart
+    router.push('/cart')
+  }
   return (
     <Layout>
       <div>
@@ -42,7 +74,11 @@ export default function Home({ products }) {
                 {/* buttons and price */}
                 <CardActions>
                   <Typography>${product.price}</Typography>
-                  <Button variant='outlined' size='small' color='primary'>
+                  <Button
+                    variant='outlined'
+                    size='small'
+                    color='primary'
+                    onClick={() => handleAddToCart(product)}>
                     Add to cart
                   </Button>
                 </CardActions>

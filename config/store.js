@@ -24,7 +24,7 @@ const reducer = (state, action) => {
     case 'DARK_MODE_OFF':
       return { ...state, darkMode: false }
 
-    // AdddToCart
+    // add to cart
     case 'CART_ADD_ITEM': {
       // get product detail
       const newItem = action.payload
@@ -44,6 +44,18 @@ const reducer = (state, action) => {
 
       return { ...state, cart: { ...state.cart, cartItems } }
     }
+    // remove from cart
+    case 'CART_REMOVE_ITEM': {
+      // remove product from cart
+      const cartItems = state.cart.cartItems.filter(
+        item => item._id !== action.payload._id
+      )
+
+      // store updated cartItems in Cookies
+      Cookies.set('cartItems', JSON.stringify(cartItems))
+      return { ...state, cart: { ...state.cart, cartItems } }
+    }
+
     default:
       return state
   }

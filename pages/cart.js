@@ -22,23 +22,48 @@ import {
   List,
   ListItem,
 } from '@material-ui/core'
+import axios from 'axios'
 
 function CartScreen() {
   // get styles
   const classes = useStyles()
-  // get cartItems state
+  // get cartItems state and dispatch
   const {
     state: {
       cart: { cartItems },
     },
+    dispatch,
   } = useContext(Store)
+
+  // update quantity count in cart
+  const updateProductQuantity = async (item, quantity) => {
+    // get product detail
+    const { data } = await axios.get(`/api/products/${item._id}`)
+
+    // show error if item is out of stock
+    if (data.countInStock < quantity) {
+      window.alert('Sorry. Product is out of stock')
+      return
+    }
+
+    // update cartItems quantity
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } })
+  }
+
+  // remove item from cart
+  const handleRemoveItem = item => {
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: item })
+  }
 
   return (
     <Layout title='Shopping Cart'>
       {/* check whether cartItem is empty or not */}
       {cartItems.length === 0 ? (
         <div className={classes.section}>
-          Cart is empty. <NextLink href='/'>Go shopping</NextLink>
+          Cart is empty.{' '}
+          <NextLink href='/'>
+            <Link>Go shopping</Link>
+          </NextLink>
         </div>
       ) : (
         // main grid
@@ -85,7 +110,11 @@ function CartScreen() {
 
                       {/* product quantity */}
                       <TableCell align='right'>
-                        <Select value={item.quantity}>
+                        <Select
+                          value={item.quantity}
+                          onChange={e =>
+                            updateProductQuantity(item, e.target.value)
+                          }>
                           {[...Array(item.countInStock).keys()].map(x => (
                             <MenuItem key={x + 1} value={x + 1}>
                               {x + 1}
@@ -99,7 +128,10 @@ function CartScreen() {
 
                       {/* remove from cart button */}
                       <TableCell align='right'>
-                        <Button variant='contained' color='secondary'>
+                        <Button
+                          variant='contained'
+                          color='secondary'
+                          onClick={() => handleRemoveItem(item)}>
                           x
                         </Button>
                       </TableCell>
