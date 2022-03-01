@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@material-ui/core': ^4.11.4
   axios: ^0.26.0
+  bcryptjs: ^2.4.3
   eslint: 8.9.0
   eslint-config-next: 12.1.0
   js-cookie: ^2.2.1
@@ -15,6 +16,7 @@ specifiers:
 dependencies:
   '@material-ui/core': 4.12.3_react-dom@17.0.2+react@17.0.2
   axios: 0.26.0
+  bcryptjs: 2.4.3
   js-cookie: 2.2.1
   mongoose: 6.2.3
   next: 12.1.0_react-dom@17.0.2+react@17.0.2
@@ -524,6 +526,10 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    dev: false
+
+  /bcryptjs/2.4.3:
+    resolution: {integrity: sha1-mrVie5PmBiH/fNrF2pczAn3x0Ms=}
     dev: false
 
   /brace-expansion/1.1.11:
