@@ -10,8 +10,11 @@ import NextLink from 'next/link'
 import React from 'react'
 import { Layout } from '../components'
 import { useStyles } from '../utils'
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
+import { Store } from '../config'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
 
 export default function Login() {
   // user email
@@ -20,6 +23,15 @@ export default function Login() {
   const [password, setPassword] = useState('')
   // get styles
   const classes = useStyles()
+  // setup router
+  const router = useRouter()
+  // get redirect from url
+  const { redirect } = router.query
+  // get userInfo and dispatch function froim Store
+  const {
+    state: { userInfo },
+    dispatch,
+  } = useContext(Store)
 
   // handle login
   const handleLogin = async e => {
@@ -30,12 +42,26 @@ export default function Login() {
         email,
         password,
       })
-      alert('login succesful')
+
+      // dispatch user login event
+      dispatch({ type: 'USER_LOGIN', payload: data })
+      // store userInfo in cookies
+      Cookies.set('userInfo', data)
+      // redirect
+      router.push(redirect || '/')
     } catch (err) {
       // show error
-      alert(err.response.data ? err.response.data.message : err.message)
+      // alert(err.response.data ? err.response.data.message : err.message)
+      console.log(err)
     }
   }
+
+  // if user is already logged in redirect to home page
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/')
+    }
+  }, [])
 
   return (
     <Layout title='Login'>

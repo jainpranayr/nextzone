@@ -44,6 +44,11 @@ const useStyles = makeStyles({
     textAlign: 'center',
   },
 
+  username: {
+    color: '#ffffff',
+    textTransform: 'initial',
+  },
+
   // footer
   footer: {
     textAlign: 'center',

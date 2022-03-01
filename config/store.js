@@ -13,6 +13,11 @@ const initialState = {
       ? JSON.parse(Cookies.get('cartItems'))
       : [],
   },
+
+  // set or get userInfo state from Cookies
+  userInfo: Cookies.get('userInfo')
+    ? JSON.parse(Cookies.get('userInfo'))
+    : null,
 }
 
 // setup reducer
@@ -54,6 +59,15 @@ const reducer = (state, action) => {
       // store updated cartItems in Cookies
       Cookies.set('cartItems', JSON.stringify(cartItems))
       return { ...state, cart: { ...state.cart, cartItems } }
+    }
+
+    // login user
+    case 'USER_LOGIN': {
+      return { ...state, userInfo: action.payload }
+    }
+    // logout user
+    case 'USER_LOGOUT': {
+      return { ...state, userInfo: null, cartItems: [] }
     }
 
     default:
