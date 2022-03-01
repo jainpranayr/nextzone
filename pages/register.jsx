@@ -6,50 +6,69 @@ import {
   Button,
   Link,
 } from '@material-ui/core'
-import NextLink from 'next/link'
-import React from 'react'
-import { Layout } from '../components'
-import { useStyles } from '../utils'
-import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import { Store } from '../config'
-import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+import NextLink from 'next/link'
+import { useContext, useEffect, useState } from 'react'
+import { Layout } from '../components'
+import { Store } from '../config'
+import { useStyles } from '../utils'
+import Cookies from 'js-cookie'
 
-export default function Login() {
+export default function Register() {
+  // user name
+  const [name, setName] = useState('')
   // user email
   const [email, setEmail] = useState('')
   // user password
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
-  // get userInfo and dispatch function froim Store
+  // get styles
+  const classes = useStyles()
+
+  // get userInfo from Store
   const {
     state: { userInfo },
     dispatch,
   } = useContext(Store)
-
-  // get styles
-  const classes = useStyles()
 
   // setup router
   const router = useRouter()
   // get redirect from url
   const { redirect } = router.query
 
-  // handle login
-  const handleLogin = async e => {
+  // if user is logged in redirect to homme page
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/')
+    }
+  }, [])
+
+  // register user
+  const handleSubmit = async e => {
     e.preventDefault()
+
+    // check password
+    if (password !== confirmPassword) {
+      alert("passwords don't match")
+      return
+    }
+
     try {
-      // check if user credentials is correct
-      const { data } = await axios.post('/api/users/login', {
+      // post user data
+      const { data } = await axios.post('/api/users/register', {
+        name,
         email,
         password,
       })
 
       // dispatch user login event
       dispatch({ type: 'USER_LOGIN', payload: data })
-      // store userInfo in cookies
+
+      // setup userInfo Cookie
       Cookies.set('userInfo', data)
+
       // redirect
       router.push(redirect || '/')
     } catch (err) {
@@ -58,24 +77,28 @@ export default function Login() {
     }
   }
 
-  // if user is already logged in redirect to home page
-  useEffect(() => {
-    if (userInfo) {
-      router.push('/')
-    }
-  }, [])
-
   return (
-    <Layout title='Login'>
+    <Layout title='Register'>
       <div className={classes.section}>
         {/* login form */}
-        <form className={classes.form} onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit} className={classes.form}>
           <Typography component='h1' variant='h4'>
-            Login
+            Register
           </Typography>
 
           <List>
-            {/* email field */}
+            {/* user name field */}
+            <ListItem>
+              <TextField
+                variant='outlined'
+                fullWidth
+                id='name'
+                label='Name'
+                inputProps={{ type: 'text' }}
+                onChange={e => setName(e.target.value)}></TextField>
+            </ListItem>
+
+            {/* user email field */}
             <ListItem>
               <TextField
                 variant='outlined'
@@ -86,7 +109,7 @@ export default function Login() {
                 onChange={e => setEmail(e.target.value)}></TextField>
             </ListItem>
 
-            {/* password field */}
+            {/* user password field */}
             <ListItem>
               <TextField
                 variant='outlined'
@@ -97,22 +120,33 @@ export default function Login() {
                 onChange={e => setPassword(e.target.value)}></TextField>
             </ListItem>
 
-            {/* login button */}
+            {/* confirm password field */}
+            <ListItem>
+              <TextField
+                variant='outlined'
+                fullWidth
+                id='confirmPassword'
+                label='Confirm Password'
+                inputProps={{ type: 'password' }}
+                onChange={e => setConfirmPassword(e.target.value)}></TextField>
+            </ListItem>
+
+            {/* Register button */}
             <ListItem>
               <Button
                 variant='contained'
                 type='submit'
                 fullWidth
                 color='primary'>
-                Login
+                Register
               </Button>
             </ListItem>
 
-            {/* register link */}
+            {/* login page link */}
             <ListItem>
-              Don't have an account? &nbsp;
-              <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
-                <Link>Register</Link>
+              Already have an account? &nbsp;
+              <NextLink href={`/login?redirect=${redirect || '/'}`} passHref>
+                <Link>Login</Link>
               </NextLink>
             </ListItem>
           </List>
