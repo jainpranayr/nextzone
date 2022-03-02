@@ -84,7 +84,7 @@ export default function Layout({ title, description, children }) {
     <div>
       {/* Dynamic title of page */}
       <Head>
-        <title>{title ? `${title} - Next Shop` : 'Next Shop'}</title>
+        <title>{title ? `${title} - nextshop` : 'nextshop'}</title>
         {description && <meta name='description' content={description}></meta>}
       </Head>
 
@@ -97,7 +97,7 @@ export default function Layout({ title, description, children }) {
           <Toolbar>
             <NextLink href='/' passHref>
               <Link underline='none'>
-                <Typography className={classes.logo}>nextshop</Typography>
+                <Typography className={classes.logo}>nextzone</Typography>
               </Link>
             </NextLink>
 
@@ -161,7 +161,7 @@ export default function Layout({ title, description, children }) {
 
         {/* Footer */}
         <footer className={classes.footer}>
-          <Typography>All rights reserved. Next Shop.</Typography>
+          <Typography>All rights reserved. nextshop.</Typography>
         </footer>
       </ThemeProvider>
     </div>
