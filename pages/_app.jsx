@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { StoreProvider } from '../config'
+import { SnackbarProvider } from 'notistack'
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -11,10 +12,13 @@ function MyApp({ Component, pageProps }) {
   }, [])
 
   return (
-    // wrap component in provider
-    <StoreProvider>
-      <Component {...pageProps} />
-    </StoreProvider>
+    // wrap in Snackbar Provider
+    <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+      {/* wrap component in Store provider */}
+      <StoreProvider>
+        <Component {...pageProps} />
+      </StoreProvider>
+    </SnackbarProvider>
   )
 }
 

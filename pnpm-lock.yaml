@@ -11,8 +11,10 @@ specifiers:
   mongoose: ^6.2.3
   next: 12.1.0
   next-connect: ^0.12.2
+  notistack: ^1.0.9
   react: 17.0.2
   react-dom: 17.0.2
+  react-hook-form: ^7.11.0
 
 dependencies:
   '@material-ui/core': 4.12.3_react-dom@17.0.2+react@17.0.2
@@ -23,8 +25,10 @@ dependencies:
   mongoose: 6.2.3
   next: 12.1.0_react-dom@17.0.2+react@17.0.2
   next-connect: 0.12.2
+  notistack: 1.0.10_fced322086cd04afb0b6feec9e866920
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-hook-form: 7.27.1_react@17.0.2
 
 devDependencies:
   eslint: 8.9.0
@@ -1692,6 +1696,20 @@ packages:
       - babel-plugin-macros
     dev: false
 
+  /notistack/1.0.10_fced322086cd04afb0b6feec9e866920:
+    resolution: {integrity: sha512-z0y4jJaVtOoH3kc3GtNUlhNTY+5LE04QDeLVujX3VPhhzg67zw055mZjrBF+nzpv3V9aiPNph1EgRU4+t8kQTQ==}
+    peerDependencies:
+      '@material-ui/core': ^4.0.0
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+    dependencies:
+      '@material-ui/core': 4.12.3_react-dom@17.0.2+react@17.0.2
+      clsx: 1.1.1
+      hoist-non-react-statics: 3.3.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
   /object-assign/4.1.1:
     resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
     engines: {node: '>=0.10.0'}
@@ -1868,6 +1886,15 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
+    dev: false
+
+  /react-hook-form/7.27.1_react@17.0.2:
+    resolution: {integrity: sha512-N3a7A6zIQ8DJeThisVZGtOUabTbJw+7DHJidmB9w8m3chckv2ZWKb5MHps9d2pPJqmCDoWe53Bos56bYmJms5w==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17
+    dependencies:
+      react: 17.0.2
     dev: false
 
   /react-is/16.13.1:
