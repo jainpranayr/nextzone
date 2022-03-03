@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Store } from '../config'
 
 export default function Shipping() {
