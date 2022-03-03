@@ -12,9 +12,11 @@ export default function Shipping() {
   } = useContext(Store)
 
   // if user not logged in redirect to login with redirect set to shippping
-  if (!userInfo) {
-    router.push('/login?redirect=/shipping')
-  }
+  useEffect(() => {
+    if (!userInfo) {
+      router.push('/login?redirect=/shipping')
+    }
+  }, [userInfo, router])
 
   return <div>Shipping</div>
 }
