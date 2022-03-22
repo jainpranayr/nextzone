@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { CheckoutWizard, Layout } from '../components'
-import { Store } from '../config'
-import { useContext, useEffect } from 'react'
+import { getError, Store } from '../config'
+import { useContext, useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -20,26 +20,29 @@ import {
   Card,
   List,
   ListItem,
+  CircularProgress,
 } from '@material-ui/core'
+import { useSnackbar } from 'notistack'
+import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const PlaceOrder = () => {
   // get styles
   const classes = useStyles()
   //   setup router
   const router = useRouter()
+  // setup snackbar
+  const { closeSnackbar, enqueueSnackbar } = useSnackbar()
+  // setup loading state
+  const [loading, setLoading] = useState(false)
   //   get required states from context
   const {
     state: {
+      userInfo,
       cart: { cartItems, shippingAddress, paymentMethod },
     },
+    dispatch,
   } = useContext(Store)
-
-  //   if payment method not selected redirect to payment page
-  useEffect(() => {
-    if (!paymentMethod) {
-      router.push('/payment')
-    }
-  }, [])
 
   //   123.456 => 123.46
   const round2 = num => Math.round(num * 100 + Number.EPSILON) / 100
@@ -53,6 +56,54 @@ const PlaceOrder = () => {
   const taxPrice = round2(itemsPrice * 0.18)
   //   calculate total cost
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice)
+
+  // post order to db
+  const handlePlaceOrder = async () => {
+    closeSnackbar()
+    try {
+      setLoading(true)
+
+      // post data
+      const { data } = await axios.post(
+        '/api/orders',
+        {
+          orderItems: cartItems,
+          shippingAddress,
+          paymentMethod,
+          itemsPrice,
+          shippingPrice,
+          taxPrice,
+          totalPrice,
+        },
+        // auth headers
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      )
+
+      // clear cart
+      dispatch({ type: 'CART_CLEAR' })
+      Cookies.remove('cartItems')
+
+      setLoading(false)
+
+      // redirect user to order page
+      router.push(`/order/${data._id}`)
+    } catch (err) {
+      setLoading(false)
+      // show error as snackbar
+      enqueueSnackbar(getError(err), { variant: 'error' })
+    }
+  }
+
+  //   if payment method not selected redirect to payment page
+  useEffect(() => {
+    if (!paymentMethod) {
+      router.push('/payment')
+    }
+  }, [])
 
   return (
     <Layout title='Shopping Cart'>
@@ -193,10 +244,19 @@ const PlaceOrder = () => {
                 </Grid>
               </ListItem>
               <ListItem>
-                <Button variant='contained' color='primary' fullWidth>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  fullWidth
+                  onClick={handlePlaceOrder}>
                   Place Order
                 </Button>
               </ListItem>
+              {loading && (
+                <ListItem>
+                  <CircularProgress />
+                </ListItem>
+              )}
             </List>
           </Card>
         </Grid>

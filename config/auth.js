@@ -17,4 +17,25 @@ const signToken = user => {
   )
 }
 
-export { signToken }
+// verfify if user is authorized
+const isAuth = async (req, res, next) => {
+  // get auth headers
+  const { authorization } = req.headers
+  if (authorization) {
+    // get Bearer token
+    const token = authorization.slice(7, authorization.length)
+    // validate Bearer token
+    jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
+      if (err) {
+        res.status(401).send({ message: 'Token is not valid' })
+      } else {
+        req.user = decode
+        next()
+      }
+    })
+  } else {
+    res.status(401).send({ message: 'Token is not suppiled' })
+  }
+}
+
+export { signToken, isAuth }
