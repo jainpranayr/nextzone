@@ -66,12 +66,19 @@ const reducer = (state, action) => {
       return { ...state, cart: { ...state.cart, cartItems } }
     }
     // save user address
-    case 'SAVE_SHIPPING_ADDRESS':
+    case 'SAVE_SHIPPING_ADDRESS': {
       return {
         ...state,
         cart: { ...state.cart, shippingAddress: action.payload },
       }
-
+    }
+    // save payment method
+    case 'SAVE_PAYMENT_METHOD': {
+      return {
+        ...state,
+        cart: { ...state.cart, paymentMethod: action.payload },
+      }
+    }
     // login user
     case 'USER_LOGIN': {
       return { ...state, userInfo: action.payload }
