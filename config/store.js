@@ -83,13 +83,21 @@ const reducer = (state, action) => {
         cart: { ...state.cart, paymentMethod: action.payload },
       }
     }
+    // clear cart
+    case 'CLEAR_CART': {
+      return { ...state, cart: { ...state.cart, cartItems: [] } }
+    }
     // login user
     case 'USER_LOGIN': {
       return { ...state, userInfo: action.payload }
     }
     // logout user
     case 'USER_LOGOUT': {
-      return { ...state, userInfo: null, cartItems: [] }
+      return {
+        ...state,
+        userInfo: null,
+        cart: { cartItems: [], shippingAddress: {}, paymentMethod: '' },
+      }
     }
 
     default:

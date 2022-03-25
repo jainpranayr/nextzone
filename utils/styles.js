@@ -13,6 +13,9 @@ const useStyles = makeStyles({
     fontSize: '2rem',
     fontWeight: 800,
   },
+  error: {
+    color: '#f04040',
+  },
 
   // navbar
   logo: {
