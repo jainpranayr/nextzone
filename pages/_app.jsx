@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { StoreProvider } from '../config'
 import { SnackbarProvider } from 'notistack'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -16,7 +17,10 @@ function MyApp({ Component, pageProps }) {
     <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
       {/* wrap component in Store provider */}
       <StoreProvider>
-        <Component {...pageProps} />
+        {/* wrap component in paypal provider */}
+        <PayPalScriptProvider>
+          <Component {...pageProps} />
+        </PayPalScriptProvider>
       </StoreProvider>
     </SnackbarProvider>
   )

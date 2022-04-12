@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@material-ui/core': ^4.11.4
+  '@paypal/react-paypal-js': ^7.6.0
   axios: ^0.26.0
   bcryptjs: ^2.4.3
   eslint: 8.9.0
@@ -18,6 +19,7 @@ specifiers:
 
 dependencies:
   '@material-ui/core': 4.12.3_react-dom@17.0.2+react@17.0.2
+  '@paypal/react-paypal-js': 7.6.0_react-dom@17.0.2+react@17.0.2
   axios: 0.26.0
   bcryptjs: 2.4.3
   js-cookie: 2.2.1
@@ -318,6 +320,30 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
     dev: true
+
+  /@paypal/paypal-js/5.0.4:
+    resolution: {integrity: sha512-g7kGQpoy/ti1oHDqo65D765gyOXf/VaqtN6Qu0W/L6LBnENn5l5CudrQfAwdoLD/D9xKLGfaTPvXbZDzumIfRA==}
+    dependencies:
+      promise-polyfill: 8.2.3
+    dev: false
+
+  /@paypal/react-paypal-js/7.6.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-GPaFXOVEh2bCNKOmLmArxWoBM6gfzoP41HfDdEr58geJi+t32/FtVKdaoxymE6f3oStaobt6KDdzxPpKuNeisQ==}
+    peerDependencies:
+      react: '>=16.3.0'
+      react-dom: '>=16.3.0'
+    dependencies:
+      '@paypal/paypal-js': 5.0.4
+      '@paypal/sdk-constants': 1.0.118
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
+  /@paypal/sdk-constants/1.0.118:
+    resolution: {integrity: sha512-vpvAz0L0/Bia/0wT8dDcieZFTcc0jqlQCPY8Qq5E2Sk7J0/klW42Xthp4cUXmR72OH7xRjjqIKDPz9TKlD/8hQ==}
+    dependencies:
+      hi-base32: 0.5.1
+    dev: false
 
   /@rushstack/eslint-patch/1.1.0:
     resolution: {integrity: sha512-JLo+Y592QzIE+q7Dl2pMUtt4q8SKYI5jDrZxrozEQxnGVOyYE+GWK9eLkwTaeN9DDctlaRAQ3TBmzZ1qdLE30A==}
@@ -1185,6 +1211,10 @@ packages:
       function-bind: 1.1.1
     dev: true
 
+  /hi-base32/0.5.1:
+    resolution: {integrity: sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA==}
+    dev: false
+
   /hoist-non-react-statics/3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
     dependencies:
@@ -1861,6 +1891,10 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
     dev: true
+
+  /promise-polyfill/8.2.3:
+    resolution: {integrity: sha512-Og0+jCRQetV84U8wVjMNccfGCnMQ9mGs9Hv78QFe+pSDD3gWTpz0y+1QCuxy5d/vBFuZ3iwP2eycAkvqIMPmWg==}
+    dev: false
 
   /prop-types/15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
