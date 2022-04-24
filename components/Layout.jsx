@@ -22,9 +22,11 @@ import {
   ListItem,
   Divider,
   ListItemText,
+  InputBase,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import CancelIcon from '@material-ui/icons/Cancel'
+import SearchIcon from '@material-ui/icons/Search'
 import { useStyles } from '../utils'
 import { useContext, useState, useEffect } from 'react'
 import { Store, getError } from '../config'
@@ -114,6 +116,17 @@ export default function Layout({ title, description, children }) {
     }
   }
 
+  const [query, setQuery] = useState('')
+
+  const handleQueryChange = e => {
+    setQuery(e.target.value)
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    router.push(`/search?query=${query}`)
+  }
+
   useEffect(() => {
     fetchCategories()
   }, [])
@@ -137,7 +150,8 @@ export default function Layout({ title, description, children }) {
               <IconButton
                 edge='start'
                 aria-label='open drawer'
-                onClick={handleOpenSidebar}>
+                onClick={handleOpenSidebar}
+                className={classes.menuButton}>
                 <MenuIcon className={classes.navbarButton} />
               </IconButton>
               <NextLink href='/' passHref>
@@ -176,7 +190,22 @@ export default function Layout({ title, description, children }) {
               </List>
             </Drawer>
 
-            <div className={classes.grow}></div>
+            <div className={classes.searchSection}>
+              <form onSubmit={handleSubmit} className={classes.searchForm}>
+                <InputBase
+                  name='query'
+                  className={classes.searchInput}
+                  placeholder='Search products'
+                  onChange={handleQueryChange}
+                />
+                <IconButton
+                  type='submit'
+                  className={classes.iconButton}
+                  aria-label='search'>
+                  <SearchIcon />
+                </IconButton>
+              </form>
+            </div>
 
             {/* dark/light mode toggle */}
             <Switch checked={darkMode} onChange={handleDarkMode}></Switch>
