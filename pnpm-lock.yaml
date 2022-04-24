@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@material-ui/core': ^4.11.4
+  '@material-ui/icons': ^4.11.2
   '@material-ui/lab': ^4.0.0-alpha.60
   '@paypal/react-paypal-js': ^7.6.0
   axios: ^0.26.0
@@ -20,6 +21,7 @@ specifiers:
 
 dependencies:
   '@material-ui/core': 4.12.3_react-dom@17.0.2+react@17.0.2
+  '@material-ui/icons': 4.11.3_fced322086cd04afb0b6feec9e866920
   '@material-ui/lab': 4.0.0-alpha.61_fced322086cd04afb0b6feec9e866920
   '@paypal/react-paypal-js': 7.6.0_react-dom@17.0.2+react@17.0.2
   axios: 0.26.0
@@ -116,6 +118,24 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-is: 16.13.1
       react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
+    dev: false
+
+  /@material-ui/icons/4.11.3_fced322086cd04afb0b6feec9e866920:
+    resolution: {integrity: sha512-IKHlyx6LDh8n19vzwH5RtHIOHl9Tu90aAAxcbWME6kp4dmvODM3UvOHJeMIDzUbd4muuJKHmlNoBN+mDY4XkBA==}
+    engines: {node: '>=8.0.0'}
+    peerDependencies:
+      '@material-ui/core': ^4.0.0
+      '@types/react': ^16.8.6 || ^17.0.0
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.17.2
+      '@material-ui/core': 4.12.3_react-dom@17.0.2+react@17.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /@material-ui/lab/4.0.0-alpha.61_fced322086cd04afb0b6feec9e866920:

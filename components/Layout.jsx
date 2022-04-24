@@ -15,12 +15,23 @@ import {
   Button,
   Menu,
   MenuItem,
+  Box,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
 } from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
+import CancelIcon from '@material-ui/icons/Cancel'
 import { useStyles } from '../utils'
-import { useContext, useState } from 'react'
-import { Store } from '../config'
+import { useContext, useState, useEffect } from 'react'
+import { Store, getError } from '../config'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
+import axios from 'axios'
 
 export default function Layout({ title, description, children }) {
   // login Menu state
@@ -82,6 +93,31 @@ export default function Layout({ title, description, children }) {
     },
   })
 
+  const [sidbarVisible, setSidebarVisible] = useState(false)
+
+  const handleOpenSidebar = () => {
+    setSidebarVisible(true)
+  }
+  const handleCloseSidebar = () => {
+    setSidebarVisible(false)
+  }
+
+  const [categories, setCategories] = useState([])
+  const { enqueueSnackbar } = useSnackbar()
+
+  const fetchCategories = async () => {
+    try {
+      const { data } = await axios.get(`/api/products/categories`)
+      setCategories(data)
+    } catch (err) {
+      enqueueSnackbar(getError(err), { variant: 'error' })
+    }
+  }
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
+
   return (
     <div>
       {/* Dynamic title of page */}
@@ -96,12 +132,49 @@ export default function Layout({ title, description, children }) {
         <CssBaseline />
         {/* Navbar */}
         <AppBar position='static' className={classes.navbar}>
-          <Toolbar>
-            <NextLink href='/' passHref>
-              <Link underline='none'>
-                <Typography className={classes.logo}>nextzone</Typography>
-              </Link>
-            </NextLink>
+          <Toolbar className={classes.toolbar}>
+            <Box display='flex' alignItems='center'>
+              <IconButton
+                edge='start'
+                aria-label='open drawer'
+                onClick={handleOpenSidebar}>
+                <MenuIcon className={classes.navbarButton} />
+              </IconButton>
+              <NextLink href='/' passHref>
+                <Link underline='none'>
+                  <Typography className={classes.logo}>nextzone</Typography>
+                </Link>
+              </NextLink>
+            </Box>
+            <Drawer
+              anchor='left'
+              open={sidbarVisible}
+              onClose={handleCloseSidebar}>
+              <List>
+                <ListItem>
+                  <Box
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='space-between'>
+                    <Typography>Shopping by category</Typography>
+                    <IconButton aria-label='close' onClick={handleCloseSidebar}>
+                      <CancelIcon />
+                    </IconButton>
+                  </Box>
+                </ListItem>
+                <Divider light />
+                {categories.map(category => (
+                  <NextLink
+                    key={category}
+                    href={`/search?category=${category}`}
+                    passHref>
+                    <ListItem button component='a' onClick={handleCloseSidebar}>
+                      <ListItemText primary={category}></ListItemText>
+                    </ListItem>
+                  </NextLink>
+                ))}
+              </List>
+            </Drawer>
 
             <div className={classes.grow}></div>
 
@@ -114,13 +187,15 @@ export default function Layout({ title, description, children }) {
               <NextLink href='/cart' passHref>
                 <Link>
                   {/* Add to cart badge */}
-                  {cartItems.length > 0 ? (
-                    <Badge color='secondary' badgeContent={cartItems.length}>
-                      Cart
-                    </Badge>
-                  ) : (
-                    'Cart'
-                  )}
+                  <Typography component='span'>
+                    {cartItems.length > 0 ? (
+                      <Badge color='secondary' badgeContent={cartItems.length}>
+                        Cart
+                      </Badge>
+                    ) : (
+                      'Cart'
+                    )}
+                  </Typography>
                 </Link>
               </NextLink>
 
@@ -155,7 +230,9 @@ export default function Layout({ title, description, children }) {
               ) : (
                 // login link
                 <NextLink href='/login' passHref>
-                  <Link>Login</Link>
+                  <Link>
+                    <Typography component='span'>Login</Typography>
+                  </Link>
                 </NextLink>
               )}
             </div>
