@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import NextLink from 'next/link'
 import { useContext, useEffect } from 'react'
 import { Layout } from '../components'
-import { Store } from '../config'
+import { getError, Store } from '../config'
 import { useStyles } from '../utils'
 import Cookies from 'js-cookie'
 import { Controller, useForm } from 'react-hook-form'
@@ -75,10 +75,7 @@ export default function Register() {
       router.push(redirect || '/')
     } catch (err) {
       // show error
-      enqueueSnackbar(
-        err.response.data ? err.response.data.message : err.message,
-        { variant: 'error' }
-      )
+      enqueueSnackbar(getError(err), { variant: 'error' })
     }
   }
 

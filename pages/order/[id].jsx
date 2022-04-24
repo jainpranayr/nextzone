@@ -1,5 +1,6 @@
 import { useContext, useEffect, useReducer } from 'react'
 import dynamic from 'next/dynamic'
+import { Layout } from '../../components'
 import { Store, getError } from '../../config'
 import NextLink from 'next/link'
 import Image from 'next/image'

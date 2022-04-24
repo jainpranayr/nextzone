@@ -12,7 +12,7 @@ import { Layout } from '../components'
 import { useStyles } from '../utils'
 import { useEffect, useContext } from 'react'
 import axios from 'axios'
-import { Store } from '../config'
+import { getError, Store } from '../config'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
@@ -58,10 +58,7 @@ export default function Login() {
       router.push(redirect || '/')
     } catch (err) {
       // show error
-      enqueueSnackbar(
-        err.response.data ? err.response.data.message : err.message,
-        { variant: 'error' }
-      )
+      enqueueSnackbar(getError(err), { variant: 'error' })
     }
   }
 

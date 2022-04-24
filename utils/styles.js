@@ -43,6 +43,7 @@ const useStyles = makeStyles({
   // form
   form: {
     maxWidth: 600,
+    minWidth: '100%',
     margin: '0 auto',
     textAlign: 'center',
   },
