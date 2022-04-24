@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import Head from 'next/head'
 import NextLink from 'next/link'
 import {
@@ -51,8 +52,9 @@ export default function Layout({ title, description, children }) {
     setLoginMenuToggle(e.currentTarget)
   }
   // close login menu
-  const closeLoginMenu = e => {
+  const closeLoginMenu = redirect => {
     setLoginMenuToggle(null)
+    if (redirect) router.push(redirect)
   }
   // handle Logout
   const handleLogOut = () => {
@@ -141,8 +143,12 @@ export default function Layout({ title, description, children }) {
                     keepMounted
                     open={Boolean(loginMenuToggle)}
                     onClose={closeLoginMenu}>
-                    <MenuItem onClick={closeLoginMenu}>Profile</MenuItem>
-                    <MenuItem onClick={closeLoginMenu}>My account</MenuItem>
+                    <MenuItem onClick={() => closeLoginMenu('/profile')}>
+                      Profile
+                    </MenuItem>
+                    <MenuItem onClick={() => closeLoginMenu('/order-history')}>
+                      My account
+                    </MenuItem>
                     <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                   </Menu>
                 </>

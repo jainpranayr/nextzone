@@ -1,6 +1,5 @@
 import { useContext, useEffect, useReducer } from 'react'
 import dynamic from 'next/dynamic'
-import { Layout, CheckoutWizard } from '../../components'
 import { Store, getError } from '../../config'
 import NextLink from 'next/link'
 import Image from 'next/image'
@@ -177,7 +176,7 @@ function Order({ params }) {
 
   return (
     <Layout title={`Order ${orderId}`}>
-      <CheckoutWizard activeStep={3}></CheckoutWizard>
+      {/* <CheckoutWizard activeStep={3}></CheckoutWizard> */}
       <Typography component='h1' variant='h4'>
         Order {orderId}
       </Typography>
