@@ -1,16 +1,5 @@
-import { Layout } from '../components'
-import NextLink from 'next/link'
-import {
-  Grid,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-} from '@material-ui/core'
-import Rating from '@material-ui/lab/Rating'
+import { Layout, SingleProduct } from '../components'
+import { Grid } from '@material-ui/core'
 import { db } from '../config'
 import { Product } from '../models'
 import axios from 'axios'
@@ -56,35 +45,10 @@ export default function Home({ products }) {
           {products.map(product => (
             // single product grid
             <Grid item md={4} key={product.name}>
-              {/* product card */}
-              <Card>
-                {/* route to product page */}
-                <NextLink href={`/product/${product.slug}`} passHref>
-                  {/* Clickable content on card */}
-                  <CardActionArea>
-                    <CardMedia
-                      component='img'
-                      image={product.image}
-                      title={product.name}></CardMedia>
-                    <CardContent>
-                      <Typography>{product.name}</Typography>
-                      <Rating value={product.rating} readOnly></Rating>
-                    </CardContent>
-                  </CardActionArea>
-                </NextLink>
-
-                {/* buttons and price */}
-                <CardActions>
-                  <Typography>${product.price}</Typography>
-                  <Button
-                    variant='outlined'
-                    size='small'
-                    color='primary'
-                    onClick={() => handleAddToCart(product)}>
-                    Add to cart
-                  </Button>
-                </CardActions>
-              </Card>
+              <SingleProduct
+                product={product}
+                handleAddToCart={handleAddToCart}
+              />
             </Grid>
           ))}
         </Grid>
