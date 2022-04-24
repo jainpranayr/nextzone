@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import reviewSchema from './reviews'
 
 // schema
 const productSchema = new mongoose.Schema(
@@ -13,6 +14,7 @@ const productSchema = new mongoose.Schema(
     numReviews: { type: Number, required: true, default: 0 },
     countInStock: { type: Number, required: true, default: 0 },
     description: { type: String, required: true },
+    reviews: [reviewSchema],
   },
   { timestamps: true }
 )

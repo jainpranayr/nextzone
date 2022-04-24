@@ -10,6 +10,7 @@ import {
   CardActions,
   Button,
 } from '@material-ui/core'
+import Rating from '@material-ui/lab/Rating'
 import { db } from '../config'
 import { Product } from '../models'
 import axios from 'axios'
@@ -67,6 +68,7 @@ export default function Home({ products }) {
                       title={product.name}></CardMedia>
                     <CardContent>
                       <Typography>{product.name}</Typography>
+                      <Rating value={product.rating} readOnly></Rating>
                     </CardContent>
                   </CardActionArea>
                 </NextLink>
@@ -96,7 +98,7 @@ export async function getServerSideProps() {
   // connect to database
   await db.connect()
   // get products and convert it to js object
-  const products = await Product.find({}).lean()
+  const products = await Product.find({}, '-reviews').lean()
   // disconect from database
   await db.disconnect()
 
