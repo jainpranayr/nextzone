@@ -86,6 +86,7 @@ export default function ProductScreen({ product }) {
       )
       setLoading(false)
       enqueueSnackbar('Review submitted successfully', { variant: 'success' })
+      setComment('')
       fetchReviews()
     } catch (err) {
       setLoading(false)
