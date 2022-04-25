@@ -261,7 +261,7 @@ export default function ProductScreen({ product }) {
               </List>
             </form>
           ) : (
-            <Typography variant='h2'>
+            <Typography variant='h6'>
               Please{' '}
               <Link href={`/login?redirect=/product/${product.slug}`}>
                 login
