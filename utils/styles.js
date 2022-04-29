@@ -29,6 +29,9 @@ const useStyles = makeStyles(theme => ({
       marginLeft: 10,
     },
   },
+  toolbar: {
+    justifyContent: 'space-between',
+  },
 
   // main content
   main: {
@@ -47,12 +50,12 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     textAlign: 'center',
   },
-
   username: {
     color: '#ffffff',
     textTransform: 'initial',
   },
 
+  // reviews
   reviewForm: {
     maxWidth: 800,
     width: '100%',
@@ -61,14 +64,6 @@ const useStyles = makeStyles(theme => ({
     marginRight: '1rem',
     borderRight: '1px #808080 solid',
     paddingRight: '1rem',
-  },
-  toolbar: {
-    justifyContent: 'space-between',
-  },
-
-  // footer
-  footer: {
-    textAlign: 'center',
   },
 
   menuButton: { padding: 0 },
@@ -101,8 +96,14 @@ const useStyles = makeStyles(theme => ({
     },
   },
 
+  // filter
   sort: {
     marginRight: 5,
+  },
+
+  // footer
+  footer: {
+    textAlign: 'center',
   },
 }))
 
