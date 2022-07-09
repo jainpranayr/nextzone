@@ -147,7 +147,7 @@ export default function ProductScreen({ product }) {
             <ListItem>
               <Rating value={product.rating} readOnly></Rating>
               <Link href='#reviews'>
-                <Typography>({product.numReviews} reviews)</Typography>
+                <Typography>({reviews.length} reviews)</Typography>
               </Link>
             </ListItem>
             <ListItem>
