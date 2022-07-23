@@ -39,7 +39,7 @@ export default function Home({ products }) {
   return (
     <Layout>
       <div>
-        <h1>Products</h1>
+        <h1 className='text-3xl font-semibold text-gray-800 m-2'>Products</h1>
         {/* main products grid */}
         <Grid container spacing={3}>
           {products.map(product => (
