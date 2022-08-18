@@ -76,7 +76,6 @@ function Order({ params }) {
 
   const {
     shippingAddress,
-    paymentMethod,
     orderItems,
     itemsPrice,
     taxPrice,
@@ -210,12 +209,6 @@ function Order({ params }) {
             </Card>
             <Card className={classes.section}>
               <List>
-                <ListItem>
-                  <Typography component='h2' variant='h6'>
-                    Payment Method
-                  </Typography>
-                </ListItem>
-                <ListItem>{paymentMethod}</ListItem>
                 <ListItem>
                   Status: {isPaid ? `paid at ${paidAt}` : 'not paid'}
                 </ListItem>

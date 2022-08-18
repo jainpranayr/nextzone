@@ -39,7 +39,7 @@ const PlaceOrder = () => {
   const {
     state: {
       userInfo,
-      cart: { cartItems, shippingAddress, paymentMethod },
+      cart: { cartItems, shippingAddress },
     },
     dispatch,
   } = useContext(Store)
@@ -69,7 +69,6 @@ const PlaceOrder = () => {
         {
           orderItems: cartItems,
           shippingAddress,
-          paymentMethod,
           itemsPrice,
           shippingPrice,
           taxPrice,
@@ -98,13 +97,6 @@ const PlaceOrder = () => {
     }
   }
 
-  //   if payment method not selected redirect to payment page
-  useEffect(() => {
-    if (!paymentMethod) {
-      router.push('/payment')
-    }
-  }, [])
-
   return (
     <Layout title='Shopping Cart'>
       <CheckoutWizard activeStep={3}></CheckoutWizard>
@@ -126,16 +118,6 @@ const PlaceOrder = () => {
                 {shippingAddress.city}, {shippingAddress.postalCode},{' '}
                 {shippingAddress.country}
               </ListItem>
-            </List>
-          </Card>
-          <Card className={classes.section}>
-            <List>
-              <ListItem>
-                <Typography component='h2' variant='h6'>
-                  Payment Method
-                </Typography>
-              </ListItem>
-              <ListItem>{paymentMethod}</ListItem>
             </List>
           </Card>
           <Card className={classes.section}>

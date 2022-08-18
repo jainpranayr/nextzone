@@ -69,8 +69,8 @@ export default function Shipping() {
       country,
     })
 
-    // redirect user to payment page
-    router.push('/payment')
+    // redirect user to placeorder page
+    router.push('/placeorder')
   }
 
   return (
