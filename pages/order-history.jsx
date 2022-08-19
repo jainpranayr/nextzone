@@ -19,7 +19,7 @@ import {
   Button,
   ListItemText,
 } from '@material-ui/core'
-import { Store, getaError } from '/config'
+import { Store, getError } from '/config'
 import { Layout } from '/components'
 import { useStyles } from '/utils'
 
@@ -52,6 +52,7 @@ function OrderHistory() {
     if (!userInfo) {
       router.push('/login')
     }
+
     const fetchOrders = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' })
@@ -63,8 +64,9 @@ function OrderHistory() {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) })
       }
     }
+
     fetchOrders()
-  }, [])
+  }, [router, userInfo])
   return (
     <Layout title='Order History'>
       <Grid container spacing={1}>

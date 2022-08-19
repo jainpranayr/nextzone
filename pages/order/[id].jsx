@@ -88,7 +88,7 @@ function Order({ params }) {
   } = order
 
   // get req. values from snackbar
-  const { closeSnackbar, enqueueSnackbar } = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
     // if user not authenticated redirect to login page
@@ -133,7 +133,7 @@ function Order({ params }) {
 
       loadPaypalScript()
     }
-  }, [order, successPay])
+  }, [order, orderId, paypalDispatch, router, successPay, userInfo])
 
   // setup payment functions for paypal
   function createOrder(data, actions) {

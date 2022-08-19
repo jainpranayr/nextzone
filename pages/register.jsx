@@ -45,7 +45,7 @@ export default function Register() {
     if (userInfo) {
       router.push('/')
     }
-  }, [])
+  }, [router, userInfo])
 
   // register user
   const registerUser = async ({ name, email, password, confirmPassword }) => {

@@ -67,7 +67,7 @@ export default function Login() {
     if (userInfo) {
       router.push('/')
     }
-  }, [])
+  }, [router, userInfo])
 
   return (
     <Layout title='Login'>
@@ -150,7 +150,7 @@ export default function Login() {
 
             {/* register link */}
             <ListItem>
-              Don't have an account? &nbsp;
+              Don&apos;t have an account? &nbsp;
               <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
                 <Link>Register</Link>
               </NextLink>

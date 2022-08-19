@@ -47,7 +47,7 @@ export default function Shipping() {
     setValue('city', shippingAddress.city)
     setValue('postalCode', shippingAddress.postalCode)
     setValue('country', shippingAddress.country)
-  }, [userInfo, router])
+  }, [userInfo, router, setValue, shippingAddress])
 
   // get styles
   const classes = useStyles()

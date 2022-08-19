@@ -44,11 +44,6 @@ export default function ProductScreen({ product }) {
     dispatch,
   } = useContext(Store)
 
-  // if product not found
-  if (!product) {
-    return <div>Product Not Found</div>
-  }
-
   // handle Add to Cart
   const handleAddToCart = async () => {
     // check if item is in stock
@@ -68,6 +63,15 @@ export default function ProductScreen({ product }) {
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
     // redirect to /cart
     router.push('/cart')
+  }
+
+  const fetchReviews = async () => {
+    try {
+      const { data } = await axios.get(`/api/products/${product._id}/reviews`)
+      setReviews(data)
+    } catch (err) {
+      enqueueSnackbar(getError(err), { variant: 'error' })
+    }
   }
 
   const submitHandler = async e => {
@@ -94,17 +98,16 @@ export default function ProductScreen({ product }) {
     }
   }
 
-  const fetchReviews = async () => {
-    try {
-      const { data } = await axios.get(`/api/products/${product._id}/reviews`)
-      setReviews(data)
-    } catch (err) {
-      enqueueSnackbar(getError(err), { variant: 'error' })
-    }
-  }
   useEffect(() => {
     fetchReviews()
-  }, [])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enqueueSnackbar, product])
+
+  // if product not found
+  if (!product) {
+    return <div>Product Not Found</div>
+  }
 
   // if product found
   return (

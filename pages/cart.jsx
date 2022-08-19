@@ -69,7 +69,7 @@ function Cart() {
       {cartItems.length === 0 ? (
         <div className={classes.section}>
           Cart is empty.{' '}
-          <NextLink href='/'>
+          <NextLink href='/' passHref>
             <Link>Go shopping</Link>
           </NextLink>
         </div>
