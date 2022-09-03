@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
   error: {
     color: '#f04040',
   },
+  mt1: {
+    marginTop: '1rem'
+  },
 
   // navbar
   logo: {
