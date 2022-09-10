@@ -176,7 +176,6 @@ function Order({ params }) {
 
   return (
     <Layout title={`Order ${orderId}`}>
-      {/* <CheckoutWizard activeStep={3}></CheckoutWizard> */}
       <Typography component='h1' variant='h4'>
         Order {orderId}
       </Typography>
