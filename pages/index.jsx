@@ -2,12 +2,14 @@ import { Layout, SingleProduct } from '../components'
 import { Grid } from '@material-ui/core'
 import { db } from '../config'
 import { Product } from '../models'
+import Hero from '../components/Hero'
 
 
 export default function Home({ products }) {
 	return (
 		<Layout>
 			<div>
+				<Hero />
 				<h1 className='text-3xl my-2'>Products</h1>
 				{/* main products grid */}
 				<Grid container spacing={3}>

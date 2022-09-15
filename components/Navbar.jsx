@@ -49,10 +49,10 @@ const Navbar = () => {
 		router.push(`/search?query=${query}`)
 	}
 	return (
-		<Disclosure as='nav' className='bg-gray-800'>
+		<Disclosure as='nav' className='bg-slate-900 backdrop-filter backdrop-blur-lg bg-opacity-90 sticky top-0 z-50'>
 			{({ open }) => (
 				<>
-					<div className='max-w-7xl mx-auto px-2 sm:px-4 lg:px-8'>
+					<div className='max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 border-b-2 border-slate-700'>
 						<div className='relative flex h-20 lg:gap-x-4 justify-between items-center'>
 							<div className='hidden lg:flex px-2 lg:px-0'>
 								<div className='flex-shrink-0 flex items-center cursor-pointer'>

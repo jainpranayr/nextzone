@@ -1,9 +1,5 @@
 import Head from 'next/head'
-import {
-	Container,
-	CssBaseline,
-	ThemeProvider,
-} from '@material-ui/core'
+import { Container, CssBaseline, ThemeProvider } from '@material-ui/core'
 import Navbar from './Navbar'
 import { createTheme } from '@material-ui/core'
 import Footer from './Footer'
@@ -37,7 +33,7 @@ export default function Layout({ title, description, children }) {
 
 				<Navbar />
 				{/* Main Content */}
-				<Container className="flex-1">{children}</Container>
+				<Container className='flex-1'>{children}</Container>
 
 				{/* Footer */}
 				<Footer />
