@@ -14,15 +14,15 @@ export default function Footer() {
 	return (
 		<footer className='bg-gray-800 mt-4' aria-labelledby='footer-heading'>
 			<div className='max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8'>
-				<div className='md:flex md:items-center md:justify-between'>
-					<div className='flex space-x-6 md:order-2'>
+				<div className='flex items-center justify-between'>
+					<p className='mt-2 text-base text-gray-300 md:mt-0'>
+						&copy; 2022 Nextone. All rights reserved.
+					</p>
+					<div>
 						<NextLink href='https://github.com/jainpranayr/nextzone' passHref>
 							<GithubIcon className='w-6 h-6 text-gray-400 hover:text-gray-300 cursor-pointer' />
 						</NextLink>
 					</div>
-					<p className='mt-8 text-base text-gray-300 md:mt-0 md:order-1'>
-						&copy; 2022 Nextone. All rights reserved.
-					</p>
 				</div>
 			</div>
 		</footer>
