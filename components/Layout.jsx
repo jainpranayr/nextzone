@@ -1,18 +1,14 @@
 import Head from 'next/head'
 import {
-	Typography,
 	Container,
 	CssBaseline,
 	ThemeProvider,
 } from '@material-ui/core'
-import { useStyles } from '../utils'
-
 import Navbar from './Navbar'
 import { createTheme } from '@material-ui/core'
+import Footer from './Footer'
 
 export default function Layout({ title, description, children }) {
-	// get styles
-	const classes = useStyles()
 	// dark and light theme styles
 	const theme = createTheme({
 		palette: {
@@ -26,7 +22,7 @@ export default function Layout({ title, description, children }) {
 	})
 
 	return (
-		<div>
+		<div className='flex flex-col min-h-screen'>
 			{/* Dynamic title of page */}
 			<Head>
 				<title>{title ? `${title} - nextshop` : 'nextshop'}</title>
@@ -41,12 +37,10 @@ export default function Layout({ title, description, children }) {
 
 				<Navbar />
 				{/* Main Content */}
-				<Container className={classes.main}>{children}</Container>
+				<Container className="flex-1">{children}</Container>
 
 				{/* Footer */}
-				<footer className={classes.footer}>
-					<Typography>All rights reserved. nextshop.</Typography>
-				</footer>
+				<Footer />
 			</ThemeProvider>
 		</div>
 	)
