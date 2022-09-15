@@ -49,7 +49,7 @@ const Navbar = () => {
 		router.push(`/search?query=${query}`)
 	}
 	return (
-		<Disclosure as='nav' className='bg-slate-900'>
+		<Disclosure as='nav' className='sticky top-0 z-50 bg-slate-900 bg-opacity-90 backdrop-blur backdrop-filter'>
 			{({ open }) => (
 				<>
 					<div className='max-w-7xl mx-auto px-2 sm:px-4 lg:px-8'>
