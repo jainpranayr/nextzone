@@ -104,8 +104,7 @@ function Cart() {
 															alt={item.name}
 															width={50}
 															height={50}
-                              priority="lazy"
-                              ></Image>
+															priority='lazy'></Image>
 													</Link>
 												</NextLink>
 											</TableCell>

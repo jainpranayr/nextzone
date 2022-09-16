@@ -1,20 +1,7 @@
 import NextLink from 'next/link'
 import Image from 'next/image'
-import {
-  Grid,
-  Link,
-  List,
-  ListItem,
-  Typography,
-  Card,
-  Button,
-  TextField,
-  CircularProgress,
-} from '@material-ui/core'
-import Rating from '@material-ui/lab/Rating'
 
 import { Layout } from '../../components'
-import { useStyles } from '../../utils'
 import { Product } from '../../models'
 import { db } from '../../config'
 import axios from 'axios'
@@ -22,280 +9,404 @@ import { useContext, useEffect, useState } from 'react'
 import { Store, getError } from '../../config'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
+import { Tab } from '@headlessui/react'
+import { StarIcon } from '@heroicons/react/solid'
+import { CheckIcon, XIcon } from '@heroicons/react/outline'
+import StarRatingPicker from '../../components/StarRatingPicker'
 
-export default function ProductScreen({ product }) {
-  // get styles
-  const classes = useStyles()
-  // setup router
-  const router = useRouter()
-  const { enqueueSnackbar } = useSnackbar()
+function classNames(...classes) {
+	return classes.filter(Boolean).join(' ')
+}
 
-  const [reviews, setReviews] = useState([])
-  const [rating, setRating] = useState(0)
-  const [comment, setComment] = useState('')
-  const [loading, setLoading] = useState(false)
+export default function ProductScreen({ item }) {
+	// setup router
+	const router = useRouter()
+	const { enqueueSnackbar } = useSnackbar()
 
-  // get state and dispatch function from store
-  const {
-    state: {
-      cart: { cartItems },
-      userInfo,
-    },
-    dispatch,
-  } = useContext(Store)
+	const [reviews, setReviews] = useState([])
+	const [rating, setRating] = useState(0)
+	const [comment, setComment] = useState('')
+	const [product, setProduct] = useState(item)
+	const [isInStock, setIsInStock] = useState(true)
 
-  // handle Add to Cart
-  const handleAddToCart = async () => {
-    // check if item is in stock
-    const existItem = cartItems.find(x => x._id === product._id)
-    const quantity = existItem ? existItem.quantity + 1 : 1
+	// get state and dispatch function from store
+	const {
+		state: {
+			cart: { cartItems },
+			userInfo,
+		},
+		dispatch,
+	} = useContext(Store)
 
-    // get product details
-    const { data } = await axios.get(`/api/products/${product._id}`)
+	console.log(isInStock)
 
-    // show error if item is not in stock
-    if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock')
-      return
-    }
+	// handle Add to Cart
+	const handleAddToCart = async e => {
+		e.preventDefault()
+		// check if item is in stock
+		const existItem = cartItems.find(x => x._id === product._id)
+		const quantity = existItem ? existItem.quantity + 1 : 1
 
-    // dispatch add to cart function
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
-    // redirect to /cart
-    router.push('/cart')
-  }
+		// get product details
+		const { data } = await axios.get(`/api/products/${product._id}`)
 
-  const fetchReviews = async () => {
-    try {
-      const { data } = await axios.get(`/api/products/${product._id}/reviews`)
-      setReviews(data)
-    } catch (err) {
-      enqueueSnackbar(getError(err), { variant: 'error' })
-    }
-  }
+		// show error if item is not in stock
+		if (data.countInStock < quantity) {
+			setIsInStock(false)
+			return
+		}
 
-  const submitHandler = async e => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      await axios.post(
-        `/api/products/${product._id}/reviews`,
-        {
-          rating,
-          comment,
-        },
-        {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        }
-      )
-      setLoading(false)
-      enqueueSnackbar('Review submitted successfully', { variant: 'success' })
-      setComment('')
-      fetchReviews()
-    } catch (err) {
-      setLoading(false)
-      enqueueSnackbar(getError(err), { variant: 'error' })
-    }
-  }
+		// dispatch add to cart function
+		dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
+		// redirect to /cart
+		router.push('/cart')
+	}
 
-  useEffect(() => {
-    fetchReviews()
+	const fetchReviews = async () => {
+		try {
+			const { data } = await axios.get(`/api/products/${product._id}/reviews`)
+			setReviews(data)
+		} catch (err) {
+			enqueueSnackbar(getError(err), { variant: 'error' })
+		}
+	}
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enqueueSnackbar, product])
+	const fetchProduct = async () => {
+		try {
+			const { data } = await axios.get(`/api/products/${product._id}`)
+			setProduct(data)
+		} catch (err) {
+			enqueueSnackbar(getError(err), { variant: 'error' })
+		}
+	}
 
-  // if product not found
-  if (!product) {
-    return <div>Product Not Found</div>
-  }
+	const submitHandler = async e => {
+		e.preventDefault()
+		try {
+			await axios.post(
+				`/api/products/${product._id}/reviews`,
+				{
+					rating,
+					comment,
+				},
+				{
+					headers: { authorization: `Bearer ${userInfo.token}` },
+				}
+			)
+			enqueueSnackbar('Review submitted successfully', { variant: 'success' })
+			setComment('')
+			fetchReviews()
+			fetchProduct()
+		} catch (err) {
+			enqueueSnackbar(getError(err), { variant: 'error' })
+		}
+	}
 
-  // if product found
-  return (
-    <Layout title={product.name} description={product.description}>
-      <div className={classes.section}>
-        {/* back to home link */}
-        <NextLink href='/' passHref>
-          <Link>
-            <Typography>back to products</Typography>
-          </Link>
-        </NextLink>
-      </div>
+	useEffect(() => {
+		fetchReviews()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
-      {/* main grid */}
-      <Grid container spacing={1}>
-        {/* product image */}
-        <Grid item md={6} xs={12}>
-          <Image
-            src={product.images[0]}
-            alt={product.name}
-            width={640}
-            height={640}
-            layout='responsive'></Image>
-        </Grid>
+	// if product not found
+	if (!product) {
+		return <div>Product Not Found</div>
+	}
 
-        {/* product details */}
-        <Grid item md={3} xs={12}>
-          <List>
-            <ListItem>
-              <Typography className={classes.heading}>
-                {product.name}
-              </Typography>
-            </ListItem>
-            <ListItem>
-              <Typography>Category: {product.category}</Typography>
-            </ListItem>
-            <ListItem>
-              <Typography>Brand: {product.brand}</Typography>
-            </ListItem>
-            <ListItem>
-              <Rating value={product.rating} readOnly></Rating>
-              <Link href='#reviews'>
-                <Typography>({reviews.length} reviews)</Typography>
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Typography> Description: {product.description}</Typography>
-            </ListItem>
-          </List>
-        </Grid>
+	// if product found
+	return (
+		<Layout title={product.name} description={product.description}>
+			<section className='bg-white mt-10'>
+				<div className='max-w-2xl mx-auto p-4 sm:px-6 lg:max-w-7xl lg:px-8'>
+					<div className='lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start'>
+						{/* Image gallery */}
+						<Tab.Group as='div' className='flex flex-col-reverse'>
+							<div className='hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none'>
+								<Tab.List className='grid grid-cols-4 gap-4'>
+									{product.images.map((image, idx) => (
+										<Tab
+											key={idx}
+											className='relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50'>
+											{({ selected }) => (
+												<>
+													<span className='absolute inset-0 rounded-md overflow-hidden'>
+														<Image
+															src={image}
+															alt=''
+															className='w-full h-full object-center object-cover'
+															layout='fill'
+															priority='eager'
+														/>
+													</span>
+													<span
+														className={classNames(
+															selected ? 'ring-indigo-500' : 'ring-transparent',
+															'absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none'
+														)}
+														aria-hidden='true'
+													/>
+												</>
+											)}
+										</Tab>
+									))}
+								</Tab.List>
+							</div>
+							<Tab.Panels className='w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden'>
+								{product.images.map((image, idx) => (
+									<Tab.Panel key={idx}>
+										<Image
+											src={image}
+											alt={image.alt}
+											className='object-center object-cover sm:rounded-lg'
+											width={600}
+											height={800}
+											priority='eager'
+										/>
+									</Tab.Panel>
+								))}
+							</Tab.Panels>
+						</Tab.Group>
+						{/* Product Details */}
+						<div className='mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0'>
+							<h1 className='text-3xl font-extrabold tracking-tight text-gray-900'>
+								{product.name}
+							</h1>
 
-        {/* Price and add to cart section */}
-        <Grid item md={3} xs={12}>
-          <Card>
-            <List>
-              {/* Product price */}
-              <ListItem>
-                <Grid container>
-                  <Grid item xs={6}>
-                    <Typography>Price</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography>${product.price}</Typography>
-                  </Grid>
-                </Grid>
-              </ListItem>
+							<div className='text-sm font-medium cursor-pointer flex gap-x-2'>
+								<NextLink
+									href={`/search?category=${product.category}`}
+									passHref>
+									<span className='text-indigo-600 hover:text-indigo-900 '>
+										{product.category}
+									</span>
+								</NextLink>
+								<NextLink href={`/search?brand=${product.brand}`} passHref>
+									<span className='text-indigo-600 hover:text-indigo-900 '>
+										{product.brand}
+									</span>
+								</NextLink>
+							</div>
 
-              {/* Product stock stautus */}
-              <ListItem>
-                <Grid container>
-                  <Grid item xs={6}>
-                    <Typography>Status</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography>
-                      {product.countInStock > 0 ? 'In stock' : 'Unavailable'}
-                    </Typography>
-                  </Grid>
-                </Grid>
+							<div className='mt-3'>
+								<p className='text-3xl text-gray-900'>₹{product.price}</p>
+							</div>
 
-                {/* Add to Cart button */}
-              </ListItem>
-              <ListItem>
-                <Button
-                  fullWidth
-                  variant='contained'
-                  color='primary'
-                  onClick={handleAddToCart}>
-                  Add to cart
-                </Button>
-              </ListItem>
-            </List>
-          </Card>
-        </Grid>
-      </Grid>
-      <List>
-        <ListItem>
-          <Typography name='reviews' id='reviews' variant='h4'>
-            Customer Reviews
-          </Typography>
-        </ListItem>
-        {reviews.length === 0 && <ListItem>No review</ListItem>}
-        {reviews.map(review => (
-          <ListItem key={review._id}>
-            <Grid container>
-              <Grid item className={classes.reviewItem}>
-                <Typography>
-                  <strong>{review.name}</strong>
-                </Typography>
-                <Typography>{review.createdAt.substring(0, 10)}</Typography>
-              </Grid>
-              <Grid item>
-                <Rating value={review.rating} readOnly></Rating>
-                <Typography>{review.comment}</Typography>
-              </Grid>
-            </Grid>
-          </ListItem>
-        ))}
-        <ListItem>
-          {userInfo ? (
-            <form onSubmit={submitHandler} className={classes.reviewForm}>
-              <List>
-                <ListItem>
-                  <Typography variant='h6'>Leave your review</Typography>
-                </ListItem>
-                <ListItem>
-                  <TextField
-                    multiline
-                    variant='outlined'
-                    fullWidth
-                    name='review'
-                    label='Enter comment'
-                    value={comment}
-                    onChange={e => setComment(e.target.value)}
-                  />
-                </ListItem>
-                <ListItem>
-                  <Rating
-                    name='simple-controlled'
-                    value={rating}
-                    onChange={e => setRating(e.target.value)}
-                  />
-                </ListItem>
-                <ListItem>
-                  <Button
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    color='primary'>
-                    Submit
-                  </Button>
+							{/* Reviews */}
+							<div className='mt-3'>
+								<h3 className='sr-only'>Reviews</h3>
+								<div className='flex items-center'>
+									<div className='flex items-center'>
+										{[0, 1, 2, 3, 4].map(rating => (
+											<StarIcon
+												key={rating}
+												className={classNames(
+													product.rating > rating
+														? 'text-indigo-500'
+														: 'text-gray-300',
+													'h-5 w-5 flex-shrink-0'
+												)}
+											/>
+										))}
+										<a
+											href='#reviews'
+											className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'>
+											{reviews.length} reviews
+										</a>
+									</div>
+								</div>
+							</div>
+							<div className='mt-6'>
+								<h3 className='sr-only'>Description</h3>
+								<div
+									className='text-base text-gray-700 space-y-6'
+									dangerouslySetInnerHTML={{ __html: product.description }}
+								/>
+							</div>
 
-                  {loading && <CircularProgress></CircularProgress>}
-                </ListItem>
-              </List>
-            </form>
-          ) : (
-            <Typography variant='h6'>
-              Please{' '}
-              <Link href={`/login?redirect=/product/${product.slug}`}>
-                login
-              </Link>{' '}
-              to write a review
-            </Typography>
-          )}
-        </ListItem>
-      </List>
-    </Layout>
-  )
+							<div className='mt-6 flex items-center'>
+								{isInStock ? (
+									<>
+										<CheckIcon
+											className='flex-shrink-0 w-5 h-5 text-green-500'
+											aria-hidden='true'
+										/>
+										<p className='ml-2 text-sm text-gray-500'>
+											In stock and ready to ship
+										</p>
+									</>
+								) : (
+									<>
+										<XIcon
+											className='flex-shrink-0 w-5 h-5 text-red-500'
+											aria-hidden='true'
+										/>
+										<p className='ml-2 text-sm text-gray-500'>
+											Sorry, this item is sold out.
+										</p>
+									</>
+								)}
+							</div>
+
+							<form className='mt-6 flex sm:flex-col1'>
+								<button
+									disabled={!isInStock}
+									className='max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full disabled:cursor-not-allowed'
+									onClick={handleAddToCart}>
+									Add to bag
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div className='max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-x-8'>
+					<div className='lg:col-span-4'>
+						<h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>
+							Customer Reviews
+						</h2>
+
+						<div className='mt-3 flex items-center'>
+							<div>
+								<div className='flex items-center'>
+									{[0, 1, 2, 3, 4].map(rating => (
+										<StarIcon
+											key={rating}
+											className={classNames(
+												product.rating > rating
+													? 'text-indigo-500'
+													: 'text-gray-300',
+												'flex-shrink-0 h-5 w-5'
+											)}
+											aria-hidden='true'
+										/>
+									))}
+								</div>
+							</div>
+							<p className='ml-2 text-sm text-gray-900'>
+								Based on {reviews.length} reviews
+							</p>
+						</div>
+
+						{userInfo ? (
+							<div className='mt-5'>
+								<h3 className='text-lg font-medium text-gray-900'>
+									Share your thoughts
+								</h3>
+								<p className='mt-1 text-sm text-gray-600'>
+									If you&apos;ve used this product, share your thoughts with
+									other customers
+								</p>
+							</div>
+						) : (
+							<div>NOPE</div>
+						)}
+						{open ? (
+							<form className='relative mt-6' onSubmit={submitHandler}>
+								<div className='border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500'>
+									<textarea
+										rows={2}
+										className='block w-full border-0 py-0 resize-none placeholder-gray-500 focus:ring-0 sm:text-sm'
+										placeholder='Write a review...'
+										value={comment}
+										onChange={e => setComment(e.target.value)}
+									/>
+
+									{/* Spacer element to match the height of the toolbar */}
+									<div aria-hidden='true'>
+										<div className='py-2'>
+											<div className='h-9' />
+										</div>
+										<div className='h-px' />
+										<div className='py-2'>
+											<div className='py-px'>
+												<div className='h-9' />
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div className='absolute bottom-0 inset-x-px'>
+									<div className='border-t border-gray-200 px-2 py-2 flex justify-between items-center space-x-3 sm:px-3'>
+										<StarRatingPicker
+											value={rating}
+											onChange={newVal => setRating(newVal)}
+										/>
+										<div className='flex-shrink-0'>
+											<button
+												disabled={comment.length <= 0}
+												type='submit'
+												className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:cursor-not-allowed'>
+												Submit
+											</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						) : null}
+					</div>
+
+					<div className='mt-16 lg:mt-0 lg:col-start-6 lg:col-span-7'>
+						<div className='flow-root'>
+							<div className='-my-8 divide-y divide-gray-200'>
+								{reviews.map(review => (
+									<div key={review._id} className='py-8'>
+										<div className='flex flex-col space-y-2'>
+											<div className='flex items-center'>
+												{[0, 1, 2, 3, 4].map(rating => (
+													<StarIcon
+														key={rating}
+														className={classNames(
+															review.rating > rating
+																? 'text-indigo-500'
+																: 'text-gray-300',
+															'h-5 w-5 flex-shrink-0'
+														)}
+													/>
+												))}
+											</div>
+											<div className='flex items-center space-x-3 ml-1'>
+												<h4 className='text-sm font-bold text-gray-900'>
+													{review.name}
+												</h4>
+												<span className=' text-gray-200 dark:text-gray-800'>
+													/
+												</span>
+												<p className='text-sm text-gray-400 dark:text-gray-600'>
+													{new Date(review.updatedAt).toDateString()}
+												</p>
+											</div>
+											<div
+												className='mt-4 space-y-6 text-base italic text-gray-600'
+												dangerouslySetInnerHTML={{ __html: review.comment }}
+											/>
+										</div>
+									</div>
+								))}
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</Layout>
+	)
 }
 
 // get product details from database
 export async function getServerSideProps(context) {
-  // get slug of product
-  const { params } = context
-  const { slug } = params
+	// get slug of product
+	const { params } = context
+	const { slug } = params
 
-  // connect to database
-  await db.connect()
-  // find product by slug in database
-  const product = await Product.findOne({ slug }, '-reviews').lean()
-  // disconnect from database
-  await db.disconnect()
+	// connect to database
+	await db.connect()
+	// find product by slug in database
+	const product = await Product.findOne({ slug }, '-reviews').lean()
+	// disconnect from database
+	await db.disconnect()
 
-  // pass product as prop
-  return {
-    props: {
-      product: db.convertDocToObj(product),
-    },
-  }
+	// pass product as prop
+	return {
+		props: {
+			item: db.convertDocToObj(product),
+		},
+	}
 }

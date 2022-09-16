@@ -75,7 +75,7 @@ const data = {
 		{
 			name: 'Cropped Satin Bomber Jacket',
 			slug: 'cropped-satin-bomber-jacket',
-			category: 'Jackets & Coats',
+			category: 'Jackets',
 			images: [
 				'https://i.postimg.cc/Fzr6SpVM/bomber1.jpg',
 				'https://i.postimg.cc/Xqszk52p/bomber2.jpg',
@@ -94,7 +94,7 @@ const data = {
 		{
 			name: 'Basic High-Neck Puff Jacket',
 			slug: 'basic-high-neck-puff-jacket',
-			category: 'Jackets & Coats',
+			category: 'Jackets',
 			images: [
 				'https://i.postimg.cc/sg4Z6JY6/high-neck1.jpg',
 				'https://i.postimg.cc/jj8nKdky/high-neck2.jpg',
@@ -112,7 +112,7 @@ const data = {
 		{
 			name: 'Oversize Faux Leather Biker Jacket',
 			slug: 'oversize-faux-leather-biker-jacket',
-			category: 'Jackets & Coats',
+			category: 'Jackets',
 			images: [
 				'https://i.postimg.cc/BbbgsVgn/faux1-1.jpg',
 				'https://i.postimg.cc/HnNtL9Z4/faux2-1.jpg',
@@ -130,7 +130,7 @@ const data = {
 		{
 			name: 'Oversized Denim Jacket',
 			slug: 'oversized-denim-jacket',
-			category: 'Jackets & Coats',
+			category: 'Jackets',
 			images: [
 				'https://i.postimg.cc/CKpmDJFc/denim1.jpg',
 				'https://i.postimg.cc/zfwpkWv8/denim2.jpg',
@@ -148,7 +148,7 @@ const data = {
 		{
 			name: 'Lightweight Zipped Bomber Jacket',
 			slug: 'lightweight-zipped-bomber-jacket',
-			category: 'Jackets & Coats',
+			category: 'Jackets',
 			images: [
 				'https://i.postimg.cc/65RHQDK8/zipped1.jpg',
 				'https://i.postimg.cc/RZBgJXCX/zipped2.jpg',

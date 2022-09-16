@@ -7,7 +7,7 @@ import Hero from '../components/Hero'
 
 export default function Home({ products }) {
 	return (
-		<Layout>
+		<Layout sticky={true}>
 			<div>
 				<Hero />
 				<h1 className='text-3xl my-2'>Products</h1>

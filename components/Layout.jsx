@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import { createTheme } from '@material-ui/core'
 import Footer from './Footer'
 
-export default function Layout({ title, description, children }) {
+export default function Layout({ title, description, children, sticky }) {
 	// dark and light theme styles
 	const theme = createTheme({
 		palette: {
@@ -31,7 +31,7 @@ export default function Layout({ title, description, children }) {
 				<CssBaseline />
 				{/* Navbar */}
 
-				<Navbar />
+				<Navbar sticky={sticky} />
 				{/* Main Content */}
 				<Container className='flex-1'>{children}</Container>
 
