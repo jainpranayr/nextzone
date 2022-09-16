@@ -126,7 +126,7 @@ export default function ProductScreen({ product }) {
         {/* product image */}
         <Grid item md={6} xs={12}>
           <Image
-            src={product.image}
+            src={product.images[0]}
             alt={product.name}
             width={640}
             height={640}

@@ -240,7 +240,7 @@ function Order({ params }) {
                                 passHref>
                                 <Link>
                                   <Image
-                                    src={item.image}
+                                    src={item?.images[0]}
                                     alt={item.name}
                                     width={50}
                                     height={50}></Image>

@@ -54,7 +54,7 @@ const Navbar = () => {
 				<>
 					<div className='max-w-7xl mx-auto px-2 sm:px-4 lg:px-8'>
 						<div className='relative flex h-20 lg:gap-x-4 justify-between items-center'>
-							<div className='hidden lg:flex px-2 lg:px-0'>
+							<div className='hidden md:flex px-2 lg:px-0'>
 								<div className='flex-shrink-0 flex items-center cursor-pointer'>
 									<NextLink href='/' passHref>
 										<span className='font-bold text-white text-2xl'>

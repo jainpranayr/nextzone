@@ -52,7 +52,7 @@ export default function SingleProduct({ product }) {
 				<CardActionArea>
 					<CardMedia
 						component='img'
-						image={product.image}
+						image={product.images[0]}
 						title={product.name}></CardMedia>
 					<CardContent>
 						<Typography>{product.name}</Typography>
