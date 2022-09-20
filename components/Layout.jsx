@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import { createTheme } from '@material-ui/core'
 import Footer from './Footer'
 
-export default function Layout({ title, description, children, sticky }) {
+export default function Layout({ title, description, children, sticky=true }) {
 	// dark and light theme styles
 	const theme = createTheme({
 		palette: {
