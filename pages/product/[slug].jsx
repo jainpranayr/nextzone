@@ -171,21 +171,6 @@ export default function ProductScreen({ item }) {
 								{product.name}
 							</h1>
 
-							<div className='text-sm font-medium cursor-pointer flex gap-x-2'>
-								<NextLink
-									href={`/search?category=${product.category}`}
-									passHref>
-									<span className='text-indigo-600 hover:text-indigo-900 '>
-										{product.category}
-									</span>
-								</NextLink>
-								<NextLink href={`/search?brand=${product.brand}`} passHref>
-									<span className='text-indigo-600 hover:text-indigo-900 '>
-										{product.brand}
-									</span>
-								</NextLink>
-							</div>
-
 							<div className='mt-3'>
 								<p className='text-3xl text-gray-900'>₹{product.price}</p>
 							</div>
@@ -220,6 +205,28 @@ export default function ProductScreen({ item }) {
 									className='text-base text-gray-700 space-y-6'
 									dangerouslySetInnerHTML={{ __html: product.description }}
 								/>
+							</div>
+
+							<div className='text-sm font-medium cursor-pointer flex flex-col gap-y-2 mt-6'>
+								<div className='space-x-2'>
+									<span className='text-gray-400'>Brand</span>
+									<NextLink href={`/search?brand=${product.brand}`} passHref>
+										<span className='text-indigo-600 hover:text-indigo-900 '>
+											{product.brand}
+										</span>
+									</NextLink>
+								</div>
+
+								<div className='space-x-2'>
+									<span className='text-gray-400'>Category</span>
+									<NextLink
+										href={`/search?category=${product.category}`}
+										passHref>
+										<span className='text-indigo-600 hover:text-indigo-900 '>
+											{product.category}
+										</span>
+									</NextLink>
+								</div>
 							</div>
 
 							<div className='mt-6 flex items-center'>
@@ -258,14 +265,13 @@ export default function ProductScreen({ item }) {
 					</div>
 				</div>
 
-				<div className='max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-x-8'>
+				<div className='max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-x-8 mt-10'>
 					<div className='lg:col-span-4'>
 						<h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>
 							Customer Reviews
 						</h2>
 
 						<div className='mt-3 flex items-center'>
-							<div>
 								<div className='flex items-center'>
 									{[0, 1, 2, 3, 4].map(rating => (
 										<StarIcon
@@ -280,10 +286,9 @@ export default function ProductScreen({ item }) {
 										/>
 									))}
 								</div>
-							</div>
-							<p className='ml-2 text-sm text-gray-900'>
-								Based on {reviews.length} reviews
-							</p>
+								<p className='ml-2 text-sm text-gray-900'>
+									Based on {reviews.length} reviews
+								</p>
 						</div>
 
 						{userInfo ? (
@@ -297,12 +302,22 @@ export default function ProductScreen({ item }) {
 								</p>
 							</div>
 						) : (
-							<div>NOPE</div>
+							<div className='mt-5 text-sm text-gray-600'>
+								To write a review, you must first{' '}
+								<NextLink
+									href={`/login?redirect=/product/${product.slug}`}
+									passHref>
+									<span className='text-indigo-500 font-semibold cursor-pointer'>
+										Sign in.
+									</span>
+								</NextLink>
+							</div>
 						)}
-						{open ? (
+						{userInfo ? (
 							<form className='relative mt-6' onSubmit={submitHandler}>
 								<div className='border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500'>
 									<textarea
+										id='review-form'
 										rows={2}
 										className='block w-full border-0 py-0 resize-none placeholder-gray-500 focus:ring-0 sm:text-sm'
 										placeholder='Write a review...'
@@ -345,44 +360,56 @@ export default function ProductScreen({ item }) {
 					</div>
 
 					<div className='mt-16 lg:mt-0 lg:col-start-6 lg:col-span-7'>
-						<div className='flow-root'>
-							<div className='-my-8 divide-y divide-gray-200'>
-								{reviews.map(review => (
-									<div key={review._id} className='py-8'>
-										<div className='flex flex-col space-y-2'>
-											<div className='flex items-center'>
-												{[0, 1, 2, 3, 4].map(rating => (
-													<StarIcon
-														key={rating}
-														className={classNames(
-															review.rating > rating
-																? 'text-indigo-500'
-																: 'text-gray-300',
-															'h-5 w-5 flex-shrink-0'
-														)}
-													/>
-												))}
+						{reviews.length >= 0 ? (
+							<div className='flow-root' id='reviews'>
+								<div className='-my-8 divide-y divide-gray-200'>
+									{reviews.map(review => (
+										<div key={review._id} className='py-8'>
+											<div className='flex flex-col space-y-2'>
+												<div className='flex items-center'>
+													{[0, 1, 2, 3, 4].map(rating => (
+														<StarIcon
+															key={rating}
+															className={classNames(
+																review.rating > rating
+																	? 'text-indigo-500'
+																	: 'text-gray-300',
+																'h-5 w-5 flex-shrink-0'
+															)}
+														/>
+													))}
+												</div>
+												<div className='flex items-center space-x-3 ml-1'>
+													<h4 className='text-sm font-bold text-gray-900'>
+														{review.name}
+													</h4>
+													<span className=' text-gray-200 dark:text-gray-800'>
+														/
+													</span>
+													<p className='text-sm text-gray-400 dark:text-gray-600'>
+														{new Date(review.updatedAt).toDateString()}
+													</p>
+												</div>
+												<div
+													className='mt-4 space-y-6 text-base italic text-gray-600'
+													dangerouslySetInnerHTML={{ __html: review.comment }}
+												/>
 											</div>
-											<div className='flex items-center space-x-3 ml-1'>
-												<h4 className='text-sm font-bold text-gray-900'>
-													{review.name}
-												</h4>
-												<span className=' text-gray-200 dark:text-gray-800'>
-													/
-												</span>
-												<p className='text-sm text-gray-400 dark:text-gray-600'>
-													{new Date(review.updatedAt).toDateString()}
-												</p>
-											</div>
-											<div
-												className='mt-4 space-y-6 text-base italic text-gray-600'
-												dangerouslySetInnerHTML={{ __html: review.comment }}
-											/>
 										</div>
-									</div>
-								))}
+									))}
+								</div>
 							</div>
-						</div>
+						) : (
+							<div className='mt-5 text-sm text-gray-600'>
+								There are no reviews. Be the first to write a{' '}
+								<a
+									href='#review-form'
+									className='text-indigo-500 font-semibold cursor-pointer'>
+									review
+								</a>{' '}
+								for this item.
+							</div>
+						)}
 					</div>
 				</div>
 			</section>
