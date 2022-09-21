@@ -279,13 +279,11 @@ const Navbar = ({ sticky }) => {
 								</>
 							) : (
 								<div className='flex flex-col px-4'>
-									<span className='text-base font-medium text-gray-500'>
+									<span className='text-base font-medium text-gray-300'>
 										Hello,
 									</span>
-									<NextLink
-										href='/login'
-										className='text-base font-medium text-gray-800'>
-										Sign In
+									<NextLink href='/login' passHref>
+										<span className='text-base font-medium text-white'>Sign In</span>
 									</NextLink>
 								</div>
 							)}

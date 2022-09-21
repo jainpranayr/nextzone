@@ -8,7 +8,6 @@ import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { useSnackbar } from 'notistack'
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid'
 
 export default function Login() {
@@ -46,9 +45,8 @@ export default function Login() {
 			// dispatch user login event
 			dispatch({ type: 'USER_LOGIN', payload: data })
 			// store userInfo in cookies
-			{
-				remember && Cookies.set('userInfo', data)
-			}
+			remember && Cookies.set('userInfo', data)
+
 			// redirect
 			router.push(redirect || '/')
 		} catch (err) {
@@ -81,9 +79,7 @@ export default function Login() {
 					</p>
 				</div>
 				<div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
-					<div
-						className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'
-						onSubmit={handleSubmit(logUserin)}>
+					<div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
 						<form className='space-y-6' onSubmit={handleSubmit(logUserin)}>
 							{/* Email Field */}
 							<div>
@@ -104,14 +100,6 @@ export default function Login() {
 											pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
 										})}
 									/>
-									{errors.email && (
-										<div className='absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none'>
-											<ExclamationCircleIcon
-												className='h-5 w-5 text-red-500'
-												aria-hidden='true'
-											/>
-										</div>
-									)}
 								</div>
 								{errors.email && (
 									<p className='mt-2 text-sm text-red-600' id='email-error'>
