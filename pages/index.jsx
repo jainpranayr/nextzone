@@ -3,13 +3,14 @@ import { Grid } from '@material-ui/core'
 import { db } from '../config'
 import { Product } from '../models'
 import Hero from '../components/Hero'
-
+import Categories from '../components/Categories'
 
 export default function Home({ products }) {
 	return (
 		<Layout sticky={true}>
 			<div>
 				<Hero />
+				<Categories />
 				<h1 className='text-3xl my-2'>Products</h1>
 				{/* main products grid */}
 				<Grid container spacing={3}>

@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 .full-bleed {
-    box-shadow: 0 0 0 100vmax #0F172A;
-    clip-path: inset(0 -100vmax);
+	box-shadow: 0 0 0 100vmax #0f172a;
+	clip-path: inset(0 -100vmax);
+}
+
+.scrollbar ::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+	cursor: pointer;
 }
