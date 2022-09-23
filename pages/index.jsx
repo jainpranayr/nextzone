@@ -24,12 +24,19 @@ export default function Home({ products }) {
 							New Arrivals
 						</h2>
 						<NextLink href={'/search?sort=newest'} passHref>
-							<p className='block text-sm font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer'>
+							<p className='hidden md:block text-sm font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer'>
 								Browse all<span aria-hidden='true'> &rarr;</span>
 							</p>
 						</NextLink>
 					</div>
 					<ProductsGrid products={products?.slice(0, 8)} />
+					<div className='-mt-6 sm:hidden'>
+						<NextLink href={'/search?sort=newest'} passHref>
+							<p className='text-sm font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer'>
+								Browse all<span aria-hidden='true'> &rarr;</span>
+							</p>
+						</NextLink>
+					</div>
 				</section>
 			</div>
 		</Layout>
