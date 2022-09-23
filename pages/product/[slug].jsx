@@ -1,18 +1,17 @@
-import NextLink from 'next/link'
 import Image from 'next/image'
+import NextLink from 'next/link'
 
-import { Layout } from '../../components'
-import { Product } from '../../models'
-import { db } from '../../config'
+import { Tab } from '@headlessui/react'
+import { CheckIcon, XIcon } from '@heroicons/react/outline'
+import { StarIcon } from '@heroicons/react/solid'
 import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
-import { Store, getError } from '../../config'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
-import { Tab } from '@headlessui/react'
-import { StarIcon } from '@heroicons/react/solid'
-import { CheckIcon, XIcon } from '@heroicons/react/outline'
+import { useContext, useEffect, useState } from 'react'
+import { Layout } from '../../components'
 import StarRatingPicker from '../../components/StarRatingPicker'
+import { db, getError, Store } from '../../config'
+import { Product } from '../../models'
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -38,23 +37,12 @@ export default function ProductScreen({ item }) {
 		dispatch,
 	} = useContext(Store)
 
-	console.log(isInStock)
-
 	// handle Add to Cart
 	const handleAddToCart = async e => {
 		e.preventDefault()
 		// check if item is in stock
 		const existItem = cartItems.find(x => x._id === product._id)
 		const quantity = existItem ? existItem.quantity + 1 : 1
-
-		// get product details
-		const { data } = await axios.get(`/api/products/${product._id}`)
-
-		// show error if item is not in stock
-		if (data.countInStock < quantity) {
-			setIsInStock(false)
-			return
-		}
 
 		// dispatch add to cart function
 		dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
@@ -103,7 +91,22 @@ export default function ProductScreen({ item }) {
 	}
 
 	useEffect(() => {
+		async function checkInStock() {
+			console.log('called')
+			const existItem = cartItems.find(x => x._id === product._id)
+			const quantity = existItem ? existItem.quantity + 1 : 1
+
+			// get item detail
+			const { data } = await axios.get(`/api/products/${product._id}`)
+
+			if (data.countInStock < quantity) {
+				setIsInStock(false)
+				return
+			}
+		}
+
 		fetchReviews()
+		checkInStock()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -272,23 +275,23 @@ export default function ProductScreen({ item }) {
 						</h2>
 
 						<div className='mt-3 flex items-center'>
-								<div className='flex items-center'>
-									{[0, 1, 2, 3, 4].map(rating => (
-										<StarIcon
-											key={rating}
-											className={classNames(
-												product.rating > rating
-													? 'text-indigo-500'
-													: 'text-gray-300',
-												'flex-shrink-0 h-5 w-5'
-											)}
-											aria-hidden='true'
-										/>
-									))}
-								</div>
-								<p className='ml-2 text-sm text-gray-900'>
-									Based on {reviews.length} reviews
-								</p>
+							<div className='flex items-center'>
+								{[0, 1, 2, 3, 4].map(rating => (
+									<StarIcon
+										key={rating}
+										className={classNames(
+											product.rating > rating
+												? 'text-indigo-500'
+												: 'text-gray-300',
+											'flex-shrink-0 h-5 w-5'
+										)}
+										aria-hidden='true'
+									/>
+								))}
+							</div>
+							<p className='ml-2 text-sm text-gray-900'>
+								Based on {reviews.length} reviews
+							</p>
 						</div>
 
 						{userInfo ? (

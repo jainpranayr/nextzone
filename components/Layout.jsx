@@ -1,10 +1,19 @@
+import {
+	Container,
+	createTheme,
+	CssBaseline,
+	ThemeProvider,
+} from '@material-ui/core'
 import Head from 'next/head'
-import { Container, CssBaseline, ThemeProvider } from '@material-ui/core'
-import Navbar from './Navbar'
-import { createTheme } from '@material-ui/core'
 import Footer from './Footer'
+import Navbar from './Navbar'
 
-export default function Layout({ title, description, children, sticky=true }) {
+export default function Layout({
+	title,
+	description,
+	children,
+	sticky = true,
+}) {
 	// dark and light theme styles
 	const theme = createTheme({
 		palette: {
@@ -18,7 +27,7 @@ export default function Layout({ title, description, children, sticky=true }) {
 	})
 
 	return (
-		<div className='flex flex-col min-h-screen'>
+		<div className='flex flex-col min-h-screen bg-gray-50'>
 			{/* Dynamic title of page */}
 			<Head>
 				<title>{title ? `${title} - nextshop` : 'nextshop'}</title>

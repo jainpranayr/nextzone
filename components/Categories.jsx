@@ -29,12 +29,10 @@ const categories = [
 export default function Categories() {
 	return (
 		<div>
-			<div className='py-16 sm:py-24 xl:max-w-7xl xl:mx-auto xl:px-8'>
-				<div className='px-4 sm:px-6 py-4 sm:items-center sm:justify-between lg:px-8 xl:px-0'>
-					<h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>
-						Shop by Category
-					</h2>
-				</div>
+			<div className='py-16 xl:max-w-7xl xl:mx-auto xl:px-8'>
+				<h2 className='text-2xl font-extrabold tracking-tight text-gray-900'>
+					Shop by Category
+				</h2>
 
 				<div className='mt-4 scrollbar'>
 					<div className='-my-2'>
@@ -64,14 +62,6 @@ export default function Categories() {
 							</div>
 						</div>
 					</div>
-				</div>
-
-				<div className='mt-6 px-4 sm:hidden'>
-					<a
-						href='#'
-						className='block text-sm font-semibold text-indigo-600 hover:text-indigo-500'>
-						Browse all categories<span aria-hidden='true'> &rarr;</span>
-					</a>
 				</div>
 			</div>
 		</div>
