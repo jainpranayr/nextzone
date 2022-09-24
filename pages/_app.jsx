@@ -1,3 +1,4 @@
+import '../styles/globals.css'
 import { useEffect } from 'react'
 import { StoreProvider } from '../config'
 import { SnackbarProvider } from 'notistack'

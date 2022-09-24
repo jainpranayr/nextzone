@@ -176,7 +176,6 @@ function Order({ params }) {
 
   return (
     <Layout title={`Order ${orderId}`}>
-      {/* <CheckoutWizard activeStep={3}></CheckoutWizard> */}
       <Typography component='h1' variant='h4'>
         Order {orderId}
       </Typography>
@@ -241,7 +240,7 @@ function Order({ params }) {
                                 passHref>
                                 <Link>
                                   <Image
-                                    src={item.image}
+                                    src={item?.images[0]}
                                     alt={item.name}
                                     width={50}
                                     height={50}></Image>

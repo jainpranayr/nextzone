@@ -5,8 +5,6 @@ export const Store = createContext()
 
 // setup initialstate
 const initialState = {
-  // set or get darkMode state from Cookies
-  darkMode: Cookies.get('darkMode') === 'ON' ? true : false,
   // set or get cartItems state from Cookies
   cart: {
     // cart items
@@ -28,12 +26,6 @@ const initialState = {
 // setup reducer
 const reducer = (state, action) => {
   switch (action.type) {
-    // darkMode
-    case 'DARK_MODE_ON':
-      return { ...state, darkMode: true }
-    case 'DARK_MODE_OFF':
-      return { ...state, darkMode: false }
-
     // add to cart
     case 'CART_ADD_ITEM': {
       // get product detail
