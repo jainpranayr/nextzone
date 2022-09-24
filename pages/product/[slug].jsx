@@ -92,7 +92,6 @@ export default function ProductScreen({ item }) {
 
 	useEffect(() => {
 		async function checkInStock() {
-			console.log('called')
 			const existItem = cartItems.find(x => x._id === product._id)
 			const quantity = existItem ? existItem.quantity + 1 : 1
 

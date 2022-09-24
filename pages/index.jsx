@@ -7,7 +7,6 @@ import { db } from '../config'
 import { Product } from '../models'
 
 export default function Home({ products }) {
-	console.log(products.length)
 	return (
 		<Layout sticky={true}>
 			<div>
