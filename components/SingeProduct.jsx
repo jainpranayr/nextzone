@@ -1,9 +1,14 @@
+import { StarIcon } from '@heroicons/react/solid'
 import axios from 'axios'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Store } from '../config'
+
+function classNames(...classes) {
+	return classes.filter(Boolean).join(' ')
+}
 
 export default function SingleProduct({ product }) {
 	const router = useRouter()
@@ -49,19 +54,39 @@ export default function SingleProduct({ product }) {
 		<div className='flex flex-col'>
 			<NextLink href={`/product/${product.slug}`} passHref>
 				<div className='group cursor-pointer'>
-					<div className='w-full bg-gray-200 rounded-lg overflow-hidden'>
+					<div className='relative w-full h-80 md:h-auto rounded-lg overflow-hidden'>
 						<Image
 							width={300}
 							height={500}
 							layout='responsive'
 							src={product?.images[0]}
 							alt=''
-							className='w-full h-full object-center object-cover group-hover:opacity-75'
+							className='w-full h-full object-center object-cover  hover:opacity-75'
 						/>
 					</div>
-					<h3 className='mt-4 text-sm text-gray-700 line-clamp-1'>
+					<h3 className='mt-4 text-sm text-gray-700 line-clamp-1 hover:text-gray-900'>
 						{product.name}
 					</h3>
+					{product.numReviews > 0 ? (
+						<div className='flex items-center'>
+							{[0, 1, 2, 3, 4].map(rating => (
+								<StarIcon
+									key={rating}
+									className={classNames(
+										product.rating > rating
+											? 'text-indigo-500'
+											: 'text-gray-300',
+										'h-5 w-5 flex-shrink-0'
+									)}
+								/>
+							))}
+						</div>
+					) : (
+						<div className='flex items-center gap-x-1'>
+							<StarIcon className='text-gray-300 h-5 w-5 flex-shrink-0' />
+							No Reviews
+						</div>
+					)}
 					<p className='mt-1 text-lg font-medium text-gray-900'>
 						₹{product.price}
 					</p>
@@ -70,7 +95,7 @@ export default function SingleProduct({ product }) {
 
 			<button
 				disabled={!isInStock}
-				className='mt-2 max-w-xs flex-1 flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full disabled:cursor-not-allowed bg-gray-200 border border-transparent rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-300'
+				className='relative flex bg-gray-200 border border-transparent rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-300'
 				onClick={() => handleAddToCart(product)}>
 				Add to bag
 			</button>
