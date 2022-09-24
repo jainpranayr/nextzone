@@ -1,15 +1,15 @@
-import NextLink from 'next/link'
-import { useContext, useState, Fragment } from 'react'
-import { Store } from '../config'
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/router'
-import { Disclosure, Transition, Menu } from '@headlessui/react'
+import { Disclosure, Menu, Transition } from '@headlessui/react'
 import {
-	ShoppingBagIcon,
-	XIcon,
 	MenuIcon,
 	SearchIcon,
+	ShoppingBagIcon,
+	XIcon,
 } from '@heroicons/react/outline'
+import Cookies from 'js-cookie'
+import NextLink from 'next/link'
+import { useRouter } from 'next/router'
+import { Fragment, useContext, useState } from 'react'
+import { Store } from '../config'
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -52,8 +52,8 @@ const Navbar = ({ sticky }) => {
 		<Disclosure
 			as='nav'
 			className={classNames(
-				sticky ? 'sticky top-0 z-50 ' : '',
-				'bg-slate-900 bg-opacity-90 backdrop-blur backdrop-filter'
+				sticky ? 'sticky top-0' : '',
+				'bg-slate-900 bg-opacity-90 backdrop-blur backdrop-filter z-50'
 			)}>
 			{({ open }) => (
 				<>
@@ -283,7 +283,9 @@ const Navbar = ({ sticky }) => {
 										Hello,
 									</span>
 									<NextLink href='/login' passHref>
-										<span className='text-base font-medium text-white'>Sign In</span>
+										<span className='text-base font-medium text-white'>
+											Sign In
+										</span>
 									</NextLink>
 								</div>
 							)}
