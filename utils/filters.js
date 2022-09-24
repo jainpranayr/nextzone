@@ -1,15 +1,19 @@
 export const prices = [
 	{
-		name: '$1 to $50',
-		value: '1-50',
+		name: 'Under ₹2500',
+		value: '0-2500',
 	},
 	{
-		name: '$51 to $200',
-		value: '51-200',
+		name: '₹2500 - ₹5000',
+		value: '2500-5000',
 	},
 	{
-		name: '$201 to $1000',
-		value: '201-1000',
+		name: '₹5000 - ₹8000',
+		value: '5000-8000',
+	},
+	{
+		name: 'Above ₹8000',
+		value: '8000',
 	},
 ]
 

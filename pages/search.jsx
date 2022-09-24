@@ -625,15 +625,16 @@ export async function getServerSideProps({ query }) {
 			  }
 			: {}
 
-	// 10-50
 	const priceFilter =
 		price && price !== 'all'
-			? {
-					price: {
-						$gte: Number(price.split('-')[0]),
-						$lte: Number(price.split('-')[1]),
-					},
-			  }
+			? price !== '8000'
+				? {
+						price: {
+							$gte: Number(price.split('-')[0]),
+							$lte: Number(price.split('-')[1]),
+						},
+				  }
+				: { price: { $gte: Number(price) } }
 			: {}
 
 	const order =
