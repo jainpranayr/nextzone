@@ -3,7 +3,7 @@ import {
 	Disclosure,
 	Menu,
 	Popover,
-	Transition,
+	Transition
 } from '@headlessui/react'
 import { ChevronDownIcon, StarIcon, XIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
@@ -54,7 +54,6 @@ export default function Search({ products, categories, brands, pages }) {
 	}
 
 	const categoryHandler = e => {
-		console.log(e.target.value)
 		filter({ category: e.target.value })
 	}
 	const brandHandler = e => {

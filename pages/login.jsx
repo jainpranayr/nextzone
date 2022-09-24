@@ -1,14 +1,13 @@
-import NextLink from 'next/link'
-import React, { useState } from 'react'
-import { Layout } from '../components'
-import { useEffect, useContext } from 'react'
-import axios from 'axios'
-import { getError, Store } from '../config'
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/router'
-import { useForm } from 'react-hook-form'
-import { useSnackbar } from 'notistack'
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid'
+import axios from 'axios'
+import Cookies from 'js-cookie'
+import NextLink from 'next/link'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
+import React, { useContext, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Layout } from '../components'
+import { getError, Store } from '../config'
 
 export default function Login() {
 	const {
@@ -33,7 +32,6 @@ export default function Login() {
 
 	// handle login
 	const logUserin = async ({ email, password }) => {
-		console.log(email, password)
 		closeSnackbar()
 		try {
 			// check if user credentials is correct
