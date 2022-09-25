@@ -29,7 +29,7 @@ export default function Home({ products }) {
 						</NextLink>
 					</div>
 					<ProductsGrid products={products?.slice(0, 8)} />
-					<div className='-mt-6 sm:hidden'>
+					<div className='block md:hidden -mt-4'>
 						<NextLink href={'/search?sort=newest'} passHref>
 							<p className='text-sm font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer'>
 								Browse all<span aria-hidden='true'> &rarr;</span>

@@ -53,7 +53,7 @@ const Navbar = ({ sticky }) => {
 			as='nav'
 			className={classNames(
 				sticky ? 'sticky top-0' : '',
-				'bg-slate-900 bg-opacity-90 backdrop-blur backdrop-filter z-50'
+				'bg-slate-900 bg-opacity-90 backdrop-blur backdrop-filter z-40'
 			)}>
 			{({ open }) => (
 				<>
@@ -146,7 +146,7 @@ const Navbar = ({ sticky }) => {
 								</NextLink>
 
 								{/* Profile dropdown */}
-								<Menu as='div' className='relative flex-shrink-0 z-50'>
+								<Menu as='div' className='relative flex-shrink-0 z-40'>
 									<div>
 										<Menu.Button className='flex-shrink-0 text-white focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-800 focus:ring-white hidden lg:flex flex-col ml-4 cursor-pointer'>
 											<span className='text-gray-300 font-medium'>Hello,</span>
