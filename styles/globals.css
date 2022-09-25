@@ -12,3 +12,7 @@
 	height: 0;
 	cursor: pointer;
 }
+
+#nprogress .spinner {
+	display: none !important;
+}
