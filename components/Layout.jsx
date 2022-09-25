@@ -18,7 +18,7 @@ export default function Layout({
 	const theme = createTheme({
 		palette: {
 			primary: {
-				main: '#f0c000',
+				main: '#4f46e5',
 			},
 			secondary: {
 				main: '#208080',

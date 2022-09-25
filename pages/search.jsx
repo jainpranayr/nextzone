@@ -3,7 +3,7 @@ import {
 	Disclosure,
 	Menu,
 	Popover,
-	Transition
+	Transition,
 } from '@headlessui/react'
 import { ChevronDownIcon, StarIcon, XIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
@@ -23,6 +23,14 @@ const PAGE_SIZE = 8
 export default function Search({ products, categories, brands, pages }) {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
+
+	const {
+		category = 'all',
+		brand = 'all',
+		price = 'all',
+		rating = 'all',
+		sort = 'newest',
+	} = router.query
 
 	const filter = ({
 		page,
@@ -113,7 +121,13 @@ export default function Search({ products, categories, brands, pages }) {
 											<>
 												<h3 className='-mx-2 -my-3 flow-root'>
 													<Disclosure.Button className='px-2 py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400'>
-														<span className='font-medium text-gray-900'>
+														<span
+															className={classNames(
+																category !== 'all'
+																	? 'text-indigo-600'
+																	: 'text-gray-900',
+																'font-medium'
+															)}>
 															Categories
 														</span>
 														<span className='ml-6 flex items-center'>
@@ -132,7 +146,12 @@ export default function Search({ products, categories, brands, pages }) {
 														<button
 															value='all'
 															onClick={categoryHandler}
-															className='border-gray-300 rounded focus:ring-indigo-500 text-sm whitespace-nowrap w-full text-left hover:text-gray-900 text-gray-700'>
+															className={classNames(
+																category === 'all'
+																	? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																	: 'hover:text-gray-900 text-gray-700',
+																'border-gray-300 rounded focus:ring-indigo-500 text-sm whitespace-nowrap w-full text-left '
+															)}>
 															All
 														</button>
 														{categories.map((option, idx) => (
@@ -140,7 +159,12 @@ export default function Search({ products, categories, brands, pages }) {
 																<button
 																	value={option}
 																	onClick={categoryHandler}
-																	className='border-gray-300 rounded focus:ring-indigo-500 text-sm whitespace-nowrap w-full text-left hover:text-gray-900 text-gray-700'>
+																	className={classNames(
+																		category === option
+																			? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																			: 'hover:text-gray-900 text-gray-700',
+																		'border-gray-300 rounded focus:ring-indigo-500 text-sm whitespace-nowrap w-full text-left '
+																	)}>
 																	{option}
 																</button>
 															</div>
@@ -158,7 +182,13 @@ export default function Search({ products, categories, brands, pages }) {
 											<>
 												<h3 className='-mx-2 -my-3 flow-root'>
 													<Disclosure.Button className='px-2 py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400'>
-														<span className='font-medium text-gray-900'>
+														<span
+															className={classNames(
+																brand !== 'all'
+																	? 'text-indigo-500'
+																	: 'to-gray-900',
+																'font-medium text-gray-900'
+															)}>
 															Brands
 														</span>
 														<span className='ml-6 flex items-center'>
@@ -177,7 +207,12 @@ export default function Search({ products, categories, brands, pages }) {
 														<button
 															value='all'
 															onClick={brandHandler}
-															className='border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left hover:text-gray-900 text-gray-700'>
+															className={classNames(
+																brand === 'all'
+																	? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																	: 'text-gray-700 hover:text-gray-900',
+																'border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left'
+															)}>
 															All
 														</button>
 														{brands.map((option, idx) => (
@@ -185,7 +220,12 @@ export default function Search({ products, categories, brands, pages }) {
 																<button
 																	value={option}
 																	onClick={brandHandler}
-																	className='border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left hover:text-gray-900 text-gray-700'>
+																	className={classNames(
+																		brand === option
+																			? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																			: 'text-gray-700 hover:text-gray-900',
+																		'border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left'
+																	)}>
 																	{option}
 																</button>
 															</div>
@@ -203,7 +243,13 @@ export default function Search({ products, categories, brands, pages }) {
 											<>
 												<h3 className='-mx-2 -my-3 flow-root'>
 													<Disclosure.Button className='px-2 py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400'>
-														<span className='font-medium text-gray-900'>
+														<span
+															className={classNames(
+																price !== 'all'
+																	? 'text-indigo-500'
+																	: 'text-gray-900',
+																'font-medium'
+															)}>
 															Prices
 														</span>
 														<span className='ml-6 flex items-center'>
@@ -222,7 +268,12 @@ export default function Search({ products, categories, brands, pages }) {
 														<button
 															value='all'
 															onClick={priceHandler}
-															className='border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left hover:text-gray-900 text-gray-700'>
+															className={classNames(
+																price === 'all'
+																	? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																	: 'text-gray-700 hover:text-gray-900',
+																'border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left'
+															)}>
 															All
 														</button>
 														{prices.map((option, idx) => (
@@ -230,7 +281,12 @@ export default function Search({ products, categories, brands, pages }) {
 																<button
 																	value={option.value}
 																	onClick={priceHandler}
-																	className='border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left hover:text-gray-900 text-gray-700'>
+																	className={classNames(
+																		price === option.value
+																			? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																			: 'text-gray-700 hover:text-gray-900',
+																		'border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left'
+																	)}>
 																	{option.name}
 																</button>
 															</div>
@@ -248,7 +304,13 @@ export default function Search({ products, categories, brands, pages }) {
 											<>
 												<h3 className='-mx-2 -my-3 flow-root'>
 													<Disclosure.Button className='px-2 py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400'>
-														<span className='font-medium text-gray-900'>
+														<span
+															className={classNames(
+																rating !== 'all'
+																	? 'text-indigo-500'
+																	: 'text-gray-900',
+																'font-medium'
+															)}>
 															Ratings
 														</span>
 														<span className='ml-6 flex items-center'>
@@ -267,7 +329,12 @@ export default function Search({ products, categories, brands, pages }) {
 														<button
 															value='all'
 															onClick={() => ratingHandler('all')}
-															className='border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left hover:text-gray-900 text-gray-700'>
+															className={classNames(
+																rating === 'all'
+																	? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																	: 'text-gray-700 hover:text-gray-900',
+																'border-gray-300 rounded focus:ring-indigo-500 text-sm  whitespace-nowrap  w-full text-left'
+															)}>
 															All
 														</button>
 														{ratings?.map((option, idx) => (
@@ -290,7 +357,14 @@ export default function Search({ products, categories, brands, pages }) {
 																				/>
 																			))}
 																		</div>
-																		&amp; Up
+																		<span
+																			className={classNames(
+																				option == rating
+																					? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																					: 'text-gray-700 hover:text-gray=900'
+																			)}>
+																			&amp; Up
+																		</span>
 																	</div>
 																</button>
 															</div>
@@ -334,11 +408,13 @@ export default function Search({ products, categories, brands, pages }) {
 									<Menu.Items className='origin-top-left absolute left-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
 										<div className='py-1'>
 											<Menu.Item>
-												{({ active }) => (
+												{() => (
 													<button
 														value='newest'
 														className={classNames(
-															active ? 'bg-gray-100' : '',
+															sort === 'newest'
+																? 'bg-gray-100 text-indigo-500 hover:to-indigo-600 font-medium'
+																: 'to-gray-700 hover:to-gray-900',
 															'block px-4 py-2 text-sm w-full text-left'
 														)}
 														onClick={sortHandler}>
@@ -347,11 +423,13 @@ export default function Search({ products, categories, brands, pages }) {
 												)}
 											</Menu.Item>
 											<Menu.Item>
-												{({ active }) => (
+												{() => (
 													<button
 														value='toprated'
 														className={classNames(
-															active ? 'bg-gray-100' : '',
+															sort === 'toprated'
+																? 'bg-gray-100 text-indigo-500 hover:to-indigo-600 font-medium'
+																: 'to-gray-700 hover:to-gray-900',
 															'block px-4 py-2 text-sm w-full text-left'
 														)}
 														onClick={sortHandler}>
@@ -360,11 +438,13 @@ export default function Search({ products, categories, brands, pages }) {
 												)}
 											</Menu.Item>
 											<Menu.Item>
-												{({ active }) => (
+												{() => (
 													<button
 														value='lowest'
 														className={classNames(
-															active ? 'bg-gray-100' : '',
+															sort === 'lowest'
+																? 'bg-gray-100 text-indigo-500 hover:to-indigo-600 font-medium'
+																: 'to-gray-700 hover:to-gray-900',
 															'block px-4 py-2 text-sm w-full text-left'
 														)}
 														onClick={sortHandler}>
@@ -373,11 +453,13 @@ export default function Search({ products, categories, brands, pages }) {
 												)}
 											</Menu.Item>
 											<Menu.Item>
-												{({ active }) => (
+												{() => (
 													<button
 														value='highest'
 														className={classNames(
-															active ? 'bg-gray-100' : '',
+															sort === 'highest'
+																? 'bg-gray-100 text-indigo-500 hover:to-indigo-600 font-medium'
+																: 'to-gray-700 hover:to-gray-900',
 															'block px-4 py-2 text-sm w-full text-left'
 														)}
 														onClick={sortHandler}>
@@ -392,7 +474,15 @@ export default function Search({ products, categories, brands, pages }) {
 
 							<button
 								type='button'
-								className='inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden'
+								className={classNames(
+									category !== 'all' ||
+										brand !== 'all' ||
+										rating !== 'all' ||
+										price !== 'all'
+										? 'text-gray-700 hover:text-gray-900'
+										: 'text-indigo-600',
+									'inline-block text-sm font-medium sm:hidden'
+								)}
 								onClick={() => setOpen(true)}>
 								Filters
 							</button>
@@ -401,8 +491,15 @@ export default function Search({ products, categories, brands, pages }) {
 								<div className='flow-root'>
 									<Popover.Group className='-mx-4 flex items-center divide-x divide-gray-200'>
 										<Popover className='px-4 relative inline-block text-left'>
-											<Popover.Button className='group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900'>
-												<span>Categories</span>
+											<Popover.Button className='group inline-flex justify-center text-sm font-medium'>
+												<span
+													className={classNames(
+														category !== 'all'
+															? 'text-indigo-500 hover:text-indigo-600'
+															: 'text-gray-700 hover:text-gray-900'
+													)}>
+													Categories
+												</span>
 												<ChevronDownIcon
 													className='flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500'
 													aria-hidden='true'
@@ -421,7 +518,12 @@ export default function Search({ products, categories, brands, pages }) {
 													<button
 														value='all'
 														onClick={categoryHandler}
-														className='border-gray-300 focus:ring-indigo-500 text-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'>
+														className={classNames(
+															category === 'all'
+																? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																: 'text-gray-700 hover:text-gray-900',
+															'border-gray-300 focus:ring-indigo-500 text-sm whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'
+														)}>
 														All
 													</button>
 													{categories.map((option, optionIdx) => (
@@ -429,7 +531,12 @@ export default function Search({ products, categories, brands, pages }) {
 															key={optionIdx}
 															value={option}
 															onClick={categoryHandler}
-															className='border-gray-300 focus:ring-indigo-500 text-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'>
+															className={classNames(
+																category === option
+																	? 'text-indigo-500 hover:text-indigo-600 font-medium'
+																	: 'text-gray-700 hover:text-gray-900',
+																'border-gray-300 focus:ring-indigo-500 text-sm whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'
+															)}>
 															{option}
 														</button>
 													))}
@@ -438,8 +545,15 @@ export default function Search({ products, categories, brands, pages }) {
 										</Popover>
 
 										<Popover className='px-4 relative inline-block text-left'>
-											<Popover.Button className='group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900'>
-												<span>Brands</span>
+											<Popover.Button className='group inline-flex justify-center text-sm font-medium'>
+												<span
+													className={classNames(
+														brand !== 'all'
+															? 'text-indigo-500 hover:text-indigo-600'
+															: 'text-gray-700 hover:text-gray-900'
+													)}>
+													Brands
+												</span>
 												<ChevronDownIcon
 													className='flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500'
 													aria-hidden='true'
@@ -458,7 +572,12 @@ export default function Search({ products, categories, brands, pages }) {
 													<button
 														value='all'
 														onClick={brandHandler}
-														className='border-gray-300 focus:ring-indigo-500 text-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'>
+														className={classNames(
+															brand === 'all'
+																? 'text-indigo-500 hover:text-indigo-600'
+																: 'text-gray-700 hover:text-gray-900',
+															'border-gray-300 focus:ring-indigo-500 text-sm whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'
+														)}>
 														All
 													</button>
 													{brands.map((option, optionIdx) => (
@@ -466,7 +585,12 @@ export default function Search({ products, categories, brands, pages }) {
 															key={optionIdx}
 															value={option}
 															onClick={brandHandler}
-															className='border-gray-300 focus:ring-indigo-500 text-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'>
+															className={classNames(
+																brand === option
+																	? 'text-indigo-500 hover:text-indigo-600'
+																	: 'text-gray-700 hover:text-gray-900',
+																'border-gray-300 focus:ring-indigo-500 text-sm whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'
+															)}>
 															{option}
 														</button>
 													))}
@@ -475,8 +599,15 @@ export default function Search({ products, categories, brands, pages }) {
 										</Popover>
 
 										<Popover className='px-4 relative inline-block text-left'>
-											<Popover.Button className='group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900'>
-												<span>Prices</span>
+											<Popover.Button className='group inline-flex justify-center text-sm font-medium'>
+												<span
+													className={classNames(
+														price !== 'all'
+															? 'text-indigo-500 hover:text-indigo-600'
+															: 'text-gray-700 hover:text-gray-900'
+													)}>
+													Prices
+												</span>
 												<ChevronDownIcon
 													className='flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500'
 													aria-hidden='true'
@@ -495,7 +626,12 @@ export default function Search({ products, categories, brands, pages }) {
 													<button
 														value='all'
 														onClick={priceHandler}
-														className='border-gray-300 focus:ring-indigo-500 text-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'>
+														className={classNames(
+															price === 'all'
+																? 'text-indigo-500 hover:text-indigo-600'
+																: 'text-gray-700 hover:text-gray-900',
+															'border-gray-300 focus:ring-indigo-500 text-sm whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'
+														)}>
 														All
 													</button>
 													{prices.map((option, optionIdx) => (
@@ -503,7 +639,12 @@ export default function Search({ products, categories, brands, pages }) {
 															key={optionIdx}
 															value={option.value}
 															onClick={priceHandler}
-															className='border-gray-300 focus:ring-indigo-500 text-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'>
+															className={classNames(
+																price === option.value
+																	? 'text-indigo-500 hover:text-indigo-600'
+																	: 'text-gray-700 hover:text-gray-900',
+																'border-gray-300 focus:ring-indigo-500 text-sm whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'
+															)}>
 															{option.name}
 														</button>
 													))}
@@ -512,8 +653,15 @@ export default function Search({ products, categories, brands, pages }) {
 										</Popover>
 
 										<Popover className='px-4 relative inline-block text-left'>
-											<Popover.Button className='group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900'>
-												<span>Ratings</span>
+											<Popover.Button className='group inline-flex justify-center text-sm font-medium'>
+												<span
+													className={classNames(
+														rating !== 'all'
+															? 'text-indigo-500 hover:text-indigo-600'
+															: 'text-gray-700 hover:text-gray-900'
+													)}>
+													Ratings
+												</span>
 												<ChevronDownIcon
 													className='flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500'
 													aria-hidden='true'
@@ -532,7 +680,12 @@ export default function Search({ products, categories, brands, pages }) {
 													<button
 														value='all'
 														onClick={() => ratingHandler('all')}
-														className='border-gray-300 focus:ring-indigo-500 text-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'>
+														className={classNames(
+															rating === 'all'
+																? 'text-indigo-500 hover:text-indigo-600'
+																: 'text-gray-700 hover:text-gray-900',
+															'border-gray-300 focus:ring-indigo-500 text-sm font-medium text-gray-900 whitespace-nowrap hover:bg-gray-100 py-2 px-4 w-full'
+														)}>
 														All
 													</button>
 													{ratings.map((option, optionIdx) => (
@@ -555,7 +708,14 @@ export default function Search({ products, categories, brands, pages }) {
 																		/>
 																	))}
 																</div>
-																&amp; Up
+																<span
+																	className={classNames(
+																		rating == option
+																			? 'text-indigo-500 hover:text-indigo-600'
+																			: 'text-gray-700 hover:text-gray-900'
+																	)}>
+																	&amp; Up
+																</span>
 															</span>
 														</button>
 													))}
