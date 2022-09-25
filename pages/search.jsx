@@ -479,8 +479,8 @@ export default function Search({ products, categories, brands, pages }) {
 										brand !== 'all' ||
 										rating !== 'all' ||
 										price !== 'all'
-										? 'text-gray-700 hover:text-gray-900'
-										: 'text-indigo-600',
+										? 'text-indigo-600'
+										: 'text-gray-700 hover:text-gray-900 ',
 									'inline-block text-sm font-medium sm:hidden'
 								)}
 								onClick={() => setOpen(true)}>
