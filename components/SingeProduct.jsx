@@ -5,10 +5,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { Store } from '../config'
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
-}
+import { classNames } from '../utils'
 
 export default function SingleProduct({ product }) {
 	const router = useRouter()

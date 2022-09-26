@@ -8,15 +8,12 @@ import {
 import { ChevronDownIcon, StarIcon, XIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import ProductsGrid from '../components/ProductsGrid'
+import { ProductsGrid } from '../components'
+import { classNames } from '../utils'
 import { Layout } from '/components'
 import { db } from '/config'
 import { Product } from '/models'
 import { prices, ratings } from '/utils'
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
-}
 
 const PAGE_SIZE = 8
 

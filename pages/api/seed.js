@@ -1,6 +1,6 @@
 import nc from 'next-connect'
-import { Product, User } from '../../models'
 import { db } from '../../config'
+import { Product, User } from '../../models'
 import { data } from '../../utils'
 
 const handler = nc()

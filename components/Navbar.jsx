@@ -10,10 +10,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useState } from 'react'
 import { Store } from '../config'
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
-}
+import { classNames } from '../utils'
 
 const Navbar = ({ sticky }) => {
 	// get state and dispatch from store

@@ -1,8 +1,5 @@
 import { StarIcon } from '@heroicons/react/solid'
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
-}
+import { classNames } from '../utils'
 
 const StarRatingPicker = ({ value, onChange, number = 5, className }) => {
 	const values = Array.from({ length: number }, (_, index) => index + 1)

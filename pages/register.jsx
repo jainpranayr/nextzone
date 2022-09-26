@@ -1,13 +1,13 @@
+import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid'
 import axios from 'axios'
-import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 import { useContext, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { Layout } from '../components'
 import { getError, Store } from '../config'
-import Cookies from 'js-cookie'
-import { useForm } from 'react-hook-form'
-import { useSnackbar } from 'notistack'
-import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid'
 
 export default function Register() {
 	// get required props from react-hook-form
