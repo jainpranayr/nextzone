@@ -1,8 +1,5 @@
 import NextLink from 'next/link'
-import { Layout } from '../components'
-import Categories from '../components/Categories'
-import Hero from '../components/Hero'
-import ProductsGrid from '../components/ProductsGrid'
+import { Categories, Hero, Layout, ProductsGrid } from '../components'
 import { db } from '../config'
 import { Product } from '../models'
 

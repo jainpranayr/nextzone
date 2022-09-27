@@ -8,15 +8,12 @@ import {
 import { ChevronDownIcon, StarIcon, XIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import ProductsGrid from '../components/ProductsGrid'
+import { ProductsGrid } from '../components'
+import { classNames } from '../utils'
 import { Layout } from '/components'
 import { db } from '/config'
 import { Product } from '/models'
 import { prices, ratings } from '/utils'
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
-}
 
 const PAGE_SIZE = 8
 
@@ -62,19 +59,19 @@ export default function Search({ products, categories, brands, pages }) {
 	}
 
 	const categoryHandler = e => {
-		filter({ category: e.target.value })
+		filter({ category: e.target.value, page: 1 })
 	}
 	const brandHandler = e => {
-		filter({ brand: e.target.value })
+		filter({ brand: e.target.value, page: 1 })
 	}
 	const sortHandler = e => {
-		filter({ sort: e.target.value })
+		filter({ sort: e.target.value, page: 1 })
 	}
 	const priceHandler = e => {
-		filter({ price: e.target.value })
+		filter({ price: e.target.value, page: 1 })
 	}
 	const ratingHandler = option => {
-		filter({ rating: option })
+		filter({ rating: option, page: 1 })
 	}
 
 	return (

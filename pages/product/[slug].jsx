@@ -8,14 +8,10 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useContext, useEffect, useState } from 'react'
-import { Layout } from '../../components'
-import StarRatingPicker from '../../components/StarRatingPicker'
+import { Layout, StarRatingPicker } from '../../components'
 import { db, getError, Store } from '../../config'
 import { Product } from '../../models'
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
-}
+import { classNames } from '../../utils'
 
 export default function ProductScreen({ item }) {
 	// setup router

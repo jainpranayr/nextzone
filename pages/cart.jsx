@@ -1,29 +1,29 @@
+import {
+	Button,
+	Card,
+	Grid,
+	Link,
+	List,
+	ListItem,
+	MenuItem,
+	Select,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Typography,
+} from '@material-ui/core'
+import axios from 'axios'
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { Layout } from '../components'
 import { Store } from '../config'
 import { useStyles } from '../utils'
-import NextLink from 'next/link'
-import Image from 'next/image'
-import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
-import {
-	Grid,
-	TableContainer,
-	Table,
-	Typography,
-	TableHead,
-	TableBody,
-	TableRow,
-	TableCell,
-	Link,
-	Select,
-	MenuItem,
-	Button,
-	Card,
-	List,
-	ListItem,
-} from '@material-ui/core'
-import axios from 'axios'
 
 function Cart() {
 	// setup router
@@ -134,7 +134,7 @@ function Cart() {
 											</TableCell>
 
 											{/* product price */}
-											<TableCell align='right'>${item.price}</TableCell>
+											<TableCell align='right'>₹{item.price}</TableCell>
 
 											{/* remove from cart button */}
 											<TableCell align='right'>
@@ -160,7 +160,7 @@ function Cart() {
 									{/* subtotal heading */}
 									<Typography variant='h6'>
 										Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-										items) : $
+										items) : ₹
 										{cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
 									</Typography>
 								</ListItem>
