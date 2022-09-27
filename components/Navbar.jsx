@@ -35,7 +35,7 @@ const Navbar = ({ sticky }) => {
 		router.push('/login')
 	}
 
-	const [query, setQuery] = useState('')
+	const [query, setQuery] = useState(router.query?.query || '')
 
 	const handleQueryChange = e => {
 		setQuery(e.target.value)
@@ -111,6 +111,7 @@ const Navbar = ({ sticky }) => {
 											className='block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-700 text-gray-300 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 sm:text-sm lg:max-w-sm'
 											placeholder='Search'
 											type='search'
+											value={query}
 											onChange={handleQueryChange}
 										/>
 									</div>

@@ -59,19 +59,19 @@ export default function Search({ products, categories, brands, pages }) {
 	}
 
 	const categoryHandler = e => {
-		filter({ category: e.target.value })
+		filter({ category: e.target.value, page: 1 })
 	}
 	const brandHandler = e => {
-		filter({ brand: e.target.value })
+		filter({ brand: e.target.value, page: 1 })
 	}
 	const sortHandler = e => {
-		filter({ sort: e.target.value })
+		filter({ sort: e.target.value, page: 1 })
 	}
 	const priceHandler = e => {
-		filter({ price: e.target.value })
+		filter({ price: e.target.value, page: 1 })
 	}
 	const ratingHandler = option => {
-		filter({ rating: option })
+		filter({ rating: option, page: 1 })
 	}
 
 	return (

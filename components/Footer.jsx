@@ -1,5 +1,3 @@
-import NextLink from 'next/link'
-
 const GithubIcon = props => (
 	<svg fill='currentColor' viewBox='0 0 24 24' {...props}>
 		<path
@@ -19,9 +17,9 @@ export default function Footer() {
 						&copy; 2022 Nextone. All rights reserved.
 					</p>
 					<div>
-						<NextLink href='https://github.com/jainpranayr/nextzone' passHref>
+						<a href='https://github.com/jainpranayr/nextzone'>
 							<GithubIcon className='w-6 h-6 text-gray-400 hover:text-gray-300 cursor-pointer' />
-						</NextLink>
+						</a>
 					</div>
 				</div>
 			</div>
