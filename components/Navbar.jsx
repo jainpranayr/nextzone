@@ -173,26 +173,26 @@ const Navbar = ({ sticky }) => {
 											<NextLink href='/profile' passHref>
 												<Menu.Item>
 													{({ active }) => (
-														<a
+														<button
 															className={classNames(
 																active ? 'bg-gray-100' : '',
 																'block px-4 py-2 text-sm text-gray-700'
 															)}>
 															Your Profile
-														</a>
+														</button>
 													)}
 												</Menu.Item>
 											</NextLink>
 											<NextLink href='/order-history' passHref>
 												<Menu.Item>
 													{({ active }) => (
-														<a
+														<button
 															className={classNames(
 																active ? 'bg-gray-100' : '',
 																'block px-4 py-2 text-sm text-gray-700'
 															)}>
 															Order History
-														</a>
+														</button>
 													)}
 												</Menu.Item>
 											</NextLink>
