@@ -140,7 +140,7 @@ function Cart() {
 											<TableCell align='right'>
 												<Button
 													variant='contained'
-													color='secondary'
+													color='primary'
 													onClick={() => handleRemoveItem(item)}>
 													x
 												</Button>
