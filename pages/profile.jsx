@@ -1,21 +1,13 @@
-import {
-	Button,
-	Card,
-	Grid,
-	List,
-	ListItem,
-	ListItemText,
-	TextField,
-	Typography,
-} from '@material-ui/core'
+import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid'
+import { Card, Grid, List, ListItem, ListItemText } from '@material-ui/core'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
-import { useContext, useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useContext, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { Layout } from '/components'
 import { getError, Store } from '/config'
 import { useStyles } from '/utils'
@@ -24,21 +16,20 @@ function Profile() {
 	const { state, dispatch } = useContext(Store)
 	const {
 		handleSubmit,
-		control,
 		formState: { errors },
+		register,
 		setValue,
+		watch,
 	} = useForm()
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 	const router = useRouter()
 	const classes = useStyles()
 	const { userInfo } = state
+	const [showPassword, setShowPassword] = useState(false)
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-	const submitHandler = async ({ name, email, password, confirmPassword }) => {
+	const submitHandler = async ({ name, email, password }) => {
 		closeSnackbar()
-		if (password !== confirmPassword) {
-			enqueueSnackbar("Passwords don't match", { variant: 'error' })
-			return
-		}
 		try {
 			const { data } = await axios.put(
 				'/api/users/profile',
@@ -86,140 +77,160 @@ function Profile() {
 					</Card>
 				</Grid>
 				<Grid item md={9} xs={12}>
-					<Card className={classes.section}>
-						<List>
-							<ListItem>
-								<Typography component='h1' variant='h4'>
-									Profile
-								</Typography>
-							</ListItem>
-							<ListItem>
-								<form
-									onSubmit={handleSubmit(submitHandler)}
-									className={classes.form}>
-									<List>
-										<ListItem>
-											<Controller
-												name='name'
-												control={control}
-												defaultValue=''
-												rules={{
-													required: true,
-													minLength: 2,
-												}}
-												render={({ field }) => (
-													<TextField
-														variant='outlined'
-														fullWidth
-														id='name'
-														label='Name'
-														inputProps={{ type: 'name' }}
-														error={Boolean(errors.name)}
-														helperText={
-															errors.name
-																? errors.name.type === 'minLength'
-																	? 'Name length is more than 1'
-																	: 'Name is required'
-																: ''
-														}
-														{...field}></TextField>
-												)}></Controller>
-										</ListItem>
-										<ListItem>
-											<Controller
-												name='email'
-												control={control}
-												defaultValue=''
-												rules={{
-													required: true,
-													pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-												}}
-												render={({ field }) => (
-													<TextField
-														variant='outlined'
-														fullWidth
-														id='email'
-														label='Email'
-														inputProps={{ type: 'email' }}
-														error={Boolean(errors.email)}
-														helperText={
-															errors.email
-																? errors.email.type === 'pattern'
-																	? 'Email is not valid'
-																	: 'Email is required'
-																: ''
-														}
-														{...field}></TextField>
-												)}></Controller>
-										</ListItem>
-										<ListItem>
-											<Controller
-												name='password'
-												control={control}
-												defaultValue=''
-												rules={{
-													validate: value =>
-														value === '' ||
-														value.length > 5 ||
-														'Password length is more than 5',
-												}}
-												render={({ field }) => (
-													<TextField
-														variant='outlined'
-														fullWidth
-														id='password'
-														label='Password'
-														inputProps={{ type: 'password' }}
-														error={Boolean(errors.password)}
-														helperText={
-															errors.password
-																? 'Password length is more than 5'
-																: ''
-														}
-														{...field}></TextField>
-												)}></Controller>
-										</ListItem>
-										<ListItem>
-											<Controller
-												name='confirmPassword'
-												control={control}
-												defaultValue=''
-												rules={{
-													validate: value =>
-														value === '' ||
-														value.length > 5 ||
-														'Confirm Password length is more than 5',
-												}}
-												render={({ field }) => (
-													<TextField
-														variant='outlined'
-														fullWidth
-														id='confirmPassword'
-														label='Confirm Password'
-														inputProps={{ type: 'password' }}
-														error={Boolean(errors.confirmPassword)}
-														helperText={
-															errors.password
-																? 'Confirm Password length is more than 5'
-																: ''
-														}
-														{...field}></TextField>
-												)}></Controller>
-										</ListItem>
-										<ListItem>
-											<Button
-												variant='contained'
-												type='submit'
-												fullWidth
-												color='primary'>
-												Update
-											</Button>
-										</ListItem>
-									</List>
-								</form>
-							</ListItem>
-						</List>
-					</Card>
+					<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+						Update Profile
+					</h2>
+					<div className='mt-4 sm:mx-auto sm:w-full sm:max-w-md'>
+						<div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
+							<form
+								className='space-y-6'
+								onSubmit={handleSubmit(submitHandler)}>
+								{/* Name Field */}
+								<div>
+									<label
+										htmlFor='name'
+										className='block text-sm font-medium text-gray-700'>
+										Username
+									</label>
+									<div className='mt-1 relative rounded-md shadow-sm'>
+										<input
+											id='name'
+											name='name'
+											type='name'
+											autoComplete='name'
+											className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+											{...register('name', {
+												required: true,
+												minLength: 3,
+											})}
+										/>
+									</div>
+									{errors.name && (
+										<p className='mt-2 text-sm text-red-600' id='email-error'>
+											Your username must be atleast 3 characters long.
+										</p>
+									)}
+								</div>
+
+								{/* Email Field */}
+								<div>
+									<label
+										htmlFor='email'
+										className='block text-sm font-medium text-gray-700'>
+										Email address
+									</label>
+									<div className='mt-1 relative rounded-md shadow-sm'>
+										<input
+											id='email'
+											name='email'
+											type='email'
+											autoComplete='email'
+											className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+											{...register('email', {
+												required: true,
+												pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+											})}
+										/>
+									</div>
+									{errors.email && (
+										<p className='mt-2 text-sm text-red-600' id='email-error'>
+											Your email is not valid.
+										</p>
+									)}
+								</div>
+
+								{/* Password Field */}
+								<div>
+									<label
+										htmlFor='password'
+										className='block text-sm font-medium text-gray-700'>
+										Password
+									</label>
+									<div className='mt-1 relative rounded-md shadow-sm'>
+										<input
+											id='password'
+											name='password'
+											type={showPassword ? 'text' : 'password'}
+											autoComplete='current-password'
+											className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+											{...register('password', {
+												required: true,
+												minLength: 6,
+											})}
+										/>
+										<div className='absolute inset-y-0 right-0 pr-3 flex items-center'>
+											{showPassword ? (
+												<EyeOffIcon
+													className='h-5 w-5 text-indigo-500 cursor-pointer'
+													onClick={() => setShowPassword(false)}
+												/>
+											) : (
+												<EyeIcon
+													className='h-5 w-5 text-indigo-500 cursor-pointer'
+													onClick={() => setShowPassword(true)}
+												/>
+											)}
+										</div>
+									</div>
+									{errors.password && (
+										<p className='mt-2 text-sm text-red-600' id='email-error'>
+											Your password must be atleast 6 characters long.
+										</p>
+									)}
+								</div>
+
+								{/* Confirm Password Fiels */}
+								<div>
+									<label
+										htmlFor='password'
+										className='block text-sm font-medium text-gray-700'>
+										Confirm Password
+									</label>
+									<div className='mt-1 relative rounded-md shadow-sm'>
+										<input
+											id='confirm_password'
+											name='confirm_password'
+											type={showConfirmPassword ? 'text' : 'password'}
+											autoComplete='current-password'
+											className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+											{...register('confirm_password', {
+												required: true,
+												minLength: 6,
+												validate: value => value === watch('password'),
+											})}
+										/>
+										<div className='absolute inset-y-0 right-0 pr-3 flex items-center'>
+											{showConfirmPassword ? (
+												<EyeOffIcon
+													className='h-5 w-5 text-indigo-500 cursor-pointer'
+													onClick={() => setShowConfirmPassword(false)}
+												/>
+											) : (
+												<EyeIcon
+													className='h-5 w-5 text-indigo-500 cursor-pointer'
+													onClick={() => setShowConfirmPassword(true)}
+												/>
+											)}
+										</div>
+									</div>
+									{errors.confirm_password && (
+										<p className='mt-2 text-sm text-red-600' id='email-error'>
+											Passwords don&apos;t match.
+										</p>
+									)}
+								</div>
+
+								{/* Submit Button */}
+								<div>
+									<input
+										type='submit'
+										value='Update'
+										className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer'
+									/>
+								</div>
+							</form>
+						</div>
+					</div>
 				</Grid>
 			</Grid>
 		</Layout>

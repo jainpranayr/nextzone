@@ -196,7 +196,6 @@ function Order({ params }) {
 								<ListItem>
 									{shippingAddress.fullName}, {shippingAddress.address},{' '}
 									{shippingAddress.city}, {shippingAddress.postalCode},{' '}
-									{shippingAddress.country}
 								</ListItem>
 								<ListItem>
 									Status:{' '}

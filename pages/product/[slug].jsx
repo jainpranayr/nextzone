@@ -79,6 +79,7 @@ export default function ProductScreen({ item }) {
 			)
 			enqueueSnackbar('Review submitted successfully', { variant: 'success' })
 			setComment('')
+			setRating(0)
 			fetchReviews()
 			fetchProduct()
 		} catch (err) {
@@ -104,6 +105,11 @@ export default function ProductScreen({ item }) {
 		checkInStock()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+
+	const handleEdit = review => {
+		setRating(review.rating)
+		setComment(review.comment)
+	}
 
 	// if product not found
 	if (!product) {
@@ -316,7 +322,7 @@ export default function ProductScreen({ item }) {
 								<div className='border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500'>
 									<textarea
 										id='review-form'
-										rows={2}
+										rows={4}
 										className='block w-full border-0 py-0 resize-none placeholder-gray-500 focus:ring-0 sm:text-sm'
 										placeholder='Write a review...'
 										value={comment}
@@ -326,12 +332,12 @@ export default function ProductScreen({ item }) {
 									{/* Spacer element to match the height of the toolbar */}
 									<div aria-hidden='true'>
 										<div className='py-2'>
-											<div className='h-9' />
+											<div className='h-4' />
 										</div>
 										<div className='h-px' />
 										<div className='py-2'>
 											<div className='py-px'>
-												<div className='h-9' />
+												<div className='h-4' />
 											</div>
 										</div>
 									</div>
@@ -364,18 +370,27 @@ export default function ProductScreen({ item }) {
 									{reviews.map(review => (
 										<div key={review._id} className='py-8'>
 											<div className='flex flex-col space-y-2'>
-												<div className='flex items-center'>
-													{[0, 1, 2, 3, 4].map(rating => (
-														<StarIcon
-															key={rating}
-															className={classNames(
-																review.rating > rating
-																	? 'text-indigo-500'
-																	: 'text-gray-300',
-																'h-5 w-5 flex-shrink-0'
-															)}
-														/>
-													))}
+												<div className='flex justify-between'>
+													<div className='flex items-center'>
+														{[0, 1, 2, 3, 4].map(rating => (
+															<StarIcon
+																key={rating}
+																className={classNames(
+																	review.rating > rating
+																		? 'text-indigo-500'
+																		: 'text-gray-300',
+																	'h-5 w-5 flex-shrink-0'
+																)}
+															/>
+														))}
+													</div>
+													{review.user === userInfo?._id && (
+														<div
+															className='mr-4 text-gray-600 text-sm italic cursor-pointer hover:text-gray-800'
+															onClick={() => handleEdit(review)}>
+															Update
+														</div>
+													)}
 												</div>
 												<div className='flex items-center space-x-3 ml-1'>
 													<h4 className='text-sm font-bold text-gray-900'>
