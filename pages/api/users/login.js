@@ -28,6 +28,7 @@ handler.post(async (req, res) => {
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,
+			isGuest: user.isGuest,
 		})
 	} else {
 		// show error
