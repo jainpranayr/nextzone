@@ -16,6 +16,7 @@ handler.post(async (req, res) => {
 		email: req.body.email,
 		password: bcrypt.hashSync(req.body.password),
 		isAdmin: false,
+		isGuest: false,
 	})
 	const user = await newUser.save()
 
@@ -32,6 +33,7 @@ handler.post(async (req, res) => {
 		name: user.name,
 		email: user.email,
 		isAdmin: user.isAdmin,
+		isGuest: user.isGuest,
 	})
 })
 

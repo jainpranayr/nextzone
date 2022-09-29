@@ -8,6 +8,7 @@ const signToken = user => {
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,
+			isGuest: user.isGuest,
 		},
 
 		process.env.JWT_SECRET,
