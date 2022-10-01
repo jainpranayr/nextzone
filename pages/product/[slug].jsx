@@ -13,12 +13,12 @@ import { db, getError, Store } from '../../config'
 import { Product } from '../../models'
 import { classNames } from '../../utils'
 
-export default function ProductScreen({ item }) {
+export default function ProductScreen({ item, productReviews }) {
 	// setup router
 	const router = useRouter()
 	const { enqueueSnackbar } = useSnackbar()
 
-	const [reviews, setReviews] = useState([])
+	const [reviews, setReviews] = useState(productReviews)
 	const [rating, setRating] = useState(0)
 	const [comment, setComment] = useState('')
 	const [product, setProduct] = useState(item)
@@ -101,7 +101,6 @@ export default function ProductScreen({ item }) {
 			}
 		}
 
-		fetchReviews()
 		checkInStock()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -439,14 +438,15 @@ export async function getServerSideProps(context) {
 	// connect to database
 	await db.connect()
 	// find product by slug in database
-	const product = await Product.findOne({ slug }, '-reviews').lean()
+	const product = await Product.findOne({ slug }).lean()
 	// disconnect from database
 	await db.disconnect()
 
 	// pass product as prop
 	return {
 		props: {
-			item: db.convertDocToObj(product),
+			item: JSON.parse(JSON.stringify(product)),
+			productReviews: JSON.parse(JSON.stringify(product.reviews)),
 		},
 	}
 }

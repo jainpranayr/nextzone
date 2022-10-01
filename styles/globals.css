@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+	scroll-behavior: smooth;
+}
+
 .full-bleed {
 	box-shadow: 0 0 0 100vmax #0f172a;
 	clip-path: inset(0 -100vmax);
