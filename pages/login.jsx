@@ -18,7 +18,6 @@ export default function Login() {
 	} = useForm()
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 	const [showPassword, setShowPassword] = useState(false)
-	const [remember, setRemember] = useState(false)
 
 	// get userInfo and dispatch function froim Store
 	const {
@@ -44,7 +43,7 @@ export default function Login() {
 			// dispatch user login event
 			dispatch({ type: 'USER_LOGIN', payload: data })
 			// store userInfo in cookies
-			remember && Cookies.set('userInfo', data)
+			Cookies.set('userInfo', data)
 
 			// redirect
 			router.push(redirect || '/')
@@ -147,25 +146,6 @@ export default function Login() {
 								)}
 							</div>
 
-							<div className='flex items-center justify-between'>
-								<div className='flex items-center'>
-									<input
-										id='remember-me'
-										name='remember-me'
-										type='checkbox'
-										className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
-										checked={remember}
-										onChange={e => {
-											setRemember(e.target.checked)
-										}}
-									/>
-									<label
-										htmlFor='remember-me'
-										className='ml-2 block text-sm text-gray-900'>
-										Remember me
-									</label>
-								</div>
-							</div>
 							{/* Submit Button */}
 							<div>
 								<input

@@ -259,7 +259,7 @@ export default function ProductScreen({ item, productReviews }) {
 							<form className='mt-6 flex sm:flex-col1'>
 								<button
 									disabled={!isInStock}
-									className='max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full disabled:cursor-not-allowed'
+									className='max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full disabled:cursor-not-allowed disabled:bg-opacity-60'
 									onClick={handleAddToCart}>
 									Add to bag
 								</button>
