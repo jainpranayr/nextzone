@@ -5,9 +5,9 @@ import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { Layout } from '/components'
 import { getError, Store } from '/config'
 import { useStyles } from '/utils'
@@ -21,7 +21,6 @@ function Profile() {
 		setValue,
 		watch,
 	} = useForm()
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 	const router = useRouter()
 	const classes = useStyles()
 	const { userInfo } = state
@@ -29,7 +28,6 @@ function Profile() {
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
 	const submitHandler = async ({ name, email, password }) => {
-		closeSnackbar()
 		try {
 			const { data } = await axios.put(
 				'/api/users/profile',
@@ -43,9 +41,9 @@ function Profile() {
 			dispatch({ type: 'USER_LOGIN', payload: data })
 			Cookies.set('userInfo', JSON.stringify(data))
 
-			enqueueSnackbar('Profile updated successfully', { variant: 'success' })
+			toast.success('Profile updated successfully', { duration: 3000 })
 		} catch (err) {
-			enqueueSnackbar(getError(err), { variant: 'error' })
+			toast.error(getError(err), { duration: 3000 })
 		}
 	}
 

@@ -22,11 +22,11 @@ specifiers:
   next: 12.1.1
   next-connect: ^0.12.2
   nextjs-progressbar: ^0.0.14
-  notistack: ^1.0.9
   postcss: ^8.4.16
   react: 17.0.2
   react-dom: 17.0.2
   react-hook-form: ^7.11.0
+  react-hot-toast: ^2.4.0
   tailwindcss: ^3.1.8
 
 dependencies:
@@ -48,10 +48,10 @@ dependencies:
   next: 12.1.1_sfoxds7t5ydpegc3knd667wn6m
   next-connect: 0.12.2
   nextjs-progressbar: 0.0.14_next@12.1.1+react@17.0.2
-  notistack: 1.0.10_7twteiegzuck7mfw73wj5btjea
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-hook-form: 7.27.1_react@17.0.2
+  react-hot-toast: 2.4.0_sfoxds7t5ydpegc3knd667wn6m
 
 devDependencies:
   autoprefixer: 10.4.8_postcss@8.4.16
@@ -1474,6 +1474,12 @@ packages:
       slash: 3.0.0
     dev: true
 
+  /goober/2.1.11:
+    resolution: {integrity: sha512-5SS2lmxbhqH0u9ABEWq7WPU69a4i2pYcHeCxqaNq6Cw3mnrF0ghWNM4tEGid4dKy8XNIAUbuThuozDHHKJVh3A==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dev: false
+
   /has-bigints/1.0.1:
     resolution: {integrity: sha512-LSBS2LjbNBTf6287JEbEzvJgftkF5qFkmCo9hDRpAzKhUOlJ+hx8dd4USs00SgsUNwc4617J9ki5YtEClM2ffA==}
     dev: true
@@ -2061,20 +2067,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /notistack/1.0.10_7twteiegzuck7mfw73wj5btjea:
-    resolution: {integrity: sha512-z0y4jJaVtOoH3kc3GtNUlhNTY+5LE04QDeLVujX3VPhhzg67zw055mZjrBF+nzpv3V9aiPNph1EgRU4+t8kQTQ==}
-    peerDependencies:
-      '@material-ui/core': ^4.0.0
-      react: ^16.8.0 || ^17.0.0
-      react-dom: ^16.8.0 || ^17.0.0
-    dependencies:
-      '@material-ui/core': 4.12.3_sfoxds7t5ydpegc3knd667wn6m
-      clsx: 1.1.1
-      hoist-non-react-statics: 3.3.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-    dev: false
-
   /nprogress/0.2.0:
     resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
     dev: false
@@ -2337,6 +2329,20 @@ packages:
       react: ^16.8.0 || ^17
     dependencies:
       react: 17.0.2
+    dev: false
+
+  /react-hot-toast/2.4.0_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      goober: 2.1.11
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    transitivePeerDependencies:
+      - csstype
     dev: false
 
   /react-is/16.13.1:

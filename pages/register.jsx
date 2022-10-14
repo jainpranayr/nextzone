@@ -3,9 +3,9 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { Layout } from '../components'
 import { getError, Store } from '../config'
 
@@ -17,11 +17,9 @@ export default function Register() {
 		watch,
 		formState: { errors },
 	} = useForm()
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
 	const [showPassword, setShowPassword] = useState(false)
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-	const [remember, setRemember] = useState(false)
 
 	// get userInfo from Store
 	const {
@@ -43,8 +41,6 @@ export default function Register() {
 
 	// register user
 	const registerUser = async ({ name, email, password }) => {
-		closeSnackbar()
-
 		try {
 			// post user data
 			const { data } = await axios.post('/api/users/register', {
@@ -57,13 +53,14 @@ export default function Register() {
 			dispatch({ type: 'USER_LOGIN', payload: data })
 
 			// setup userInfo Cookie
-			remember && Cookies.set('userInfo', data)
+			Cookies.set('userInfo', data)
 
 			// redirect
 			router.push(redirect || '/')
+			toast.success('Account created successfully', { duration: 3000 })
 		} catch (err) {
 			// show error
-			enqueueSnackbar(getError(err), { variant: 'error' })
+			toast.error(getError(err), { duration: 3000 })
 		}
 	}
 
@@ -219,26 +216,6 @@ export default function Register() {
 										Passwords don&apos;t match.
 									</p>
 								)}
-							</div>
-
-							<div className='flex items-center justify-between'>
-								<div className='flex items-center'>
-									<input
-										id='remember-me'
-										name='remember-me'
-										type='checkbox'
-										className='h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded'
-										checked={remember}
-										onChange={e => {
-											setRemember(e.target.checked)
-										}}
-									/>
-									<label
-										htmlFor='remember-me'
-										className='ml-2 block text-sm text-gray-900'>
-										Remember me
-									</label>
-								</div>
 							</div>
 
 							{/* Submit Button */}
