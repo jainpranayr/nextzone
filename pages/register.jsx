@@ -3,9 +3,9 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { Layout } from '../components'
 import { getError, Store } from '../config'
 
@@ -17,7 +17,6 @@ export default function Register() {
 		watch,
 		formState: { errors },
 	} = useForm()
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
 	const [showPassword, setShowPassword] = useState(false)
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -42,8 +41,6 @@ export default function Register() {
 
 	// register user
 	const registerUser = async ({ name, email, password }) => {
-		closeSnackbar()
-
 		try {
 			// post user data
 			const { data } = await axios.post('/api/users/register', {
@@ -60,9 +57,10 @@ export default function Register() {
 
 			// redirect
 			router.push(redirect || '/')
+			toast.success('Account created successfully', { duration: 3000 })
 		} catch (err) {
 			// show error
-			enqueueSnackbar(getError(err), { variant: 'error' })
+			toast.error(getError(err), { duration: 3000 })
 		}
 	}
 

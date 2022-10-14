@@ -1,17 +1,9 @@
-import {
-	Button,
-	List,
-	ListItem,
-	TextField,
-	Typography,
-} from '@material-ui/core'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { CheckoutWizard, Layout } from '../components'
 import { Store } from '../config'
-import { useStyles } from '../utils'
 
 export default function Shipping() {
 	// setup router
@@ -29,7 +21,6 @@ export default function Shipping() {
 	// get required values from react hook form
 	const {
 		handleSubmit,
-		control,
 		formState: { errors },
 		setValue,
 		register,
@@ -48,9 +39,6 @@ export default function Shipping() {
 		setValue('postalCode', shippingAddress.postalCode)
 		setValue('state', shippingAddress.state)
 	}, [userInfo, router, setValue, shippingAddress])
-
-	// get styles
-	const classes = useStyles()
 
 	// form submit handler
 	const submitHandler = ({ fullName, address, city, postalCode, state }) => {

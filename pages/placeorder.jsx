@@ -20,8 +20,8 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
 import { useContext, useState } from 'react'
+import toast from 'react-hot-toast'
 import { CheckoutWizard, Layout } from '../components'
 import { getError, Store } from '../config'
 import { useStyles } from '../utils'
@@ -31,8 +31,6 @@ const PlaceOrder = () => {
 	const classes = useStyles()
 	//   setup router
 	const router = useRouter()
-	// setup snackbar
-	const { closeSnackbar, enqueueSnackbar } = useSnackbar()
 	// setup loading state
 	const [loading, setLoading] = useState(false)
 	//   get required states from context
@@ -59,7 +57,6 @@ const PlaceOrder = () => {
 
 	// post order to db
 	const handlePlaceOrder = async () => {
-		closeSnackbar()
 		try {
 			setLoading(true)
 
@@ -90,10 +87,10 @@ const PlaceOrder = () => {
 
 			// redirect user to order page
 			router.push(`/order/${data._id}`)
+			toast.success('Order placed successfully')
 		} catch (err) {
 			setLoading(false)
-			// show error as snackbar
-			enqueueSnackbar(getError(err), { variant: 'error' })
+			toast.error(getError(err), { duration: 3000 })
 		}
 	}
 

@@ -19,8 +19,8 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
 import { useContext, useEffect, useReducer } from 'react'
+import toast from 'react-hot-toast'
 import { Layout } from '../../components'
 import { getError, Store } from '../../config'
 import { slugify, useStyles } from '../../utils'
@@ -86,9 +86,6 @@ function Order({ params }) {
 		isDelivered,
 		deliveredAt,
 	} = order
-
-	// get req. values from snackbar
-	const { enqueueSnackbar } = useSnackbar()
 
 	useEffect(() => {
 		// if user not authenticated redirect to login page
@@ -162,16 +159,16 @@ function Order({ params }) {
 					}
 				)
 				dispatch({ type: 'PAY_SUCCESS', payload: data })
-				enqueueSnackbar('Order is paid', { variant: 'success' })
+				toast.success('Order is paid', { duration: 3000 })
 			} catch (err) {
 				dispatch({ type: 'PAY_FAIL', payload: getError(err) })
-				enqueueSnackbar(getError(err), { variant: 'error' })
+				toast.error(getError(err), { duration: 3000 })
 			}
 		})
 	}
 
 	function onError(err) {
-		enqueueSnackbar(getError(err), { variant: 'error' })
+		toast.error(getError(err), { duration: 3000 })
 	}
 
 	return (

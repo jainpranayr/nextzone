@@ -3,9 +3,9 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
 import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { Layout } from '../components'
 import { getError, Store } from '../config'
 
@@ -16,7 +16,6 @@ export default function Login() {
 		formState: { errors },
 		setValue,
 	} = useForm()
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 	const [showPassword, setShowPassword] = useState(false)
 
 	// get userInfo and dispatch function froim Store
@@ -32,7 +31,6 @@ export default function Login() {
 
 	// handle login
 	const logUserin = async ({ email, password }) => {
-		closeSnackbar()
 		try {
 			// check if user credentials is correct
 			const { data } = await axios.post('/api/users/login', {
@@ -47,9 +45,10 @@ export default function Login() {
 
 			// redirect
 			router.push(redirect || '/')
+			toast.success("You're logged in", { duration: 3000 })
 		} catch (err) {
 			// show error
-			enqueueSnackbar(getError(err), { variant: 'error' })
+			toast.error(getError(err), { duration: 3000 })
 		}
 	}
 

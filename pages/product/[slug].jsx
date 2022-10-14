@@ -6,8 +6,8 @@ import { CheckIcon, XIcon } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
 import { useContext, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { Layout, StarRatingPicker } from '../../components'
 import { db, getError, Store } from '../../config'
 import { Product } from '../../models'
@@ -16,7 +16,6 @@ import { classNames } from '../../utils'
 export default function ProductScreen({ item, productReviews }) {
 	// setup router
 	const router = useRouter()
-	const { enqueueSnackbar } = useSnackbar()
 
 	const [reviews, setReviews] = useState(productReviews)
 	const [rating, setRating] = useState(0)
@@ -51,7 +50,7 @@ export default function ProductScreen({ item, productReviews }) {
 			const { data } = await axios.get(`/api/products/${product._id}/reviews`)
 			setReviews(data)
 		} catch (err) {
-			enqueueSnackbar(getError(err), { variant: 'error' })
+			return err
 		}
 	}
 
@@ -60,7 +59,7 @@ export default function ProductScreen({ item, productReviews }) {
 			const { data } = await axios.get(`/api/products/${product._id}`)
 			setProduct(data)
 		} catch (err) {
-			enqueueSnackbar(getError(err), { variant: 'error' })
+			return err
 		}
 	}
 
@@ -77,13 +76,13 @@ export default function ProductScreen({ item, productReviews }) {
 					headers: { authorization: `Bearer ${userInfo.token}` },
 				}
 			)
-			enqueueSnackbar('Review submitted successfully', { variant: 'success' })
+			toast.success('Review submitted successfully', { duration: 3000 })
 			setComment('')
 			setRating(0)
 			fetchReviews()
 			fetchProduct()
 		} catch (err) {
-			enqueueSnackbar(getError(err), { variant: 'error' })
+			toast.error(getError(err), { duration: 3000 })
 		}
 	}
 
