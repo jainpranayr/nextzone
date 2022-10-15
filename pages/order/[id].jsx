@@ -21,7 +21,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer } from 'react'
 import toast from 'react-hot-toast'
-import { Layout } from '../../components'
+import { MyHead } from '../../components'
 import { getError, Store } from '../../config'
 import { slugify, useStyles } from '../../utils'
 
@@ -172,7 +172,9 @@ function Order({ params }) {
 	}
 
 	return (
-		<Layout title={`Order ${orderId}`}>
+		<>
+			<MyHead title={`Order - ${orderId.substring(20, 24)}`} />
+
 			<Typography component='h1' variant='h4'>
 				Order {orderId}
 			</Typography>
@@ -337,7 +339,7 @@ function Order({ params }) {
 					</Grid>
 				</Grid>
 			)}
-		</Layout>
+		</>
 	)
 }
 

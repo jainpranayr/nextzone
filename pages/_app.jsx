@@ -2,6 +2,7 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import NextNProgress from 'nextjs-progressbar'
 import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
+import { Layout } from '../components'
 import { StoreProvider } from '../config'
 import '../styles/globals.css'
 
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }) {
 		<StoreProvider>
 			<PayPalScriptProvider>
 				<NextNProgress color='#4f46e5' height={4} />
-				<Component {...pageProps} />
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
 				<Toaster position='top-right' />
 			</PayPalScriptProvider>
 		</StoreProvider>

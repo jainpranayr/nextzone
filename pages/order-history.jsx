@@ -19,7 +19,7 @@ import dynamic from 'next/dynamic'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer } from 'react'
-import { Layout } from '/components'
+import { MyHead } from '../components'
 import { getError, Store } from '/config'
 import { useStyles } from '/utils'
 
@@ -68,7 +68,8 @@ function OrderHistory() {
 		fetchOrders()
 	}, [router, userInfo])
 	return (
-		<Layout title='Order History'>
+		<>
+			<MyHead title='Order History' />
 			<Grid container spacing={1}>
 				<Grid item md={3} xs={12}>
 					<Card className={classes.section}>
@@ -144,7 +145,7 @@ function OrderHistory() {
 					</Card>
 				</Grid>
 			</Grid>
-		</Layout>
+		</>
 	)
 }
 

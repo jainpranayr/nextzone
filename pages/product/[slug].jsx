@@ -5,11 +5,10 @@ import { Tab } from '@headlessui/react'
 import { CheckIcon, XIcon } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
 import axios from 'axios'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { Layout, StarRatingPicker } from '../../components'
+import { MyHead, StarRatingPicker } from '../../components'
 import { db, getError, Store } from '../../config'
 import { Product } from '../../models'
 import { classNames } from '../../utils'
@@ -117,12 +116,14 @@ export default function ProductScreen({ item, productReviews }) {
 
 	// if product found
 	return (
-		<div>
-			<Head>
-				<meta property='og:title' content={product.name} />
-				<meta property='og:image' content={product.images[0]} />
-			</Head>
-			<Layout title={product.name} description={product.description}>
+		<>
+			<MyHead
+				title={product.name}
+				description={product.description.replace(/(<([^>]+)>)/gi, '')}
+				image={product.images[0]}
+			/>
+
+			<div>
 				<section className='bg-white mt-10'>
 					<div className='max-w-2xl mx-auto p-4 sm:px-6 lg:max-w-7xl lg:px-8'>
 						<div className='lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start'>
@@ -432,8 +433,8 @@ export default function ProductScreen({ item, productReviews }) {
 						</div>
 					</div>
 				</section>
-			</Layout>
-		</div>
+			</div>
+		</>
 	)
 }
 

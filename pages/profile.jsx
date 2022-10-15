@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { Layout } from '/components'
+import { MyHead } from '../components'
 import { getError, Store } from '/config'
 import { useStyles } from '/utils'
 
@@ -56,7 +56,8 @@ function Profile() {
 	}, [router, setValue, userInfo])
 
 	return (
-		<Layout title='Profile'>
+		<>
+			<MyHead title='User Profile' />
 			<Grid container spacing={1}>
 				<Grid item md={3} xs={12}>
 					<Card className={classes.section}>
@@ -247,7 +248,7 @@ function Profile() {
 					)}
 				</Grid>
 			</Grid>
-		</Layout>
+		</>
 	)
 }
 

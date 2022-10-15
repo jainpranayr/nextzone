@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { CheckoutWizard, Layout } from '../components'
+import { CheckoutWizard, MyHead } from '../components'
 import { Store } from '../config'
 
 export default function Shipping() {
@@ -62,7 +62,8 @@ export default function Shipping() {
 	}
 
 	return (
-		<Layout title='Shipping Address'>
+		<>
+			<MyHead title='Shipping Address' />
 			<CheckoutWizard activeStep={1} />
 			<form
 				className='space-y-8 max-w-2xl mx-auto mt-6'
@@ -211,6 +212,6 @@ export default function Shipping() {
 					</div>
 				</div>
 			</form>
-		</Layout>
+		</>
 	)
 }
