@@ -74,7 +74,7 @@ export default function Search({ products, categories, brands, pages }) {
 	}
 
 	return (
-		<>
+		<div>
 			<MyHead
 				title='Search'
 				description='Brouse through our collection of apparel'
@@ -731,7 +731,7 @@ export default function Search({ products, categories, brands, pages }) {
 				</section>
 			</div>
 			<ProductsGrid products={products} />
-			<nav className='border-t border-gray-200 px-4 flex items-center justify-center sm:px-0'>
+			<nav className='border-t border-gray-200 px-4 flex items-center justify-center sm:px-0 mb-4'>
 				<div className='flex'>
 					{Array.from({ length: pages }).map((_, index) => (
 						<button
@@ -747,8 +747,12 @@ export default function Search({ products, categories, brands, pages }) {
 					))}
 				</div>
 			</nav>
-		</>
+		</div>
 	)
+}
+
+Search.layout = {
+	sticky: false,
 }
 
 export async function getServerSideProps({ query }) {
@@ -787,14 +791,14 @@ export async function getServerSideProps({ query }) {
 
 	const priceFilter =
 		price && price !== 'all'
-			? price !== '8000'
+			? price.split('-').length !== 1
 				? {
 						price: {
 							$gte: Number(price.split('-')[0]),
 							$lte: Number(price.split('-')[1]),
 						},
 				  }
-				: { price: { $gte: Number(price) } }
+				: { price: { $gt: Number(price) } }
 			: {}
 
 	const order =
