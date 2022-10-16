@@ -22,7 +22,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
-import { CheckoutWizard, Layout } from '../components'
+import { CheckoutWizard, MyHead } from '../components'
 import { getError, Store } from '../config'
 import { useStyles } from '../utils'
 
@@ -95,7 +95,11 @@ const PlaceOrder = () => {
 	}
 
 	return (
-		<Layout title='Shopping Cart'>
+		<>
+			<MyHead
+				title='Place Order'
+				url={`https://nextzone.vercel.app/${router.asPath}`}
+			/>
 			<CheckoutWizard activeStep={3}></CheckoutWizard>
 			<Typography component='h1' variant='h4'>
 				Place Order
@@ -240,7 +244,7 @@ const PlaceOrder = () => {
 					</Card>
 				</Grid>
 			</Grid>
-		</Layout>
+		</>
 	)
 }
 

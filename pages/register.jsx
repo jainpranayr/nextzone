@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { Layout } from '../components'
+import { MyHead } from '../components'
 import { getError, Store } from '../config'
 
 export default function Register() {
@@ -65,7 +65,11 @@ export default function Register() {
 	}
 
 	return (
-		<Layout title='Register'>
+		<>
+			<MyHead
+				title='Register'
+				url={`https://nextzone.vercel.app/${router.asPath}`}
+			/>
 			<div className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
 				<div className='sm:mx-auto sm:w-full sm:max-w-md'>
 					<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
@@ -230,6 +234,6 @@ export default function Register() {
 					</div>
 				</div>
 			</div>
-		</Layout>
+		</>
 	)
 }

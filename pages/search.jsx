@@ -8,9 +8,8 @@ import {
 import { ChevronDownIcon, StarIcon, XIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import { ProductsGrid } from '../components'
+import { MyHead, ProductsGrid } from '../components'
 import { classNames } from '../utils'
-import { Layout } from '/components'
 import { db } from '/config'
 import { Product } from '/models'
 import { prices, ratings } from '/utils'
@@ -75,7 +74,12 @@ export default function Search({ products, categories, brands, pages }) {
 	}
 
 	return (
-		<Layout title='Search' sticky={false}>
+		<>
+			<MyHead
+				title='Search'
+				description='Brouse through our collection of apparel'
+				url={`https://nextzone.vercel.app/${router.asPath}`}
+			/>
 			<div className='sticky top-0 p-4 z-10 bg-white border-b border-gray-200 mb-4'>
 				<Transition.Root show={open} as={Fragment}>
 					<Dialog
@@ -743,7 +747,7 @@ export default function Search({ products, categories, brands, pages }) {
 					))}
 				</div>
 			</nav>
-		</Layout>
+		</>
 	)
 }
 

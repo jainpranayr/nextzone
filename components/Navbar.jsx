@@ -6,10 +6,12 @@ import {
 	XIcon,
 } from '@heroicons/react/outline'
 import Cookies from 'js-cookie'
+import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useState } from 'react'
 import { Store } from '../config'
+import Logo from '../public/images/logo.png'
 import { classNames } from '../utils'
 
 const Navbar = ({ sticky }) => {
@@ -56,14 +58,21 @@ const Navbar = ({ sticky }) => {
 				<>
 					<div className='max-w-7xl mx-auto px-2 sm:px-4 lg:px-8'>
 						<div className='relative flex h-16 md:h-20 lg:gap-x-4 justify-between items-center'>
-							<div className='hidden md:flex px-2 lg:px-0'>
-								<div className='flex-shrink-0 flex items-center cursor-pointer'>
-									<NextLink href='/' passHref>
-										<span className='font-bold text-white text-2xl'>
-											nextzone
+							<div className='flex items-center justify-center gap-x-2'>
+								<NextLink href='/' passHref>
+									<div className='flex-shrink-0 flex items-center text-2xl font-bold focus:outline-none focus:ring px-3 py-2 rounded-sm gap-x-2 cursor-pointer'>
+										<Image
+											src={Logo.src}
+											alt=''
+											className='w-full h-full'
+											width={32}
+											height={32}
+										/>
+										<span className='text-white hidden md:inline'>
+											Nextzone
 										</span>
-									</NextLink>
-								</div>
+									</div>
+								</NextLink>
 								<div className='hidden lg:block lg:ml-6'>
 									<div className='flex space-x-4'>
 										<NextLink href='/' passHref>
@@ -91,6 +100,7 @@ const Navbar = ({ sticky }) => {
 									</div>
 								</div>
 							</div>
+
 							<div className='flex-1 flex justify-center items-center px-2 lg:ml-6 lg:justify-end'>
 								<form
 									className='max-w-lg w-full lg:max-w-xs'

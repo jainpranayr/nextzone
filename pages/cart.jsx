@@ -21,7 +21,7 @@ import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
-import { Layout } from '../components'
+import { MyHead } from '../components'
 import { Store } from '../config'
 import { useStyles } from '../utils'
 
@@ -64,7 +64,13 @@ function Cart() {
 	}
 
 	return (
-		<Layout title='Shopping Cart'>
+		<>
+			<MyHead
+				title={`Shopping Bag ${
+					cartItems.length > 0 && '- ' + cartItems.length + ' item(s)'
+				}`}
+				url={`https://nextzone.vercel.app/${router.asPath}`}
+			/>
 			{/* check whether cartItem is empty or not */}
 			{cartItems.length === 0 ? (
 				<div className={classes.section}>
@@ -180,7 +186,7 @@ function Cart() {
 					</Grid>
 				</Grid>
 			)}
-		</Layout>
+		</>
 	)
 }
 
