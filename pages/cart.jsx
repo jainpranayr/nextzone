@@ -20,6 +20,10 @@ function Cart() {
 		dispatch,
 	} = useContext(Store)
 
+	const subtotal = cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
+	const tax = Math.floor(subtotal * 0.18)
+	const totalPrice = Math.floor(subtotal + tax)
+
 	// update quantity count in cart
 	const updateProductQuantity = async (item, quantity) => {
 		// get product detail
@@ -45,10 +49,6 @@ function Cart() {
 		e.preventDefault()
 		router.push('/shipping')
 	}
-
-	const subtotal = cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
-	const tax = Math.floor(subtotal * 0.18)
-	const totalPrice = Math.floor(subtotal + tax)
 
 	return (
 		<div>
@@ -161,7 +161,7 @@ function Cart() {
 
 						<section
 							aria-labelledby='summary-heading'
-							className='mt-16 bg-gray-100 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5'>
+							className='mt-16 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5'>
 							<h2
 								id='summary-heading'
 								className='text-lg font-medium text-gray-900'>
