@@ -6,6 +6,9 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['Roboto', 'sans-serif'],
+			},
 			keyframes: {
 				wiggle: {
 					'0%': { transform: 'rotate(5deg)' },
