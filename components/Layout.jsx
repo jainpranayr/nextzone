@@ -1,4 +1,4 @@
-import { Container, createTheme, ThemeProvider } from '@material-ui/core'
+import { createTheme, ThemeProvider } from '@material-ui/core'
 import Footer from './Footer'
 import Navbar from './Navbar'
 
@@ -22,7 +22,7 @@ export default function Layout({ children, sticky = true }) {
 				{/* Navbar */}
 				<Navbar sticky={sticky} />
 				{/* Main Content */}
-				<Container className='flex-1'>{children}</Container>
+				<div className='container max-w-7xl mx-auto flex-1'>{children}</div>
 				{/* Footer */}
 				<Footer />
 			</ThemeProvider>
