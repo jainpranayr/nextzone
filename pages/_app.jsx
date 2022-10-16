@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
 		<StoreProvider>
 			<PayPalScriptProvider>
 				<NextNProgress color='#4f46e5' height={4} />
-				<Layout>
+				<Layout {...(Component.layout || {})}>
 					<Component {...pageProps} />
 				</Layout>
 				<Toaster position='top-right' />
