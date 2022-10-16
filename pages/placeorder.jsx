@@ -96,7 +96,10 @@ const PlaceOrder = () => {
 
 	return (
 		<>
-			<MyHead title='Place Order' url={window.location.href} />
+			<MyHead
+				title='Place Order'
+				url={`https://nextzone.vercel.app/${router.asPath}`}
+			/>
 			<CheckoutWizard activeStep={3}></CheckoutWizard>
 			<Typography component='h1' variant='h4'>
 				Place Order

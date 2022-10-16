@@ -175,7 +175,7 @@ function Order({ params }) {
 		<>
 			<MyHead
 				title={`Order - ${orderId.substring(20, 24)}`}
-				url={window.location.href}
+				url={`https://nextzone.vercel.app/${router.asPath}`}
 			/>
 
 			<Typography component='h1' variant='h4'>

@@ -61,7 +61,10 @@ export default function Login() {
 
 	return (
 		<>
-			<MyHead title='Sign In' url={window.location.href} />
+			<MyHead
+				title='Sign In'
+				url={`https://nextzone.vercel.app/${router.asPath}`}
+			/>
 
 			<div className='min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
 				<div className='sm:mx-auto sm:w-full sm:max-w-md'>

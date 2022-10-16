@@ -69,7 +69,10 @@ function OrderHistory() {
 	}, [router, userInfo])
 	return (
 		<>
-			<MyHead title='Order History' url={window.location.href} />
+			<MyHead
+				title='Order History'
+				url={`https://nextzone.vercel.app/${router.asPath}`}
+			/>
 			<Grid container spacing={1}>
 				<Grid item md={3} xs={12}>
 					<Card className={classes.section}>
