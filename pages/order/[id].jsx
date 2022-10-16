@@ -173,7 +173,10 @@ function Order({ params }) {
 
 	return (
 		<>
-			<MyHead title={`Order - ${orderId.substring(20, 24)}`} />
+			<MyHead
+				title={`Order - ${orderId.substring(20, 24)}`}
+				url={window.location.href}
+			/>
 
 			<Typography component='h1' variant='h4'>
 				Order {orderId}

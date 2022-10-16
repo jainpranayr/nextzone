@@ -63,7 +63,7 @@ export default function Shipping() {
 
 	return (
 		<>
-			<MyHead title='Shipping Address' />
+			<MyHead title='Shipping Address' url={window.location.href} />
 			<CheckoutWizard activeStep={1} />
 			<form
 				className='space-y-8 max-w-2xl mx-auto mt-6'

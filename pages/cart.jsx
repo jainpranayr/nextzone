@@ -69,6 +69,7 @@ function Cart() {
 				title={`Shopping Bag ${
 					cartItems.length > 0 && '- ' + cartItems.length + ' item(s)'
 				}`}
+				url={window.location.href}
 			/>
 			{/* check whether cartItem is empty or not */}
 			{cartItems.length === 0 ? (

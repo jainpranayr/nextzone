@@ -121,6 +121,7 @@ export default function ProductScreen({ item, productReviews }) {
 				title={product.name}
 				description={product.description.replace(/(<([^>]+)>)/gi, '')}
 				image={product.images[0]}
+				url={window.location.href}
 			/>
 
 			<div>

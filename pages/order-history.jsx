@@ -69,7 +69,7 @@ function OrderHistory() {
 	}, [router, userInfo])
 	return (
 		<>
-			<MyHead title='Order History' />
+			<MyHead title='Order History' url={window.location.href} />
 			<Grid container spacing={1}>
 				<Grid item md={3} xs={12}>
 					<Card className={classes.section}>

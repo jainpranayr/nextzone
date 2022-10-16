@@ -11,7 +11,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useContext, useState } from 'react'
 import { Store } from '../config'
-import Logo from '../public/images/logo.svg'
+import Logo from '../public/images/logo.png'
 import { classNames } from '../utils'
 
 const Navbar = ({ sticky }) => {

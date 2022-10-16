@@ -96,7 +96,7 @@ const PlaceOrder = () => {
 
 	return (
 		<>
-			<MyHead title='Place Order' />
+			<MyHead title='Place Order' url={window.location.href} />
 			<CheckoutWizard activeStep={3}></CheckoutWizard>
 			<Typography component='h1' variant='h4'>
 				Place Order

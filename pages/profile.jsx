@@ -57,7 +57,7 @@ function Profile() {
 
 	return (
 		<>
-			<MyHead title='User Profile' />
+			<MyHead title='User Profile' url={window.location.href} />
 			<Grid container spacing={1}>
 				<Grid item md={3} xs={12}>
 					<Card className={classes.section}>

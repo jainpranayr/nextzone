@@ -78,6 +78,7 @@ export default function Search({ products, categories, brands, pages }) {
 			<MyHead
 				title='Search'
 				description='Brouse through our collection of apparel'
+				url={window.location.href}
 			/>
 			<div className='sticky top-0 p-4 z-10 bg-white border-b border-gray-200 mb-4'>
 				<Transition.Root show={open} as={Fragment}>
