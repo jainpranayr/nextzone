@@ -19,6 +19,7 @@ specifiers:
   js-cookie: ^2.2.1
   jsonwebtoken: ^8.5.1
   mongoose: ^6.2.3
+  nanoid: ^4.0.0
   next: 12.1.1
   next-connect: ^0.12.2
   nextjs-progressbar: ^0.0.14
@@ -45,6 +46,7 @@ dependencies:
   js-cookie: 2.2.1
   jsonwebtoken: 8.5.1
   mongoose: 6.2.3
+  nanoid: 4.0.0
   next: 12.1.1_sfoxds7t5ydpegc3knd667wn6m
   next-connect: 0.12.2
   nextjs-progressbar: 0.0.14_next@12.1.1+react@17.0.2
@@ -1989,6 +1991,12 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}

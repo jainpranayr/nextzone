@@ -55,9 +55,9 @@ export default function Login() {
 	// if user is already logged in redirect to home page
 	useEffect(() => {
 		if (userInfo) {
-			router.push('/')
+			router.push(redirect || '/')
 		}
-	}, [router, userInfo])
+	}, [router, userInfo, redirect])
 
 	return (
 		<>
