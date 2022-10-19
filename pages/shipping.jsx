@@ -40,12 +40,14 @@ export default function Shipping() {
 			router.push('/login?redirect=/shipping')
 		}
 
-		// set values from saved address
-		setValue('fullName', shippingAddress.fullName)
-		setValue('address', shippingAddress.address)
-		setValue('city', shippingAddress.city)
-		setValue('postalCode', shippingAddress.postalCode)
-		setValue('state', shippingAddress.state)
+		if (shippingAddress || userInfo) {
+			// set values from saved address
+			setValue('fullName', shippingAddress.fullName || userInfo?.name)
+			setValue('address', shippingAddress.address)
+			setValue('city', shippingAddress.city)
+			setValue('postalCode', shippingAddress.postalCode)
+			setValue('state', shippingAddress.state)
+		}
 	}, [userInfo, router, setValue, shippingAddress])
 
 	// form submit handler
@@ -104,7 +106,7 @@ export default function Shipping() {
 			<h1 className='text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl'>
 				Checkout
 			</h1>
-			<div className='mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16'>
+			<div className='mt-2 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16'>
 				<form
 					className='space-y-8 max-w-2xl mx-auto mt-6 px-4 sm:px-6 lg:col-span-7'
 					onSubmit={handleSubmit(submitHandler)}>
@@ -268,15 +270,15 @@ export default function Shipping() {
 					<div className='mt-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm'>
 						<ul role='list' className='divide-y divide-gray-200'>
 							{cartItems.map((product, productIdx) => (
-								<li key={product._id} className='flex py-6 px-4 sm:px-6'>
-									<div className='flex-shrink-0'>
+								<li key={product._id} className='flex py-4 px-4 sm:px-6'>
+									<div className='relative h-20 w-20 md:h-40 md:w-36 aspect-1 rounded-lg overflow-hidden flex-shrink-0'>
 										<Image
-											src={product.images[0]}
+											width={300}
+											height={520}
+											layout='responsive'
+											src={product?.images[0]}
 											alt={product.name}
-											className='rounded-md object-center aspect-h-2 aspect-w-1'
-											width={80}
-											objectFit='cover'
-											height='100%'
+											className='w-full h-full object-center object-cover hover:opacity-75 border'
 										/>
 									</div>
 									<div className='ml-6 flex-1 flex flex-col'>
@@ -289,14 +291,6 @@ export default function Shipping() {
 														</p>
 													</NextLink>
 												</h4>
-												<div className='mt-1 flex text-sm'>
-													<p className='text-gray-500 truncate'>
-														{product.category}
-													</p>
-													<p className='ml-4 pl-4 border-l border-gray-200 text-gray-500'>
-														{product.brand}
-													</p>
-												</div>
 											</div>
 											<div className='ml-4 flex-shrink-0 flow-root'>
 												<button
@@ -335,7 +329,7 @@ export default function Shipping() {
 					</div>
 
 					<dl className='border-t border-gray-200 px-4 space-y-6 sm:px-6 mt-6'>
-						<div className='flex items-center justify-between'>
+						<div className='border-t border-gray-200 pt-4 flex items-center justify-between'>
 							<dt className='text-sm text-gray-600'>Subtotal</dt>
 							<dd className='text-sm font-medium text-gray-900'>
 								₹ {subtotal}
@@ -344,9 +338,6 @@ export default function Shipping() {
 						<div className='border-t border-gray-200 pt-4 flex items-center justify-between'>
 							<dt className='flex text-sm text-gray-600'>
 								<span>Tax(18%)</span>
-								<a
-									href='#'
-									className='ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500'></a>
 							</dt>
 							<dd className='text-sm font-medium text-gray-900'>₹ {tax}</dd>
 						</div>

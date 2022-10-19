@@ -88,21 +88,22 @@ function Cart() {
 								role='list'
 								className='border-t border-b border-gray-200 divide-y divide-gray-200'>
 								{cartItems.map((product, productIdx) => (
-									<li key={product._id} className='flex py-6 sm:py-10'>
-										<div className='flex-shrink-0'>
+									<li key={product._id} className='flex py-6'>
+										<div className='relative h-full w-full md:h-50 md:w-40 aspect-1 rounded-lg overflow-hidden flex-shrink'>
 											<Image
-												src={product.images[0]}
+												width={300}
+												height={520}
+												layout='responsive'
+												src={product?.images[0]}
 												alt={product.name}
-												className='rounded-md object-center object-cover'
-												width={150}
-												height={220}
+												className='w-full h-full object-center object-cover hover:opacity-75 border'
 											/>
 										</div>
 
 										<div className='ml-4 flex-1 flex flex-col justify-between sm:ml-6'>
 											<div className='relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0'>
 												<div>
-													<div className='flex justify-between'>
+													<div className='flex flex-col justify-between'>
 														<h3 className='text-sm'>
 															<NextLink
 																href={`/product/${product.slug}`}
@@ -112,14 +113,26 @@ function Cart() {
 																</p>
 															</NextLink>
 														</h3>
+
+														<p className='hidden mt-2 text-sm text-gray-600 max-w-lg'>
+															{product.description.replace(/(<([^>]+)>)/gi, '')}
+														</p>
 													</div>
-													<div className='mt-1 flex text-sm'>
-														<p className='text-gray-500 truncate'>
-															{product.category}
-														</p>
-														<p className='ml-4 pl-4 border-l border-gray-200 text-gray-500'>
-															{product.brand}
-														</p>
+													<div className='mt-2 flex text-sm'>
+														<NextLink
+															href={`/search?category=${product.category}`}
+															passHref>
+															<p className='text-gray-500 truncate'>
+																{product.category}
+															</p>
+														</NextLink>
+														<NextLink
+															href={`/search?brand=${product.brand}`}
+															passHref>
+															<p className='ml-4 pl-4 border-l border-gray-200 text-gray-500'>
+																{product.brand}
+															</p>
+														</NextLink>
 													</div>
 													<p className='mt-1 text-sm font-medium text-gray-900'>
 														₹ {product.price}

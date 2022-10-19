@@ -22,7 +22,9 @@ export default function Layout({ children, sticky = true }) {
 				{/* Navbar */}
 				<Navbar sticky={sticky} />
 				{/* Main Content */}
-				<div className='container max-w-7xl mx-auto flex-1'>{children}</div>
+				<div className='flex-1 container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+					{children}
+				</div>
 				{/* Footer */}
 				<Footer />
 			</ThemeProvider>
