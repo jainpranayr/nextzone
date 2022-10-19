@@ -103,7 +103,7 @@ const PlaceOrder = () => {
 												Delivery Details
 											</dt>
 											<dd className='mt-1 text-sm text-gray-900'>
-												<span className='block'>{userInfo.name}</span>
+												<span className='block'>{userInfo?.name}</span>
 												<span className='block'>{shippingAddress.address}</span>
 												<span className='block'>
 													{shippingAddress.city} , {shippingAddress.state}
@@ -119,7 +119,7 @@ const PlaceOrder = () => {
 												Shipping Updates
 											</dt>
 											<dd className='mt-1 text-sm text-gray-900'>
-												<span className='block'>{userInfo.email}</span>
+												<span className='block'>{userInfo?.email}</span>
 											</dd>
 										</div>
 									</dl>
