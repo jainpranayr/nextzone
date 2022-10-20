@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import nc from 'next-connect'
 import { db, isAuth, onError } from '../../../config'
-import { Order } from '../../../models'
+import { Order, Product } from '../../../models'
 
 // use error function if error occurs
 const handler = nc({
@@ -13,6 +13,14 @@ handler.use(isAuth)
 handler.post(async (req, res) => {
 	// connect to db
 	await db.connect()
+
+	req.body.orderItems?.forEach(async item => {
+		const product = await Product.findById(item._id)
+		if (product) {
+			product.countInStock = product.countInStock - item.quantity
+			await product.save()
+		}
+	})
 
 	// instantiate new Order
 	const newOrder = new Order({
