@@ -81,7 +81,7 @@ function Order() {
 			/>
 
 			<div className='mt-10'>
-				<div className='max-w-3xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8 bg-white'>
+				<div className='max-w-2xl mx-auto px-4 py-16 sm:px-6  lg:px-8 bg-white'>
 					<div className='max-w-xl'>
 						<h1 className='text-sm font-semibold uppercase tracking-wide text-indigo-600'>
 							Thank you!
@@ -104,12 +104,12 @@ function Order() {
 								<div
 									key={product?.id}
 									className='py-10 border-b border-gray-200 flex space-x-4'>
-									<div className='relative h-full w-full md:h-40 md:w-40  aspect-1 rounded-lg overflow-hidden flex-shrink'>
+									<div className='relative h-full w-full lg:h-40 lg:w-40 aspect-1 rounded-lg overflow-hidden flex-shrink'>
 										<Image
 											width={300}
 											height={500}
 											layout='responsive'
-											src={product?.images[0]}
+											src={product?.image}
 											alt={product.name}
 											className='w-full h-full object-center object-cover hover:opacity-75'
 										/>
@@ -122,9 +122,7 @@ function Order() {
 												</h4>
 											</NextLink>
 											<p className='text-sm text-gray-600 hidden md:inline-block max-w-lg'>
-												{product?.description
-													?.replace(/(<([^>]+)>)/gi, '')
-													.substring(0, 118) + '..'}
+												{product?.description}
 											</p>
 										</div>
 
@@ -195,9 +193,9 @@ function Order() {
 								</div>
 							</dl>
 
-							<div className='mt-16 border-t border-gray-200 py-6 text-right'>
+							<div className='mt-10 border-t border-gray-200 py-6 text-right'>
 								<NextLink href='/' passHref>
-									<p className='text-sm font-medium text-indigo-600 hover:text-indigo-500'>
+									<p className='text-sm font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer'>
 										Continue Shopping&rarr;
 									</p>
 								</NextLink>

@@ -50,7 +50,9 @@ function Cart() {
 		router.push('/shipping')
 	}
 
-	return (
+	const isServer = () => typeof window === `undefined`
+
+	return isServer() ? null : (
 		<div>
 			<MyHead
 				title={`Shopping Bag ${
@@ -89,82 +91,54 @@ function Cart() {
 								className='border-t border-b border-gray-200 divide-y divide-gray-200'>
 								{cartItems.map((product, productIdx) => (
 									<li key={product._id} className='flex py-6'>
-										<div className='relative h-full w-full md:h-50 md:w-40 aspect-1 rounded-lg overflow-hidden flex-shrink'>
+										<div className='relative h-28 w-24 md:h-40 md:w-36 aspect-1 rounded-lg overflow-hidden'>
 											<Image
 												width={300}
 												height={520}
 												layout='responsive'
-												src={product?.images[0]}
+												src={product?.image}
 												alt={product.name}
 												className='w-full h-full object-center object-cover hover:opacity-75 border'
 											/>
 										</div>
 
-										<div className='ml-4 flex-1 flex flex-col justify-between sm:ml-6'>
-											<div className='relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0'>
+										<div className='ml-4 flex-1 flex flex-col justify-between sm:ml-6 relative pr-9 sm:gap-x-6 sm:pr-0'>
+											<div className='flex flex-col justify-between h-full gap-y-2'>
 												<div>
-													<div className='flex flex-col justify-between'>
-														<h3 className='text-sm'>
-															<NextLink
-																href={`/product/${product.slug}`}
-																passHref>
-																<p className='font-medium text-gray-700 hover:text-gray-800 cursor-pointer'>
-																	{product.name}
-																</p>
-															</NextLink>
-														</h3>
-
-														<p className='hidden mt-2 text-sm text-gray-600 max-w-lg'>
-															{product.description.replace(/(<([^>]+)>)/gi, '')}
-														</p>
-													</div>
-													<div className='mt-2 flex text-sm'>
-														<NextLink
-															href={`/search?category=${product.category}`}
-															passHref>
-															<p className='text-gray-500 truncate'>
-																{product.category}
-															</p>
-														</NextLink>
-														<NextLink
-															href={`/search?brand=${product.brand}`}
-															passHref>
-															<p className='ml-4 pl-4 border-l border-gray-200 text-gray-500'>
-																{product.brand}
-															</p>
-														</NextLink>
-													</div>
-													<p className='mt-1 text-sm font-medium text-gray-900'>
-														₹ {product.price}
+													<NextLink href={`/product/${product?.slug}`} passHref>
+														<h4 className='font-medium text-gray-700 hover:text-gray-900 cursor-pointer'>
+															{product?.name}
+														</h4>
+													</NextLink>
+													<p className='text-sm text-gray-600 line-clamp-2 max-w-sm'>
+														{product?.description}
 													</p>
 												</div>
 
-												<div className='mt-4 sm:mt-0 sm:pr-9'>
-													<select
-														id={`quantity-${productIdx}`}
-														name={`quantity-${productIdx}`}
-														className='max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-														onChange={e =>
-															updateProductQuantity(product, e.target.value)
-														}
-														value={product.quantity}>
-														{[...Array(product.countInStock).keys()].map(x => (
-															<option key={x + 1} value={x + 1}>
-																{x + 1}
-															</option>
-														))}
-													</select>
+												<select
+													id={`quantity-${productIdx}`}
+													name={`quantity-${productIdx}`}
+													className='w-fit rounded-md border border-gray-300 py-1 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+													onChange={e =>
+														updateProductQuantity(product, e.target.value)
+													}
+													value={product.quantity}>
+													{[...Array(product.countInStock).keys()].map(x => (
+														<option key={x + 1} value={x + 1}>
+															{x + 1}
+														</option>
+													))}
+												</select>
+											</div>
 
-													<div className='absolute top-0 right-0'>
-														<button
-															type='button'
-															className='-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500'
-															onClick={() => handleRemoveItem(product)}>
-															<span className='sr-only'>Remove</span>
-															<XIcon className='h-5 w-5' aria-hidden='true' />
-														</button>
-													</div>
-												</div>
+											<div className='absolute top-0 right-0'>
+												<button
+													type='button'
+													className='-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500'
+													onClick={() => handleRemoveItem(product)}>
+													<span className='sr-only'>Remove</span>
+													<XIcon className='h-5 w-5' aria-hidden='true' />
+												</button>
 											</div>
 										</div>
 									</li>

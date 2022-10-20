@@ -106,9 +106,9 @@ export default function Shipping() {
 			<h1 className='text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl'>
 				Checkout
 			</h1>
-			<div className='mt-2 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16'>
+			<div className='mt-2 grid grid-cols-1 lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16'>
 				<form
-					className='space-y-8 max-w-2xl mx-auto mt-6 px-4 sm:px-6 lg:col-span-7'
+					className='space-y-8 mt-6 px-4 sm:px-6 lg:col-span-7 order-last lg:order-none'
 					onSubmit={handleSubmit(submitHandler)}>
 					<div>
 						<h2 className='leading-6 font-medium text-2xl text-gray-900'>
@@ -260,67 +260,65 @@ export default function Shipping() {
 
 				<section
 					aria-labelledby='summary-heading'
-					className='mt-10 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5'>
+					className='mt-5 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5'>
 					<h2
 						id='summary-heading'
 						className='text-lg font-medium text-gray-900'>
 						Order summary
 					</h2>
 
-					<div className='mt-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm'>
+					<div className='mt-4 bg-gray-50  border-gray-200 rounded-lg shadow-sm'>
 						<ul role='list' className='divide-y divide-gray-200'>
 							{cartItems.map((product, productIdx) => (
-								<li key={product._id} className='flex py-4 px-4 sm:px-6'>
-									<div className='relative h-20 w-20 md:h-40 md:w-36 aspect-1 rounded-lg overflow-hidden flex-shrink-0'>
+								<li key={product._id} className='flex py-6'>
+									<div className='relative h-28 w-24 md:h-40 md:w-36 aspect-1 rounded-lg overflow-hidden'>
 										<Image
 											width={300}
 											height={520}
 											layout='responsive'
-											src={product?.images[0]}
+											src={product?.image}
 											alt={product.name}
 											className='w-full h-full object-center object-cover hover:opacity-75 border'
 										/>
 									</div>
-									<div className='ml-6 flex-1 flex flex-col'>
-										<div className='flex'>
-											<div className='min-w-0 flex-1'>
-												<h4 className='text-sm'>
-													<NextLink href={`/product/${product.slug}`} passHref>
-														<p className='font-medium text-gray-700 hover:text-gray-800 cursor-pointer'>
-															{product.name}
-														</p>
-													</NextLink>
-												</h4>
+
+									<div className='ml-4 flex-1 flex flex-col justify-between sm:ml-6 relative pr-9 sm:gap-x-6 sm:pr-0'>
+										<div className='flex flex-col justify-between h-full gap-y-2'>
+											<div>
+												<NextLink href={`/product/${product?.slug}`} passHref>
+													<h4 className='font-medium text-gray-700 hover:text-gray-900 cursor-pointer'>
+														{product?.name}
+													</h4>
+												</NextLink>
+												<p className='text-sm text-gray-600 line-clamp-2 max-w-sm'>
+													{product?.description}
+												</p>
 											</div>
-											<div className='ml-4 flex-shrink-0 flow-root'>
-												<button
-													type='button'
-													className='-m-2.5 bg-white p-2.5 flex items-center justify-center text-gray-400 hover:text-gray-500'
-													onClick={() => handleRemoveItem(product)}>
-													<XIcon className='h-5 w-5' aria-hidden='true' />
-												</button>
-											</div>
+
+											<select
+												id={`quantity-${productIdx}`}
+												name={`quantity-${productIdx}`}
+												className='w-fit rounded-md border border-gray-300 py-1 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+												onChange={e =>
+													updateProductQuantity(product, e.target.value)
+												}
+												value={product.quantity}>
+												{[...Array(product.countInStock).keys()].map(x => (
+													<option key={x + 1} value={x + 1}>
+														{x + 1}
+													</option>
+												))}
+											</select>
 										</div>
-										<div className='flex-1 pt-2 flex items-end justify-between'>
-											<p className='mt-1 text-sm font-medium text-gray-900'>
-												₹ {product.price}
-											</p>
-											<div className='ml-4'>
-												<select
-													id={`quantity-${productIdx}`}
-													name={`quantity-${productIdx}`}
-													className='max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-													onChange={e =>
-														updateProductQuantity(product, e.target.value)
-													}
-													value={product.quantity}>
-													{[...Array(product.countInStock).keys()].map(x => (
-														<option key={x + 1} value={x + 1}>
-															{x + 1}
-														</option>
-													))}
-												</select>
-											</div>
+
+										<div className='absolute top-0 right-0'>
+											<button
+												type='button'
+												className='-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500'
+												onClick={() => handleRemoveItem(product)}>
+												<span className='sr-only'>Remove</span>
+												<XIcon className='h-5 w-5' aria-hidden='true' />
+											</button>
 										</div>
 									</div>
 								</li>
