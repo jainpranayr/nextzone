@@ -65,14 +65,10 @@ const PlaceOrder = () => {
 	}
 
 	useEffect(() => {
-		if (userInfo) {
-			if (cartItems.length <= 0) {
-				router.push('/search')
-			}
-		} else {
+		if (!userInfo) {
 			router.push('/login')
 		}
-	}, [cartItems.length, router, userInfo])
+	}, [router, userInfo])
 
 	return (
 		<>
