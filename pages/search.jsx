@@ -13,10 +13,17 @@ import { classNames } from '../utils'
 import { db } from '/config'
 import { Product } from '/models'
 import { prices, ratings } from '/utils'
+import SearchIcon from '../public/images/search.svg'
 
 const PAGE_SIZE = 8
 
-export default function Search({ products, categories, brands, pages }) {
+export default function Search({
+	products,
+	categories,
+	brands,
+	pages,
+	countProducts,
+}) {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
 
@@ -730,7 +737,24 @@ export default function Search({ products, categories, brands, pages }) {
 					</div>
 				</section>
 			</div>
-			<ProductsGrid products={products} />
+			{countProducts <= 0 ? (
+				<div className='flex flex-col items-center justify-center text-center h-[calc(100vh-258px)] w-full'>
+					<img
+						src={SearchIcon.src}
+						alt=''
+						className='w-60 h-40 md:w-81 animate-wiggle object-cover object-center'
+					/>
+					<div className='ml-3 mt-3 space-y-1'>
+						<h1 className='text-gray-800 text-lg font-medium'>
+							No products found.
+						</h1>
+						<p className='text-gray-600 text-sm'>Please relax your filters</p>
+					</div>
+				</div>
+			) : (
+				<ProductsGrid products={products} className='border' />
+			)}
+
 			<nav className='border-t border-gray-200 px-4 flex items-center justify-center sm:px-0 mb-4'>
 				<div className='flex'>
 					{Array.from({ length: pages }).map((_, index) => (

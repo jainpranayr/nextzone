@@ -132,51 +132,55 @@ const PlaceOrder = () => {
 										Order Items
 									</h2>
 								</div>
-								<div className='border-t border-gray-200 px-4 sm:px-6 py-3'>
+								<div className='border-t border-gray-200 p-2 space-y-3'>
 									{cartItems.map(product => (
-										<div
-											key={product?.id}
-											className='last:border-b-0 border-b border-gray-200 flex space-x-4 py-5'>
-											<div className='relative h-30 w-20 md:h-40 md:w-40 aspect-1 rounded-lg overflow-hidden flex-shrink-0'>
+										<div key={product._id} className='flex p-3'>
+											<div className='relative h-30 w-24 md:h-40 md:w-36 aspect-1 rounded-lg overflow-hidden'>
 												<Image
 													width={300}
-													height={500}
+													height={520}
 													layout='responsive'
-													src={product?.images[0]}
+													src={product?.image}
 													alt={product.name}
-													className='w-full h-full object-center object-cover hover:opacity-75'
+													className='w-full h-full object-center object-cover hover:opacity-75 border'
 												/>
 											</div>
-											<div className='flex-auto flex flex-col'>
-												<div>
-													<NextLink href={`/product/${product?.slug}`} passHref>
-														<h4 className='font-medium text-gray-700 hover:text-gray-900 cursor-pointer'>
-															{product?.name}
-														</h4>
-													</NextLink>
-													<p className='mt-2 text-sm text-gray-600 line-clamp-2 max-w-lg'>
-														{product?.description?.replace(/(<([^>]+)>)/gi, '')}
-													</p>
-												</div>
-												<div className='mt-6 flex-1 flex items-end'>
-													<dl className='flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6'>
-														<div className='flex'>
-															<dt className='font-medium text-gray-900'>
-																Quantity
-															</dt>
-															<dd className='ml-2 text-gray-700'>
-																{product?.quantity}
-															</dd>
-														</div>
-														<div className='pl-4 flex sm:pl-6'>
-															<dt className='font-medium text-gray-900'>
-																Price
-															</dt>
-															<dd className='ml-2 text-gray-700'>
-																{product?.price}
-															</dd>
-														</div>
-													</dl>
+
+											<div className='ml-4 flex-1 flex flex-col justify-between sm:ml-6 sm:gap-x-6 sm:pr-0'>
+												<div className='flex flex-col justify-between h-full gap-y-2'>
+													<div>
+														<NextLink
+															href={`/product/${product?.slug}`}
+															passHref>
+															<h4 className='font-medium text-gray-700 hover:text-gray-900 cursor-pointer'>
+																{product?.name}
+															</h4>
+														</NextLink>
+														<p className='text-sm text-gray-600 line-clamp-2 max-w-sm'>
+															{product?.description}
+														</p>
+													</div>
+
+													<div className=' flex-1 flex items-end'>
+														<dl className='flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6'>
+															<div className='flex'>
+																<dt className='font-medium text-gray-900'>
+																	Quantity
+																</dt>
+																<dd className='ml-2 text-gray-700'>
+																	{product?.quantity}
+																</dd>
+															</div>
+															<div className='pl-4 flex sm:pl-6'>
+																<dt className='font-medium text-gray-900'>
+																	Price
+																</dt>
+																<dd className='ml-2 text-gray-700'>
+																	{product?.price}
+																</dd>
+															</div>
+														</dl>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -187,7 +191,7 @@ const PlaceOrder = () => {
 					</div>
 					<section
 						aria-labelledby='summary-heading'
-						className='mt-16 bg-white rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 h-max'>
+						className='bg-white rounded-lg px-4 py-6 sm:p-6 lg:p-8 h-max'>
 						<h2
 							id='summary-heading'
 							className='text-lg font-medium text-gray-900'>
