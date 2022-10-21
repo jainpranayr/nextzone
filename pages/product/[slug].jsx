@@ -6,7 +6,7 @@ import { CheckIcon, XIcon } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { MyHead, StarRatingPicker } from '../../components'
 import { db, getError, Store } from '../../config'
@@ -22,6 +22,7 @@ export default function ProductScreen({ item, productReviews }) {
 	const [comment, setComment] = useState('')
 	const [product, setProduct] = useState(item)
 	const [isInStock, setIsInStock] = useState(true)
+	const formRef = useRef(null)
 
 	// get state and dispatch function from store
 	const {
@@ -63,10 +64,19 @@ export default function ProductScreen({ item, productReviews }) {
 		}
 	}
 
+	const sortedReviews = useMemo(() => {
+		if (!reviews || reviews.lenght <= 0) return
+
+		return reviews.sort(
+			(a, b) =>
+				new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+		)
+	}, [reviews])
+
 	const submitHandler = async e => {
 		e.preventDefault()
 		try {
-			await axios.post(
+			const response = await axios.post(
 				`/api/products/${product._id}/reviews`,
 				{
 					rating,
@@ -76,7 +86,8 @@ export default function ProductScreen({ item, productReviews }) {
 					headers: { authorization: `Bearer ${userInfo.token}` },
 				}
 			)
-			toast.success('Review submitted successfully', { duration: 3000 })
+
+			toast.success(response.data.message, { duration: 3000 })
 			setComment('')
 			setRating(0)
 			fetchReviews()
@@ -107,6 +118,7 @@ export default function ProductScreen({ item, productReviews }) {
 	const handleEdit = review => {
 		setRating(review.rating)
 		setComment(review.comment)
+		formRef.current.focus()
 	}
 
 	// if product not found
@@ -130,7 +142,7 @@ export default function ProductScreen({ item, productReviews }) {
 						<div className='lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start'>
 							{/* Image gallery */}
 							<Tab.Group as='div' className='flex flex-col-reverse'>
-								<div className='hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none'>
+								<div className='mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none'>
 									<Tab.List className='grid grid-cols-4 gap-4'>
 										{product.images.map((image, idx) => (
 											<Tab
@@ -330,6 +342,7 @@ export default function ProductScreen({ item, productReviews }) {
 									<div className='border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500'>
 										<textarea
 											id='review-form'
+											ref={formRef}
 											rows={4}
 											className='block w-full border-0 py-0 resize-none placeholder-gray-500 focus:ring-0 sm:text-sm'
 											placeholder='Write a review...'
@@ -375,7 +388,7 @@ export default function ProductScreen({ item, productReviews }) {
 							{reviews.length >= 0 ? (
 								<div className='flow-root' id='reviews'>
 									<div className='-my-8 divide-y divide-gray-200'>
-										{reviews.map(review => (
+										{sortedReviews.map(review => (
 											<div key={review._id} className='py-8'>
 												<div className='flex flex-col space-y-2'>
 													<div className='flex justify-between'>
