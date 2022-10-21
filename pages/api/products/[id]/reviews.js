@@ -40,7 +40,7 @@ handler.use(isAuth).post(async (req, res) => {
 			await updatedProduct.save()
 
 			await db.disconnect()
-			return res.send({ message: 'Review updated' })
+			return res.send({ message: 'Review updated successfully' })
 		} else {
 			const review = {
 				user: mongoose.Types.ObjectId(req.user._id),
@@ -56,12 +56,12 @@ handler.use(isAuth).post(async (req, res) => {
 			await product.save()
 			await db.disconnect()
 			res.status(201).send({
-				message: 'Review submitted',
+				message: 'Review submitted successfully',
 			})
 		}
 	} else {
 		await db.disconnect()
-		res.status(404).send({ message: 'Product Not Found' })
+		res.status(404).send({ message: 'Something went wrpng' })
 	}
 })
 
