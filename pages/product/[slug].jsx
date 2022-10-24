@@ -385,7 +385,7 @@ export default function ProductScreen({ item, productReviews }) {
 											/>
 											<div className='flex-shrink-0'>
 												<button
-													disabled={comment.length <= 0}
+													disabled={comment.length <= 0 || rating <= 0}
 													type='submit'
 													className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:cursor-not-allowed'>
 													Submit
