@@ -40,7 +40,7 @@ function OrderHistory({ orders }) {
 							User Profile
 						</p>
 					</NextLink>
-					<NextLink href='/profile' passHref>
+					<NextLink href='/order-history' passHref>
 						<p
 							className={classNames(
 								router.pathname === '/order-history'
