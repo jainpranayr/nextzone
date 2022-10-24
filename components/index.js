@@ -1,5 +1,4 @@
 export { default as Categories } from './Categories'
-export { default as CheckoutWizard } from './CheckoutWizard'
 export { default as Hero } from './Hero'
 export { default as Layout } from './Layout'
 export { default as MyHead } from './MyHead'

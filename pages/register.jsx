@@ -35,9 +35,9 @@ export default function Register() {
 	// if user is logged in redirect to homme page
 	useEffect(() => {
 		if (userInfo) {
-			router.push('/')
+			router.push(redirect || '/')
 		}
-	}, [router, userInfo])
+	}, [redirect, router, userInfo])
 
 	// register user
 	const registerUser = async ({ name, email, password }) => {

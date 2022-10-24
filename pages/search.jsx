@@ -9,6 +9,7 @@ import { ChevronDownIcon, StarIcon, XIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
 import { MyHead, ProductsGrid } from '../components'
+import SearchIcon from '../public/images/search.svg'
 import { classNames } from '../utils'
 import { db } from '/config'
 import { Product } from '/models'
@@ -16,7 +17,13 @@ import { prices, ratings } from '/utils'
 
 const PAGE_SIZE = 8
 
-export default function Search({ products, categories, brands, pages }) {
+export default function Search({
+	products,
+	categories,
+	brands,
+	pages,
+	countProducts,
+}) {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
 
@@ -74,7 +81,7 @@ export default function Search({ products, categories, brands, pages }) {
 	}
 
 	return (
-		<>
+		<div>
 			<MyHead
 				title='Search'
 				description='Brouse through our collection of apparel'
@@ -730,8 +737,25 @@ export default function Search({ products, categories, brands, pages }) {
 					</div>
 				</section>
 			</div>
-			<ProductsGrid products={products} />
-			<nav className='border-t border-gray-200 px-4 flex items-center justify-center sm:px-0'>
+			{countProducts <= 0 ? (
+				<div className='flex flex-col items-center justify-center text-center h-[calc(100vh-258px)] w-full'>
+					<img
+						src={SearchIcon.src}
+						alt=''
+						className='w-60 h-40 md:w-81 animate-wiggle object-cover object-center'
+					/>
+					<div className='ml-3 mt-3 space-y-1'>
+						<h1 className='text-gray-800 text-lg font-medium'>
+							No products found.
+						</h1>
+						<p className='text-gray-600 text-sm'>Please relax your filters</p>
+					</div>
+				</div>
+			) : (
+				<ProductsGrid products={products} className='border' />
+			)}
+
+			<nav className='border-t border-gray-200 px-4 flex items-center justify-center sm:px-0 mb-4'>
 				<div className='flex'>
 					{Array.from({ length: pages }).map((_, index) => (
 						<button
@@ -747,8 +771,12 @@ export default function Search({ products, categories, brands, pages }) {
 					))}
 				</div>
 			</nav>
-		</>
+		</div>
 	)
+}
+
+Search.layout = {
+	sticky: false,
 }
 
 export async function getServerSideProps({ query }) {
@@ -787,14 +815,14 @@ export async function getServerSideProps({ query }) {
 
 	const priceFilter =
 		price && price !== 'all'
-			? price !== '8000'
+			? price.split('-').length !== 1
 				? {
 						price: {
 							$gte: Number(price.split('-')[0]),
 							$lte: Number(price.split('-')[1]),
 						},
 				  }
-				: { price: { $gte: Number(price) } }
+				: { price: { $gt: Number(price) } }
 			: {}
 
 	const order =
