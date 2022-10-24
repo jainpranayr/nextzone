@@ -30,7 +30,7 @@ function Order() {
 		state: { userInfo },
 	} = useContext(Store)
 
-	const [{ loading, order }, dispatch] = useReducer(reducer, {
+	const [{ loading, order, error }, dispatch] = useReducer(reducer, {
 		loading: true,
 		order: {},
 		error: '',
@@ -72,6 +72,7 @@ function Order() {
 	}, [order._id, orderId, router, userInfo])
 
 	if (loading || !order) return <p>loading...</p>
+	if (error) return <p>{error}</p>
 
 	return (
 		<>

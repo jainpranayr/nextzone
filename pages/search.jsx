@@ -9,11 +9,11 @@ import { ChevronDownIcon, StarIcon, XIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
 import { MyHead, ProductsGrid } from '../components'
+import SearchIcon from '../public/images/search.svg'
 import { classNames } from '../utils'
 import { db } from '/config'
 import { Product } from '/models'
 import { prices, ratings } from '/utils'
-import SearchIcon from '../public/images/search.svg'
 
 const PAGE_SIZE = 8
 

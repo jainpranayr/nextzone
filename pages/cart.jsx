@@ -71,9 +71,9 @@ function Cart() {
 					<div className='ml-2 mt-3 space-y-1'>
 						<h1 className='text-gray-800 text-lg'>Your bag looks empty</h1>
 						<NextLink href='/search' passHref>
-							<button className=' bg-indigo-600 border border-transparent rounded-md shadow-sm py-1.5 px-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500'>
-								Go Shopping
-							</button>
+							<p className='text-indigo-500 font-semibold leading-relaxed text-sm cursor-pointer hover:underline'>
+								Shop now
+							</p>
 						</NextLink>
 					</div>
 				</div>

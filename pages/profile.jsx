@@ -1,16 +1,14 @@
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid'
-import { Card, Grid, List, ListItem, ListItemText } from '@material-ui/core'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import dynamic from 'next/dynamic'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { MyHead } from '../components'
+import { classNames } from '../utils'
 import { getError, Store } from '/config'
-import { useStyles } from '/utils'
 
 function Profile() {
 	const { state, dispatch } = useContext(Store)
@@ -22,7 +20,6 @@ function Profile() {
 		watch,
 	} = useForm()
 	const router = useRouter()
-	const classes = useStyles()
 	const { userInfo } = state
 	const [showPassword, setShowPassword] = useState(false)
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -61,24 +58,34 @@ function Profile() {
 				title='User Profile'
 				url={`https://nextzone.vercel.app/${router.asPath}`}
 			/>
-			<Grid container spacing={1}>
-				<Grid item md={3} xs={12}>
-					<Card className={classes.section}>
-						<List>
-							<NextLink href='/profile' passHref>
-								<ListItem selected button component='a'>
-									<ListItemText primary='User Profile'></ListItemText>
-								</ListItem>
-							</NextLink>
-							<NextLink href='/order-history' passHref>
-								<ListItem button component='a'>
-									<ListItemText primary='Order History'></ListItemText>
-								</ListItem>
-							</NextLink>
-						</List>
-					</Card>
-				</Grid>
-				<Grid item md={9} xs={12}>
+
+			<div className='mt-2 grid grid-cols-1 lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16'>
+				<nav className='mt-6 lg:col-span-3 shadow overflow-hidden rounded-md'>
+					<NextLink href='/profile' passHref>
+						<p
+							className={classNames(
+								router.pathname === '/profile'
+									? 'bg-slate-100 text-gray-900'
+									: 'bg-white text-gray-700 hover:text-gray-900',
+								'border px-4 py-4 sm:px-6 text-center font-medium cursor-pointer'
+							)}>
+							User Profile
+						</p>
+					</NextLink>
+					<NextLink href='/order-history' passHref>
+						<p
+							className={classNames(
+								router.pathname === '/order-history'
+									? 'bg-slate-100 text-gray-900'
+									: 'bg-white text-gray-700 hover:text-gray-900',
+								'border px-4 py-4 sm:px-6 text-center font-medium cursor-pointer'
+							)}>
+							Order History
+						</p>
+					</NextLink>
+				</nav>
+
+				<main className='space-y-8 mt-3 px-4 sm:px-6 lg:col-span-9'>
 					{userInfo?.isGuest ? (
 						<h2 className='mt-6 text-center text-xl font-medium text-gray-900'>
 							The Guest Profile cannot be updated.
@@ -156,7 +163,7 @@ function Profile() {
 											<label
 												htmlFor='password'
 												className='block text-sm font-medium text-gray-700'>
-												Password
+												New password
 											</label>
 											<div className='mt-1 relative rounded-md shadow-sm'>
 												<input
@@ -198,7 +205,7 @@ function Profile() {
 											<label
 												htmlFor='password'
 												className='block text-sm font-medium text-gray-700'>
-												Confirm Password
+												Confirm new password
 											</label>
 											<div className='mt-1 relative rounded-md shadow-sm'>
 												<input
@@ -249,10 +256,10 @@ function Profile() {
 							</div>
 						</>
 					)}
-				</Grid>
-			</Grid>
+				</main>
+			</div>
 		</>
 	)
 }
 
-export default dynamic(() => Promise.resolve(Profile), { ssr: false })
+export default Profile
