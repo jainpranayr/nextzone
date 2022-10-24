@@ -40,8 +40,21 @@ export default function ProductScreen({ item, productReviews }) {
 		const existItem = cartItems.find(x => x._id === product._id)
 		const quantity = existItem ? existItem.quantity + 1 : 1
 
-		// dispatch add to cart function
-		dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } })
+		const data = {
+			_id: product._id,
+			price: product.price,
+			name: product.name,
+			description:
+				product?.description?.replace(/(<([^>]+)>)/gi, '').substring(0, 118) +
+				'..',
+			image: product.images[0],
+			countInStock: product.countInStock,
+			slug: product.slug,
+			quantity,
+		}
+
+		// add item to cart
+		dispatch({ type: 'CART_ADD_ITEM', payload: { ...data, quantity } })
 		// redirect to /cart
 		router.push('/cart')
 	}
