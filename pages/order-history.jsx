@@ -5,7 +5,7 @@ import { useContext, useEffect } from 'react'
 import { MyHead } from '../components'
 import { db } from '../config'
 import { Order } from '../models'
-import Bag from '../public/images/bag.svg'
+import Order  from '../public/images/order.svg'
 import { classNames } from '../utils'
 import { Store } from '/config'
 
@@ -56,7 +56,7 @@ function OrderHistory({ orders }) {
 				{orders && orders.length <= 0 ? (
 					<div className='flex flex-col items-center justify-center text-center h-[calc(100vh-258px)] w-full lg:col-span-9'>
 						<img
-							src={Bag.src}
+							src={Order.src}
 							alt=''
 							className='w-60 h-40 md:w-81 animate-wiggle object-cover object-center'
 						/>
