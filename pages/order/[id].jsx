@@ -1,27 +1,12 @@
-import axios from 'axios'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useReducer } from 'react'
+import { useContext, useEffect } from 'react'
 import { MyHead } from '../../components'
-import { getError, Store } from '../../config'
+import { db, Store } from '../../config'
+import { Order as OrderModel } from '../../models'
 
-function reducer(state, action) {
-	switch (action.type) {
-		// setup reducers for fetching order details
-		case 'FETCH_REQUEST':
-			return { ...state, loading: true, error: '' }
-		case 'FETCH_SUCCESS':
-			return { ...state, loading: false, order: action.payload, error: '' }
-		case 'FETCH_FAIL':
-			return { ...state, loading: false, error: action.payload }
-
-		default:
-			state
-	}
-}
-
-function Order() {
+function Order({ order }) {
 	// setuo router
 	const router = useRouter()
 	const orderId = router.query.id
@@ -29,12 +14,6 @@ function Order() {
 	const {
 		state: { userInfo },
 	} = useContext(Store)
-
-	const [{ loading, order, error }, dispatch] = useReducer(reducer, {
-		loading: true,
-		order: {},
-		error: '',
-	})
 
 	const {
 		subtotal,
@@ -52,27 +31,7 @@ function Order() {
 		if (!userInfo) {
 			return router.push('/login')
 		}
-
-		// fetch order details
-		const fetchOrder = async () => {
-			try {
-				dispatch({ type: 'FETCH_REQUEST' })
-				const { data } = await axios.get(`/api/orders/${orderId}`, {
-					headers: { authorization: `Bearer ${userInfo.token}` },
-				})
-				dispatch({ type: 'FETCH_SUCCESS', payload: data })
-			} catch (err) {
-				dispatch({ type: 'FETCH_FAIL', payload: getError(err) })
-			}
-		}
-
-		if (!order._id || (order._id && order._id !== orderId)) {
-			fetchOrder()
-		}
 	}, [order._id, orderId, router, userInfo])
-
-	if (loading || !order) return <p>loading...</p>
-	if (error) return <p>{error}</p>
 
 	return (
 		<>
@@ -100,54 +59,51 @@ function Order() {
 					</div>
 
 					<div className='mt-10 border-t border-gray-200'>
-						{!loading &&
-							orderItems.map(product => (
-								<div
-									key={product?.id}
-									className='py-10 border-b border-gray-200 flex space-x-4'>
-									<div className='relative h-full w-full lg:h-40 lg:w-40 aspect-1 rounded-lg overflow-hidden flex-shrink'>
-										<Image
-											width={300}
-											height={500}
-											layout='responsive'
-											src={product?.image}
-											alt={product.name}
-											className='w-full h-full object-center object-cover hover:opacity-75'
-										/>
+						{orderItems.map(product => (
+							<div
+								key={product?.id}
+								className='py-10 border-b border-gray-200 flex space-x-4'>
+								<div className='relative h-full w-full lg:h-40 lg:w-40 aspect-1 rounded-lg overflow-hidden flex-shrink'>
+									<Image
+										width={300}
+										height={500}
+										layout='responsive'
+										src={product?.image}
+										alt={product.name}
+										className='w-full h-full object-center object-cover hover:opacity-75'
+									/>
+								</div>
+								<div className='flex-auto flex flex-col justify-between'>
+									<div>
+										<NextLink href={`/product/${product?.slug}`} passHref>
+											<h4 className='font-medium text-gray-700 hover:text-gray-900 cursor-pointer'>
+												{product?.name}
+											</h4>
+										</NextLink>
+										<p className='text-sm text-gray-600 hidden md:inline-block max-w-lg'>
+											{product?.description}
+										</p>
 									</div>
-									<div className='flex-auto flex flex-col justify-between'>
-										<div>
-											<NextLink href={`/product/${product?.slug}`} passHref>
-												<h4 className='font-medium text-gray-700 hover:text-gray-900 cursor-pointer'>
-													{product?.name}
-												</h4>
-											</NextLink>
-											<p className='text-sm text-gray-600 hidden md:inline-block max-w-lg'>
-												{product?.description}
-											</p>
-										</div>
 
-										<div>
-											<dl className='flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6'>
-												<div className='flex'>
-													<dt className='font-medium text-gray-900'>
-														Quantity
-													</dt>
-													<dd className='ml-2 text-gray-700'>
-														{product?.quantity}
-													</dd>
-												</div>
-												<div className='pl-4 flex sm:pl-6'>
-													<dt className='font-medium text-gray-900'>Price</dt>
-													<dd className='ml-2 text-gray-700'>
-														₹{product?.price}
-													</dd>
-												</div>
-											</dl>
-										</div>
+									<div>
+										<dl className='flex text-sm divide-x divide-gray-200 space-x-4 sm:space-x-6'>
+											<div className='flex'>
+												<dt className='font-medium text-gray-900'>Quantity</dt>
+												<dd className='ml-2 text-gray-700'>
+													{product?.quantity}
+												</dd>
+											</div>
+											<div className='pl-4 flex sm:pl-6'>
+												<dt className='font-medium text-gray-900'>Price</dt>
+												<dd className='ml-2 text-gray-700'>
+													₹{product?.price}
+												</dd>
+											</div>
+										</dl>
 									</div>
 								</div>
-							))}
+							</div>
+						))}
 
 						<div className='sm:ml-40 sm:pl-6'>
 							<dl className='grid grid-cols-2 gap-x-6 text-sm py-10'>
@@ -210,3 +166,17 @@ function Order() {
 }
 
 export default Order
+
+export async function getServerSideProps(context) {
+	const order_id = context.params.id
+
+	await db.connect()
+	const order = await OrderModel.findOne({ _id: order_id })
+	await db.disconnect()
+
+	return {
+		props: {
+			order: JSON.parse(JSON.stringify(order)),
+		},
+	}
+}

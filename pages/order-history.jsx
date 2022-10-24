@@ -3,6 +3,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'
 import { MyHead } from '../components'
+import { db } from '../config'
 import { Order } from '../models'
 import Bag from '../public/images/bag.svg'
 import { classNames } from '../utils'
@@ -197,7 +198,11 @@ export default OrderHistory
 export async function getServerSideProps(context) {
 	const userInfo = JSON.parse(context.req.cookies['userInfo'])
 
-	const orders = await Order.find({ user: userInfo._id })
+	await db.connect()
+	const orders = await Order.find({ user: userInfo._id }).sort({
+		createdAt: -1,
+	})
+	await db.disconnect()
 
 	return {
 		props: {
