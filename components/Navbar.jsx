@@ -89,7 +89,8 @@ const Navbar = ({ sticky }) => {
 										<NextLink href='/search' passHref>
 											<span
 												className={classNames(
-													router.pathname === '/search'
+													router.pathname ===
+														'/search'
 														? 'bg-gray-900 text-white'
 														: 'text-gray-300 hover:bg-gray-700 hover:text-white',
 													'px-3 py-2 rounded-md text-sm font-medium cursor-pointer'
@@ -130,11 +131,19 @@ const Navbar = ({ sticky }) => {
 							<div className='flex items-center lg:hidden'>
 								{/* Mobile menu button */}
 								<Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-800 focus:ring-white'>
-									<span className='sr-only'>Open main menu</span>
+									<span className='sr-only'>
+										Open main menu
+									</span>
 									{open ? (
-										<XIcon className='block h-6 w-6' aria-hidden='true' />
+										<XIcon
+											className='block h-6 w-6'
+											aria-hidden='true'
+										/>
 									) : (
-										<MenuIcon className='block h-6 w-6' aria-hidden='true' />
+										<MenuIcon
+											className='block h-6 w-6'
+											aria-hidden='true'
+										/>
 									)}
 								</Disclosure.Button>
 							</div>
@@ -143,8 +152,13 @@ const Navbar = ({ sticky }) => {
 									<button
 										type='button'
 										className='relative flex-shrink-0 p-2 text-gray-400 hover:text-white focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-800 focus:ring-white rounded-md'>
-										<span className='sr-only'>View notifications</span>
-										<ShoppingBagIcon className='h-6 w-6' aria-hidden='true' />
+										<span className='sr-only'>
+											View Cart
+										</span>
+										<ShoppingBagIcon
+											className='h-6 w-6'
+											aria-hidden='true'
+										/>
 										{cartItems.length > 0 && (
 											<span className='absolute top-[2px] left-[18px] bg-red-600 rounded-full text-center text-white h-[18px] w-[18px] text-sm'>
 												{cartItems.length}
@@ -154,16 +168,22 @@ const Navbar = ({ sticky }) => {
 								</NextLink>
 
 								{/* Profile dropdown */}
-								<Menu as='div' className='relative flex-shrink-0 z-40'>
-									<div>
-										<Menu.Button className='flex-shrink-0 text-white focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-800 focus:ring-white hidden lg:flex flex-col ml-4 cursor-pointer'>
-											<span className='text-gray-300 font-medium'>Hello,</span>
+								<Menu
+									as='div'
+									className='relative flex-shrink-0 z-40'>
+									<div className='flex-shrink-0 text-white hidden lg:flex flex-col ml-4'>
+										<span className='text-gray-300 font-medium'>
+											Hello,
+										</span>
+										<Menu.Button className='focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-800 focus:ring-white cursor-pointer'>
 											{userInfo ? (
 												<span className='font-medium text-white'>
 													{userInfo.name}
 												</span>
 											) : (
-												<NextLink href='/login' passHref>
+												<NextLink
+													href='/login'
+													passHref>
 													<span className='font-medium text-white'>
 														Sign In
 													</span>
@@ -185,7 +205,9 @@ const Navbar = ({ sticky }) => {
 													{({ active }) => (
 														<button
 															className={classNames(
-																active ? 'bg-gray-100' : '',
+																active
+																	? 'bg-gray-100'
+																	: '',
 																'block px-4 py-2 text-sm text-gray-700'
 															)}>
 															Your Profile
@@ -193,12 +215,16 @@ const Navbar = ({ sticky }) => {
 													)}
 												</Menu.Item>
 											</NextLink>
-											<NextLink href='/order-history' passHref>
+											<NextLink
+												href='/order-history'
+												passHref>
 												<Menu.Item>
 													{({ active }) => (
 														<button
 															className={classNames(
-																active ? 'bg-gray-100' : '',
+																active
+																	? 'bg-gray-100'
+																	: '',
 																'block px-4 py-2 text-sm text-gray-700'
 															)}>
 															Order History
@@ -210,7 +236,9 @@ const Navbar = ({ sticky }) => {
 												{({ active }) => (
 													<button
 														className={classNames(
-															active ? 'bg-gray-100' : '',
+															active
+																? 'bg-gray-100'
+																: '',
 															'block px-4 py-2 text-sm text-gray-700 w-full text-left'
 														)}
 														onClick={handleLogOut}>
